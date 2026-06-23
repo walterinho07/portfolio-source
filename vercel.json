@@ -6,26 +6,11 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
-    {
-      "src": "/portfolio-source/assets/(.*)",
-      "dest": "dist/client/assets/$1"
-    },
-    {
-      "src": "/portfolio-source/images/(.*)",
-      "dest": "dist/client/images/$1"
-    },
-    {
-      "src": "/assets/(.*)",
-      "dest": "dist/client/assets/$1"
-    },
-    {
-      "src": "/images/(.*)",
-      "dest": "dist/client/images/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "dist/server/server.js"
-    }
+  "rewrites": [
+    { "source": "/portfolio-source/assets/:path*", "destination": "/dist/client/assets/:path*" },
+    { "source": "/portfolio-source/images/:path*", "destination": "/dist/client/images/:path*" },
+    { "source": "/assets/:path*", "destination": "/dist/client/assets/:path*" },
+    { "source": "/images/:path*", "destination": "/dist/client/images/:path*" },
+    { "source": "/:path*", "destination": "/dist/server/server.js" }
   ]
 }
