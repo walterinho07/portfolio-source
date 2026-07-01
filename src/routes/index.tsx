@@ -24,6 +24,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+import Faq from "@/components/ui/Faq.jsx";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -113,6 +114,7 @@ const services = [
 function Nav() {
   const links = [
     { href: "#about", label: "About" },
+    { href: "#faq", label: "FAQ" },
     { href: "#projects", label: "Progetti" },
     { href: "#services", label: "Servizi" },
     { href: "#contact", label: "Contatti" },
@@ -455,7 +457,8 @@ function Index() {
         <Hero />
         <About />
         <Projects />
-        <Services />
+          <Services />
+          <Faq />
         <Contact />
       </main>
       <Footer />
