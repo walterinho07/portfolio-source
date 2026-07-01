@@ -24,6 +24,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+//@ts-ignore  
 import Faq from "@/components/ui/Faq.jsx";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";

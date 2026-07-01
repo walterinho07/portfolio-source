@@ -67,6 +67,44 @@ const DialogDescription = React.forwardRef(({ className, ...props }, ref) => /* 
   }
 ));
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
+const faqItems = [
+  {
+    question: "Di cosa ti occupi?",
+    answer: "Sviluppo siti web e applicazioni moderne con un focus su design responsivo, performance e accessibilità."
+  },
+  {
+    question: "Come posso contattarti?",
+    answer: "Puoi inviarmi un messaggio tramite la sezione contatti del portfolio oppure scrivermi via email se presente nel footer."
+  },
+  {
+    question: "Quali tecnologie usi?",
+    answer: "Lavoro principalmente con JavaScript, React, HTML, CSS e librerie correlate per creare esperienze web dinamiche."
+  },
+  {
+    question: "Posso richiedere un preventivo?",
+    answer: "Sì, contattami con i dettagli del progetto e ti risponderò con una stima dei tempi e dei costi."
+  }
+];
+function Faq() {
+  return /* @__PURE__ */ jsx("section", { id: "faq", className: "px-6 py-16 bg-slate-950 text-slate-100", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-5xl", children: [
+    /* @__PURE__ */ jsxs("div", { className: "mb-10 text-center", children: [
+      /* @__PURE__ */ jsx("p", { className: "text-sm uppercase tracking-[0.4em] text-cyan-400", children: "FAQ" }),
+      /* @__PURE__ */ jsx("h2", { className: "mt-4 text-3xl font-semibold sm:text-4xl", children: "Domande frequenti" }),
+      /* @__PURE__ */ jsx("p", { className: "mx-auto mt-4 max-w-2xl text-slate-300", children: "Qui trovi le risposte ai dubbi più comuni sull'approccio ai progetti, alle tempistiche e al mio modo di lavorare." })
+    ] }),
+    /* @__PURE__ */ jsx("div", { className: "space-y-4", children: faqItems.map((item) => /* @__PURE__ */ jsxs(
+      "details",
+      {
+        className: "rounded-2xl border border-slate-700 bg-slate-900/70 p-5 transition hover:border-cyan-400",
+        children: [
+          /* @__PURE__ */ jsx("summary", { className: "cursor-pointer text-lg font-medium text-slate-100", children: item.question }),
+          /* @__PURE__ */ jsx("p", { className: "mt-3 text-slate-300", children: item.answer })
+        ]
+      },
+      item.question
+    )) })
+  ] }) });
+}
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
@@ -213,6 +251,9 @@ function Nav() {
   const links = [{
     href: "#about",
     label: "About"
+  }, {
+    href: "#faq",
+    label: "FAQ"
   }, {
     href: "#projects",
     label: "Progetti"
@@ -444,6 +485,7 @@ function Index() {
       /* @__PURE__ */ jsx(About, {}),
       /* @__PURE__ */ jsx(Projects, {}),
       /* @__PURE__ */ jsx(Services, {}),
+      /* @__PURE__ */ jsx(Faq, {}),
       /* @__PURE__ */ jsx(Contact, {})
     ] }),
     /* @__PURE__ */ jsx(Footer, {})

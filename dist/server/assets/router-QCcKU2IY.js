@@ -3,7 +3,8 @@ import { createRootRouteWithContext, useRouter, Link, Outlet, HeadContent, Scrip
 import { jsx, jsxs } from "react/jsx-runtime";
 import { useEffect } from "react";
 import { Toaster as Toaster$1 } from "sonner";
-const appCss = "/assets/styles-8m1kepYT.css";
+import { Analytics } from "@vercel/analytics/react";
+const appCss = "/assets/styles-AjCIFe8J.css";
 function reportLovableError(error, context = {}) {
   if (typeof window === "undefined") return;
   window.__lovableEvents?.captureException?.(
@@ -119,6 +120,7 @@ function RootShell({ children }) {
     /* @__PURE__ */ jsx("head", { children: /* @__PURE__ */ jsx(HeadContent, {}) }),
     /* @__PURE__ */ jsxs("body", { children: [
       children,
+      /* @__PURE__ */ jsx(Analytics, {}),
       /* @__PURE__ */ jsx(Scripts, {})
     ] })
   ] });
@@ -130,7 +132,7 @@ function RootComponent() {
     /* @__PURE__ */ jsx(Toaster, {})
   ] });
 }
-const $$splitComponentImporter = () => import("./index-C8kSU1ih.js");
+const $$splitComponentImporter = () => import("./index-Dycz59Ma.js");
 const Route = createFileRoute("/")({
   head: () => ({
     meta: [{
