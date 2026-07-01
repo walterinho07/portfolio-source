@@ -365,8 +365,8 @@ function Contact() {
   };
 
   const channels = [
-    { icon: Mail, label: "Email", value: "walterfida9@gmail.com", href: "mailto:walterfida9@gmail.com" },
-    { icon: MessageCircle, label: "WhatsApp", value: "+39 324 605 4939", href: "https://wa.me/3246054939" },
+    { icon: Mail, label: "Email", value: "info@walterfidadev.it", href: "mailto:info@walterfidadev.it" },
+    { icon: MessageCircle, label: "WhatsApp", value: "+39 3272791266", href: "https://wa.me/3272791266" },
     { icon: Linkedin, label: "LinkedIn", value: "/walterfida/Dev", href: "https://www.linkedin.com/in/walter-fida-a7749b1bb/" },
     { icon: Github, label: "GitHub", value: "@Walterinho07", href: "https://github.com" },
   ];
