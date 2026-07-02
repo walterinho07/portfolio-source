@@ -415,13 +415,13 @@ function Contact() {
   const channels = [{
     icon: Mail,
     label: "Email",
-    value: "walterfida9@gmail.com",
-    href: "mailto:walterfida9@gmail.com"
+    value: "info@walterfidadev.it",
+    href: "mailto:info@walterfidadev.it"
   }, {
     icon: MessageCircle,
     label: "WhatsApp",
-    value: "+39 324 605 4939",
-    href: "https://wa.me/3246054939"
+    value: "+39 327 2791266",
+    href: "https://wa.me/3272791266"
   }, {
     icon: Linkedin,
     label: "LinkedIn",
