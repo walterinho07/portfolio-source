@@ -44,7 +44,7 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const stack = ["Java", "JavaFX", "Angular", "Spring Boot", "TypeScript", "HTML", "CSS", "SQL", "Git", "GitHub"];
+const stack = ["Java", "JavaFX", "Angular", "Spring Boot", "TypeScript", "HTML", "CSS", "SQL", "Git", "GitHub","full stack"];
 
 interface Project {
   name: string;
