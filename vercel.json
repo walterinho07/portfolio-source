@@ -5,8 +5,6 @@
     { "src": "dist/client/**", "use": "@vercel/static" }
   ],
   "routes": [
-    { "src": "/portfolio-source/assets/(.*)", "dest": "/dist/client/assets/$1" },
-    { "src": "/portfolio-source/images/(.*)", "dest": "/dist/client/images/$1" },
     { "src": "/assets/(.*)", "dest": "/dist/client/assets/$1" },
     { "src": "/images/(.*)", "dest": "/dist/client/images/$1" },
     { "src": "/(.*)", "dest": "/dist/server/server.js" }
