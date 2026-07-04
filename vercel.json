@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "builds": [
-    { "src": "api/index.mjs", "use": "@vercel/node" },
-    { "src": "dist/client/**", "use": "@vercel/static" }
-  ],
+  "functions": {
+    "api/index.mjs": {
+      "includeFiles": "dist/server/**"
+    }
+  },
   "routes": [
     { "src": "/assets/(.*)", "dest": "/dist/client/assets/$1" },
     { "src": "/images/(.*)", "dest": "/dist/client/images/$1" },
