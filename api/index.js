@@ -30,8 +30,10 @@ module.exports = async (req, res) => {
       body: body && body.length ? body : undefined,
     });
 
-    const mod = await import('../dist/server/server.js');
-    const server = (mod && (mod.default ?? mod));
+    // Dynamically import the ESM server module
+    const serverModule = await import('../dist/server/server.js');
+    const server = (serverModule && (serverModule.default ?? serverModule));
+    
     if (!server || typeof server.fetch !== 'function') {
       throw new Error('Built server does not export a fetch handler');
     }
@@ -47,6 +49,6 @@ module.exports = async (req, res) => {
   } catch (err) {
     console.error('API wrapper error:', err);
     res.statusCode = 500;
-    res.end('Server error');
+    res.end('Server error: ' + err.message);
   }
 };
