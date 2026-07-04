@@ -241,10 +241,12 @@ function Projects() {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<Project | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [fullscreenImageIndex, setFullscreenImageIndex] = useState<number | null>(null);
 
   const openProject = (p: Project) => {
     setSelected(p);
     setActiveImageIndex(0);
+    setFullscreenImageIndex(null);
     setOpen(true);
   };
 
@@ -324,7 +326,7 @@ function Projects() {
                     <img
                       src={selected.images[activeImageIndex]}
                       alt={`${selected.name} screenshot ${activeImageIndex + 1}`}
-                      className="w-full h-[320px] sm:h-[420px] object-cover"
+                      className="w-full h-auto max-h-[420px] object-contain bg-background"
                     />
                   </div>
                   <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 gap-3">
@@ -332,7 +334,7 @@ function Projects() {
                       <button
                         key={i}
                         type="button"
-                        onClick={() => setActiveImageIndex(i)}
+                        onClick={() => setFullscreenImageIndex(i)}
                         className={`overflow-hidden rounded-2xl border p-0 transition ${
                           i === activeImageIndex ? "border-primary shadow-[0_0_0_3px_rgba(59,130,246,0.12)]" : "border-border"
                         }`}
@@ -344,6 +346,24 @@ function Projects() {
                         />
                       </button>
                     ))}
+                  </div>
+                </div>
+              )}
+              {fullscreenImageIndex !== null && selected?.images?.[fullscreenImageIndex] && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4">
+                  <div className="relative max-w-5xl w-full rounded-3xl overflow-hidden bg-slate-950 shadow-2xl">
+                    <button
+                      type="button"
+                      onClick={() => setFullscreenImageIndex(null)}
+                      className="absolute top-4 right-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-slate-900/90 text-slate-100 shadow-lg hover:bg-slate-800"
+                    >
+                      ×
+                    </button>
+                    <img
+                      src={selected.images[fullscreenImageIndex]}
+                      alt={`${selected.name} fullscreen ${fullscreenImageIndex + 1}`}
+                      className="w-full h-[80vh] object-contain bg-black"
+                    />
                   </div>
                 </div>
               )}
