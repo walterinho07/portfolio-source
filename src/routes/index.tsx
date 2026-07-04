@@ -315,9 +315,15 @@ function Projects() {
             <div className="space-y-4">
               <p className="text-muted-foreground leading-relaxed">{selected?.description}</p>
               {selected?.images && (
-                <div className="mt-4 grid grid-cols-1 gap-3">
+                <div className="mt-4 grid gap-3 sm:grid-cols-2">
                   {selected.images.map((src, i) => (
-                    <img key={i} src={src} alt={`${selected.name} screenshot ${i + 1}`} className="w-full rounded-md border object-cover" />
+                    <div key={i} className="overflow-hidden rounded-xl border border-border bg-card">
+                      <img
+                        src={src}
+                        alt={`${selected.name} screenshot ${i + 1}`}
+                        className="w-full h-full min-h-[180px] max-h-[320px] object-cover"
+                      />
+                    </div>
                   ))}
                 </div>
               )}
