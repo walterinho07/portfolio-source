@@ -92,6 +92,7 @@ const projects: Project[] = [
     description: "Sistema di prenotazione per B&B e strutture ricettive con gestione richieste, disponibilità e interfaccia semplice per clienti e proprietari.",
     status: "In sviluppo",
     done: false,
+    images: ["/images/BBPAGINA1.png", "/images/bbpagina2.png", "/images/bbpagina3.png"],
     github: "https://github.com/Walterinho07/BB-Booking-System",
   },
   {
