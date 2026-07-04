@@ -7,7 +7,7 @@ const faqItems = [
   },
   {
     question: 'Come posso contattarti?',
-    answer: 'Puoi inviarmi un messaggio tramite la sezione contatti del portfolio oppure scrivermi via email se presente nel footer.',
+    answer: 'Puoi inviarmi un messaggio tramite la sezione contatti del portfolio oppure compilare il form di richiesta preventivo per progetti specifici.',
   },
   {
     question: 'Quali tecnologie usi?',

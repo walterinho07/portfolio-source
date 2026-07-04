@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
 import {
   ArrowRight,
   Mail,
@@ -17,17 +16,12 @@ import {
   Loader2,
 } from "lucide-react";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
-import Faq from "@/components/ui/Faq";
-import { Button } from "@/components/ui/button";
+  Button,
+} from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import Faq from "@/components/ui/Faq";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/")({
@@ -52,6 +46,7 @@ interface Project {
   status: string;
   done: boolean;
   images?: string[];
+  github?: string;
 }
 
 const projects: Project[] = [
@@ -66,6 +61,7 @@ const projects: Project[] = [
       "/images/Geoshield1.png",
       "/images/Geoshield2.png",
     ],
+    github: "https://github.com/Walterinho07/GeoShield",
   },
   {
     name: "Afterglow",
@@ -79,6 +75,7 @@ const projects: Project[] = [
       "/images/afterglow2.png",
 
     ],
+    github: "https://github.com/Walterinho07/Afterglow",
   },
   {
     name: "B&B Booking System",
@@ -87,6 +84,7 @@ const projects: Project[] = [
     description: "Sistema di prenotazione per B&B e strutture ricettive con gestione richieste, disponibilità e interfaccia semplice per clienti e proprietari.",
     status: "In sviluppo",
     done: false,
+    github: "https://github.com/Walterinho07/BB-Booking-System",
   },
   {
     name: "Restaurant Booking & Menu",
@@ -98,6 +96,7 @@ const projects: Project[] = [
     images: [
       "/images/restaurant-1.jpg",
     ],
+    github: "https://github.com/Walterinho07/Restaurant-Booking",
   },
 ];
 
@@ -230,14 +229,6 @@ function About() {
 }
 
 function Projects() {
-  const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState<Project | null>(null);
-
-  const openProject = (p: Project) => {
-    setSelected(p);
-    setOpen(true);
-  };
-
   return (
     <section id="projects" className="px-6 py-24 border-t border-border/50">
       <div className="mx-auto max-w-6xl">
@@ -281,39 +272,22 @@ function Projects() {
                 ))}
               </div>
               <div className="mt-6 pt-5 border-t border-border/60 flex items-center gap-4 text-sm">
-                <button
-                  onClick={() => openProject(p)}
-                  className="text-primary hover:underline inline-flex items-center gap-1"
-                >
-                  Dettagli <ArrowRight className="h-3.5 w-3.5" />
-                </button>
-                <a href="#" className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
-                  <Github className="h-3.5 w-3.5" /> Codice
-                </a>
+                {p.github ? (
+                  <a
+                    href={p.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-primary hover:underline inline-flex items-center gap-1"
+                  >
+                    Vedi su GitHub <ArrowRight className="h-3.5 w-3.5" />
+                  </a>
+                ) : (
+                  <span className="text-muted-foreground">Dettagli disponibili presto</span>
+                )}
               </div>
             </article>
           ))}
         </div>
-        <Dialog open={open} onOpenChange={(val) => { if (!val) setSelected(null); setOpen(val); }}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>{selected?.name}</DialogTitle>
-            </DialogHeader>
-            <DialogDescription>
-              <p className="text-sm text-muted-foreground mb-4">{selected?.type} — {selected?.status}</p>
-            </DialogDescription>
-            <div className="space-y-4">
-              <p className="text-muted-foreground leading-relaxed">{selected?.description}</p>
-              {selected?.images && (
-                <div className="mt-4 grid grid-cols-1 gap-3">
-                  {selected.images.map((src, i) => (
-                    <img key={i} src={src} alt={`${selected.name} screenshot ${i + 1}`} className="w-full rounded-md border object-cover" />
-                  ))}
-                </div>
-              )}
-            </div>
-          </DialogContent>
-        </Dialog>
       </div>
     </section>
   );
