@@ -189,7 +189,7 @@ const Textarea = React.forwardRef(
   }
 );
 Textarea.displayName = "Textarea";
-const stack = ["Java", "JavaFX", "Angular", "Spring Boot", "TypeScript", "HTML", "CSS", "SQL", "Git", "GitHub"];
+const stack = ["Java", "JavaFX", "Angular", "Spring Boot", "TypeScript", "HTML", "CSS", "SQL", "Git", "GitHub", "full stack"];
 const projects = [{
   name: "GeoShield",
   type: "Desktop App",
@@ -420,7 +420,7 @@ function Contact() {
   }, {
     icon: MessageCircle,
     label: "WhatsApp",
-    value: "+39 327 2791266",
+    value: "+39 3272791266",
     href: "https://wa.me/3272791266"
   }, {
     icon: Linkedin,
