@@ -1,13 +1,13 @@
 {
-  "version": 2,
   "functions": {
     "api/index.mjs": {
-      "includeFiles": "dist/server/**"
+      "includeFiles": "dist/**"
     }
   },
-  "routes": [
-    { "src": "/assets/(.*)", "dest": "/dist/client/assets/$1" },
-    { "src": "/images/(.*)", "dest": "/dist/client/images/$1" },
-    { "src": "(.*)", "dest": "/api/index.mjs" }
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api/index.mjs"
+    }
   ]
 }
