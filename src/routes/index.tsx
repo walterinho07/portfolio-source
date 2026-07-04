@@ -22,6 +22,13 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import Faq from "@/components/ui/Faq";
 import { toast } from "sonner";
 
@@ -230,6 +237,14 @@ function About() {
 }
 
 function Projects() {
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState<Project | null>(null);
+
+  const openProject = (p: Project) => {
+    setSelected(p);
+    setOpen(true);
+  };
+
   return (
     <section id="projects" className="px-6 py-24 border-t border-border/50">
       <div className="mx-auto max-w-6xl">
@@ -273,22 +288,46 @@ function Projects() {
                 ))}
               </div>
               <div className="mt-6 pt-5 border-t border-border/60 flex items-center gap-4 text-sm">
-                {p.github ? (
-                  <a
-                    href={p.github}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-primary hover:underline inline-flex items-center gap-1"
-                  >
-                    Vedi su GitHub <ArrowRight className="h-3.5 w-3.5" />
+                <button
+                  onClick={() => openProject(p)}
+                  className="text-primary hover:underline inline-flex items-center gap-1"
+                >
+                  Dettagli <ArrowRight className="h-3.5 w-3.5" />
+                </button>
+                {p.github && (
+                  <a href={p.github} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
+                    <Github className="h-3.5 w-3.5" /> Codice
                   </a>
-                ) : (
-                  <span className="text-muted-foreground">Dettagli disponibili presto</span>
                 )}
               </div>
             </article>
           ))}
         </div>
+        <Dialog open={open} onOpenChange={(val) => { if (!val) setSelected(null); setOpen(val); }}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{selected?.name}</DialogTitle>
+            </DialogHeader>
+            <DialogDescription>
+              <p className="text-sm text-muted-foreground mb-4">{selected?.type} — {selected?.status}</p>
+            </DialogDescription>
+            <div className="space-y-4">
+              <p className="text-muted-foreground leading-relaxed">{selected?.description}</p>
+              {selected?.images && (
+                <div className="mt-4 grid grid-cols-1 gap-3">
+                  {selected.images.map((src, i) => (
+                    <img key={i} src={src} alt={`${selected.name} screenshot ${i + 1}`} className="w-full rounded-md border object-cover" />
+                  ))}
+                </div>
+              )}
+              {selected?.github && (
+                <a href={selected.github} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-primary hover:underline mt-4">
+                  <Github className="h-4 w-4" /> Vedi su GitHub
+                </a>
+              )}
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </section>
   );
