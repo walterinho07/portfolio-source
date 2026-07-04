@@ -18,14 +18,12 @@ import {
 } from "lucide-react";
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-//@ts-ignore  
-import Faq from "@/components/ui/Faq.jsx";
+import Faq from "@/components/ui/Faq";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
