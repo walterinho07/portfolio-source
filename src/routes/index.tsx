@@ -240,11 +240,15 @@ function About() {
 function Projects() {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<Project | null>(null);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   const openProject = (p: Project) => {
     setSelected(p);
+    setActiveImageIndex(0);
     setOpen(true);
   };
+
+  const selectedImages = selected?.images ?? [];
 
   return (
     <section id="projects" className="px-6 py-24 border-t border-border/50">
@@ -314,17 +318,33 @@ function Projects() {
             </DialogDescription>
             <div className="space-y-4">
               <p className="text-muted-foreground leading-relaxed">{selected?.description}</p>
-              {selected?.images && (
-                <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                  {selected.images.map((src, i) => (
-                    <div key={i} className="overflow-hidden rounded-xl border border-border bg-card">
-                      <img
-                        src={src}
-                        alt={`${selected.name} screenshot ${i + 1}`}
-                        className="w-full h-full min-h-[180px] max-h-[320px] object-cover"
-                      />
-                    </div>
-                  ))}
+              {selected?.images && selected.images.length > 0 && (
+                <div className="mt-4">
+                  <div className="overflow-hidden rounded-3xl border border-border bg-card">
+                    <img
+                      src={selected.images[activeImageIndex]}
+                      alt={`${selected.name} screenshot ${activeImageIndex + 1}`}
+                      className="w-full h-[320px] sm:h-[420px] object-cover"
+                    />
+                  </div>
+                  <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 gap-3">
+                    {selected.images.map((src, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => setActiveImageIndex(i)}
+                        className={`overflow-hidden rounded-2xl border p-0 transition ${
+                          i === activeImageIndex ? "border-primary shadow-[0_0_0_3px_rgba(59,130,246,0.12)]" : "border-border"
+                        }`}
+                      >
+                        <img
+                          src={src}
+                          alt={`${selected.name} thumbnail ${i + 1}`}
+                          className="w-full h-20 object-cover"
+                        />
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
               {selected?.github && (
