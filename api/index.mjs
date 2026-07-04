@@ -1,12 +1,14 @@
-const {Readable} = require('stream');
+import { Readable } from 'stream';
 
 async function streamToBuffer(stream) {
   const chunks = [];
-  for await (const chunk of stream) chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+  for await (const chunk of stream) {
+    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+  }
   return Buffer.concat(chunks);
 }
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
   try {
     const host = req.headers.host || 'localhost';
     const url = new URL(req.url, `https://${host}`);
@@ -30,9 +32,9 @@ module.exports = async (req, res) => {
       body: body && body.length ? body : undefined,
     });
 
-    // Dynamically import the ESM server module
+    // Dynamically import the built ESM server module
     const serverModule = await import('../dist/server/server.js');
-    const server = (serverModule && (serverModule.default ?? serverModule));
+    const server = serverModule && (serverModule.default ?? serverModule);
     
     if (!server || typeof server.fetch !== 'function') {
       throw new Error('Built server does not export a fetch handler');
