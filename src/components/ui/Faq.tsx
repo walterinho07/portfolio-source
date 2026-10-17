@@ -1,48 +1,102 @@
-import React from 'react';
+import React, { useState } from "react";
+import { ChevronDown, HelpCircle } from "lucide-react";
 
-const faqItems = [
+interface FaqItem {
+  question: string;
+  answer: string;
+  category?: string;
+}
+
+const faqItems: FaqItem[] = [
   {
-    question: 'Di cosa ti occupi?',
-    answer: 'Sviluppo siti web e applicazioni moderne con un focus su design responsivo, performance e accessibilità.',
+    question: "Di quali tipologie di software ti occupi principalmente?",
+    answer:
+      "Sviluppo sia applicazioni web complete (frontend con Angular/React/TypeScript e backend Spring Boot/Java) sia software desktop ad alte prestazioni in JavaFX (come strumenti OSINT, gestionali o tool di analisi dati). Realizzo inoltre sistemi di prenotazione dedicati e siti web su misura.",
   },
   {
-    question: 'Come posso contattarti?',
-    answer: 'Puoi inviarmi un messaggio tramite la sezione contatti del portfolio oppure compilare il form di richiesta preventivo per progetti specifici.',
+    question: "Lavori solo con realtà in Calabria o anche da remoto?",
+    answer:
+      "Entrambe le cose: ho base in Calabria e supporto con entusiasmo le attività locali (B&B, ristoranti, professionisti e imprese) che vogliono digitalizzarsi, ma collaboro stabilmente anche da remoto con clienti e team in tutta Italia.",
   },
   {
-    question: 'Quali tecnologie usi?',
-    answer: 'Lavoro principalmente con JavaScript, React, HTML, CSS e librerie correlate per creare esperienze web dinamiche.',
+    question: "Come viene gestito lo sviluppo e la consegna del progetto?",
+    answer:
+      "Adotto un approccio trasparente e iterativo: partiamo da un'analisi dettagliata dei requisiti, definendo tempistiche chiare e deliverable intermedi. Durante lo sviluppo condivido avanzamenti regolari e demo funzionanti, fino al rilascio in produzione e al collaudo finale.",
   },
   {
-    question: 'Posso richiedere un preventivo?',
-    answer: 'Sì, contattami con i dettagli del progetto e ti risponderò con una stima dei tempi e dei costi.',
+    question: "Fornisci assistenza e manutenzione dopo il rilascio?",
+    answer:
+      "Certamente. Non lascio mai il cliente da solo dopo la consegna. Offro pacchetti di supporto per aggiornamenti, monitoraggio, backup, correzione bug e l'aggiunta di nuove funzionalità nel tempo.",
+  },
+  {
+    question: "Come posso richiedere una stima o un preventivo per la mia idea?",
+    answer:
+      "Puoi scrivermi direttamente tramite il form contatti qui sotto, inviarmi una mail a info@walterfidadev.it oppure contattarmi su WhatsApp. Rispondo solitamente entro 24 ore con una prima valutazione gratuita e senza impegno.",
   },
 ];
 
 export default function Faq() {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  const toggle = (idx: number) => {
+    setOpenIndex(openIndex === idx ? null : idx);
+  };
+
   return (
-    <section id="faq" className="px-6 py-16 bg-slate-950 text-slate-100">
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-10 text-center">
-          <p className="text-sm uppercase tracking-[0.4em] text-cyan-400">FAQ</p>
-          <h2 className="mt-4 text-3xl font-semibold sm:text-4xl">Domande frequenti</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-slate-300">
-            Qui trovi le risposte ai dubbi più comuni sull&apos;approccio ai progetti, alle tempistiche e al mio modo di lavorare.
+    <section id="faq" className="relative px-6 py-28 border-t border-white/5">
+      <div className="mx-auto max-w-4xl">
+        <div className="mb-14 text-center">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full glass border border-primary/30 text-xs font-mono text-primary mb-3">
+            <HelpCircle className="w-3.5 h-3.5" />
+            Domande Frequenti
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight">
+            Tutto ciò che <span className="text-gradient">ti serve sapere.</span>
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-muted-foreground text-sm sm:text-base leading-relaxed">
+            Risposte chiare su metodo di lavoro, stack tecnologico e modalità di collaborazione.
           </p>
         </div>
 
         <div className="space-y-4">
-          {faqItems.map((item) => (
-            <details
-              key={item.question}
-              className="rounded-2xl border border-slate-700 bg-slate-900/70 p-5 transition hover:border-cyan-400"
-            >
-              <summary className="cursor-pointer text-lg font-medium text-slate-100">
-                {item.question}
-              </summary>
-              <p className="mt-3 text-slate-300">{item.answer}</p>
-            </details>
-          ))}
+          {faqItems.map((item, idx) => {
+            const isOpen = openIndex === idx;
+            return (
+              <div
+                key={item.question}
+                className={`rounded-2xl glass-card transition-all duration-300 overflow-hidden ${
+                  isOpen
+                    ? "border-primary/40 shadow-[0_0_25px_rgba(34,211,238,0.08)]"
+                    : "hover:border-white/20"
+                }`}
+              >
+                <button
+                  type="button"
+                  onClick={() => toggle(idx)}
+                  className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 text-left cursor-pointer"
+                  aria-expanded={isOpen}
+                >
+                  <span className="font-semibold text-base sm:text-lg text-foreground">
+                    {item.question}
+                  </span>
+                  <div
+                    className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center glass border border-white/10 transition-transform duration-300 ${
+                      isOpen
+                        ? "rotate-180 bg-primary/20 text-primary border-primary/30"
+                        : "text-muted-foreground"
+                    }`}
+                  >
+                    <ChevronDown className="w-4 h-4" />
+                  </div>
+                </button>
+                {isOpen && (
+                  <div className="px-5 pb-6 sm:px-6 pt-0 text-sm sm:text-base text-muted-foreground leading-relaxed border-t border-white/5 mt-1 pt-4">
+                    {item.answer}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

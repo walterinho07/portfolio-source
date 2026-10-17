@@ -74,9 +74,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Portfolio — Freelance Developer in Calabria" },
-      { name: "description", content: "Sviluppo web app, software desktop e sistemi di prenotazione per attività locali e business digitali." },
+      {
+        name: "description",
+        content:
+          "Sviluppo web app, software desktop e sistemi di prenotazione per attività locali e business digitali.",
+      },
       { property: "og:title", content: "Portfolio — Freelance Developer" },
-      { property: "og:description", content: "Web app, software desktop e sistemi di prenotazione per attività locali." },
+      {
+        property: "og:description",
+        content: "Web app, software desktop e sistemi di prenotazione per attività locali.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -86,7 +93,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" } as any,
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
+      } as unknown as { rel: string; href: string },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap",

@@ -31,7 +31,7 @@ function renderErrorPage() {
 let serverEntryPromise;
 async function getServerEntry() {
   if (!serverEntryPromise) {
-    serverEntryPromise = import("./assets/server-CgBB49k7.js").then((n) => n.s).then(
+    serverEntryPromise = import("./assets/server-BKSmv-xg.js").then((n) => n.s).then(
       (m) => m.default ?? m
     );
   }
