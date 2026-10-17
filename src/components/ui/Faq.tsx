@@ -4,7 +4,6 @@ import { ChevronDown, HelpCircle } from "lucide-react";
 interface FaqItem {
   question: string;
   answer: string;
-  category?: string;
 }
 
 const faqItems: FaqItem[] = [
@@ -46,28 +45,26 @@ export default function Faq() {
     <section id="faq" className="relative px-6 py-28 border-t border-white/5">
       <div className="mx-auto max-w-4xl">
         <div className="mb-14 text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full glass border border-primary/30 text-xs font-mono text-primary mb-3">
-            <HelpCircle className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full apple-glass text-xs font-mono text-zinc-400 mb-3">
+            <HelpCircle className="w-3.5 h-3.5 text-zinc-300" />
             Domande Frequenti
           </div>
-          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
             Tutto ciò che <span className="text-gradient">ti serve sapere.</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-muted-foreground text-sm sm:text-base leading-relaxed">
+          <p className="mx-auto mt-4 max-w-xl text-zinc-400 text-sm sm:text-base leading-relaxed">
             Risposte chiare su metodo di lavoro, stack tecnologico e modalità di collaborazione.
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3.5">
           {faqItems.map((item, idx) => {
             const isOpen = openIndex === idx;
             return (
               <div
                 key={item.question}
-                className={`rounded-2xl glass-card transition-all duration-300 overflow-hidden ${
-                  isOpen
-                    ? "border-primary/40 shadow-[0_0_25px_rgba(34,211,238,0.08)]"
-                    : "hover:border-white/20"
+                className={`rounded-2xl apple-card transition-all duration-300 overflow-hidden ${
+                  isOpen ? "border-white/20 shadow-xl" : "hover:border-white/15"
                 }`}
               >
                 <button
@@ -76,21 +73,19 @@ export default function Faq() {
                   className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 text-left cursor-pointer"
                   aria-expanded={isOpen}
                 >
-                  <span className="font-semibold text-base sm:text-lg text-foreground">
+                  <span className="font-semibold text-base sm:text-lg text-white">
                     {item.question}
                   </span>
                   <div
-                    className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center glass border border-white/10 transition-transform duration-300 ${
-                      isOpen
-                        ? "rotate-180 bg-primary/20 text-primary border-primary/30"
-                        : "text-muted-foreground"
+                    className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center apple-glass transition-transform duration-300 ${
+                      isOpen ? "rotate-180 bg-white/10 text-white" : "text-zinc-400"
                     }`}
                   >
                     <ChevronDown className="w-4 h-4" />
                   </div>
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-6 sm:px-6 pt-0 text-sm sm:text-base text-muted-foreground leading-relaxed border-t border-white/5 mt-1 pt-4">
+                  <div className="px-5 pb-6 sm:px-6 pt-0 text-sm sm:text-base text-zinc-400 leading-relaxed border-t border-white/5 mt-1 pt-4">
                     {item.answer}
                   </div>
                 )}

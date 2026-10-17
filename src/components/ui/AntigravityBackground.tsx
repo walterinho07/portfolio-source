@@ -4,42 +4,43 @@ export function AntigravityBackground() {
   return (
     <div
       aria-hidden="true"
-      className="fixed inset-0 pointer-events-none -z-10 overflow-hidden select-none"
+      className="fixed inset-0 pointer-events-none -z-10 overflow-hidden select-none bg-[#0a0a0c]"
     >
-      {/* Dynamic ambient gradient meshes (Zero-G Orbs) */}
-      <div className="absolute -top-[15%] left-[10%] w-[500px] h-[500px] rounded-full bg-cyan-500/10 blur-[130px] animate-pulse-glow" />
-      <div className="absolute top-[35%] -right-[10%] w-[550px] h-[550px] rounded-full bg-teal-500/10 blur-[140px] animate-float-slow" />
-      <div className="absolute top-[65%] left-[5%] w-[450px] h-[450px] rounded-full bg-indigo-500/10 blur-[120px] animate-float-reverse" />
-      <div className="absolute -bottom-[10%] right-[20%] w-[600px] h-[600px] rounded-full bg-cyan-600/10 blur-[150px] animate-pulse-glow" />
+      {/* Subtle Volumetric Light Pools (Apple Pro Space Gray / Titanium Glow) */}
+      <div className="absolute -top-[20%] left-[15%] w-[600px] h-[600px] rounded-full bg-slate-400/[0.04] blur-[140px] animate-lens-drift" />
+      <div className="absolute top-[35%] -right-[10%] w-[650px] h-[650px] rounded-full bg-sky-500/[0.035] blur-[150px] animate-float-slow" />
+      <div className="absolute top-[65%] left-[5%] w-[500px] h-[500px] rounded-full bg-zinc-300/[0.03] blur-[130px] animate-float-reverse" />
+      <div className="absolute -bottom-[15%] right-[20%] w-[700px] h-[700px] rounded-full bg-slate-500/[0.03] blur-[160px]" />
 
-      {/* Cyber Isometric Grid Overlay */}
+      {/* Weightless Floating Frosted Glass Lenses (Apple Aesthetic) */}
       <div
-        className="absolute inset-0 opacity-[0.035]"
-        style={{
-          backgroundImage: `
-            linear-gradient(to right, rgba(255, 255, 255, 0.4) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 1px, transparent 1px)
-          `,
-          backgroundSize: "48px 48px",
-          maskImage: "radial-gradient(ellipse 80% 70% at 50% 35%, black 40%, transparent 100%)",
-          WebkitMaskImage:
-            "radial-gradient(ellipse 80% 70% at 50% 35%, black 40%, transparent 100%)",
-        }}
+        className="absolute top-28 left-[8%] w-32 h-32 rounded-full border border-white/[0.08] bg-white/[0.015] backdrop-blur-[6px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)] animate-float-slow"
+        style={{ animationDuration: "14s" }}
+      />
+      <div
+        className="absolute top-[42%] right-[7%] w-48 h-48 rounded-full border border-white/[0.06] bg-white/[0.01] backdrop-blur-[8px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] animate-float-reverse"
+        style={{ animationDuration: "16s" }}
+      />
+      <div
+        className="absolute top-[75%] left-[12%] w-24 h-24 rounded-full border border-white/[0.07] bg-white/[0.015] backdrop-blur-[5px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)] animate-float-medium"
+        style={{ animationDuration: "11s" }}
       />
 
-      {/* Subtle floating coordinate markers / zero-gravity micro particles */}
-      <div className="absolute top-24 left-[15%] w-1.5 h-1.5 rounded-full bg-primary/40 animate-float-slow shadow-[0_0_10px_var(--primary)]" />
-      <div className="absolute top-80 right-[25%] w-2 h-2 rounded-full bg-cyan-300/30 animate-float-medium shadow-[0_0_12px_cyan]" />
-      <div className="absolute top-[55%] left-[8%] w-1 h-1 rounded-full bg-teal-400/40 animate-float-reverse shadow-[0_0_8px_teal]" />
-      <div className="absolute top-[75%] right-[12%] w-2 h-2 rounded-full bg-indigo-400/30 animate-float-slow shadow-[0_0_10px_indigo]" />
-      <div className="absolute top-[88%] left-[40%] w-1.5 h-1.5 rounded-full bg-primary/40 animate-float-medium shadow-[0_0_10px_var(--primary)]" />
+      {/* Floating Precision Orbital Rings */}
+      <div
+        className="absolute top-[20%] right-[22%] w-72 h-72 rounded-full border border-white/[0.04] animate-float-slow pointer-events-none"
+        style={{ animationDuration: "20s" }}
+      />
+      <div
+        className="absolute top-[60%] left-[25%] w-96 h-96 rounded-full border border-white/[0.03] animate-float-reverse pointer-events-none"
+        style={{ animationDuration: "24s" }}
+      />
 
-      {/* Radial vignette mask for depth focus */}
+      {/* Subtle Specular Horizon Gradient Mask */}
       <div
         className="absolute inset-0"
         style={{
-          background:
-            "radial-gradient(ellipse at center, transparent 30%, oklch(0.10 0.02 255 / 0.7) 100%)",
+          background: "radial-gradient(ellipse 90% 70% at 50% 15%, transparent 20%, #0a0a0c 90%)",
         }}
       />
     </div>

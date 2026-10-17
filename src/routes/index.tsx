@@ -1,12 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import {
   ArrowRight,
   Mail,
   Github,
   Linkedin,
   MessageCircle,
-  MapPin,
   Code2,
   Monitor,
   Globe,
@@ -23,11 +22,8 @@ import {
   X,
   Layers,
   Sparkles,
-  Database,
-  ShieldCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -39,14 +35,14 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { AntigravityBackground } from "@/components/ui/AntigravityBackground";
-import { DevTerminalCard } from "@/components/ui/DevTerminalCard";
+import { DeconstructingTerminal } from "@/components/ui/DeconstructingTerminal";
 import { BentoAbout } from "@/components/ui/BentoAbout";
 import Faq from "@/components/ui/Faq";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Walter Fida — Software & Full-Stack Developer | Portfolio" },
+      { title: "Walter Fida — Software & Full-Stack Developer" },
       {
         name: "description",
         content:
@@ -72,7 +68,6 @@ interface Project {
   longDescription?: string;
   status: string;
   done: boolean;
-  accentColor: string;
   images?: string[];
   github?: string;
 }
@@ -80,21 +75,20 @@ interface Project {
 const projects: Project[] = [
   {
     name: "GeoShield",
-    type: "Desktop App",
+    type: "Desktop Application",
     stack: ["Java", "JavaFX", "OSINT", "CSS"],
     description:
       "Tool OSINT e geolocalizzazione sviluppato in JavaFX per raccogliere, analizzare e visualizzare intelligence da fonti aperte su mappe interattive.",
     longDescription:
-      "GeoShield è un applicativo desktop incentrato sull'intelligence geospaziale. Permette agli operatori di raccogliere dati da sorgenti pubbliche, normalizzarli e visualizzarli con una dashboard ad alta efficienza costruita interamente in JavaFX con architettura modulare.",
+      "GeoShield è un applicativo desktop nativo incentrato sull'intelligence geospaziale. Permette agli operatori di raccogliere dati da sorgenti pubbliche, normalizzarli e visualizzarli con una dashboard ad alta efficienza costruita interamente in JavaFX con architettura modulare.",
     status: "Completato",
     done: true,
-    accentColor: "from-cyan-500/20 to-blue-500/10 border-cyan-500/30",
     images: ["/images/Geoshield1.png", "/images/Geoshield2.png"],
     github: "https://github.com/Walterinho07/GeoShield",
   },
   {
     name: "Afterglow",
-    type: "Web App",
+    type: "Web Application",
     stack: ["Angular", "Spring Boot", "TypeScript", "SQL"],
     description:
       "Piattaforma web completa per discoteche e club: gestione eventi, prenotazione tavoli, liste d'ingresso e interfaccia interattiva.",
@@ -102,13 +96,12 @@ const projects: Project[] = [
       "Afterglow digitalizza l'esperienza dei locali notturni. Il backend in Spring Boot gestisce la disponibilità in tempo reale e le prenotazioni, mentre il frontend Angular offre un'interfaccia dark, accattivante e ottimizzata per smartphone.",
     status: "Quasi completato",
     done: true,
-    accentColor: "from-purple-500/20 to-pink-500/10 border-purple-500/30",
     images: ["/images/afterglow1.png", "/images/afterglow2.png"],
     github: "https://github.com/Walterinho07/Afterglow",
   },
   {
     name: "B&B Booking System",
-    type: "Web App",
+    type: "Web Application",
     stack: ["Angular", "Spring Boot", "TypeScript", "Tailwind CSS"],
     description:
       "Sistema di prenotazione e gestione per strutture ricettive: calendario disponibilità, preventivi istantanei e pannello proprietario.",
@@ -116,13 +109,12 @@ const projects: Project[] = [
       "Soluzione concepita per B&B e case vacanza che desiderano rendersi indipendenti dalle piattaforme di terzi. Include sincronizzazione calendario, gestione camere, notifiche e pannello di controllo completo per i gestori.",
     status: "In sviluppo",
     done: false,
-    accentColor: "from-emerald-500/20 to-teal-500/10 border-emerald-500/30",
     images: ["/images/BBPAGINA1.png", "/images/bbpagina2.png", "/images/bbpagina3.png"],
     github: "https://github.com/Walterinho07/BB-Booking-System",
   },
   {
     name: "Restaurant Booking & Menu",
-    type: "Web App",
+    type: "Web Application",
     stack: ["Angular", "Spring Boot", "TypeScript", "PostgreSQL"],
     description:
       "Piattaforma digitale per ristorazione con menù interattivo, prenotazione tavoli con fasce orarie e gestione comande.",
@@ -130,7 +122,6 @@ const projects: Project[] = [
       "Applicazione web full-stack studiata per ristoranti e pizzerie: riduce i no-show grazie a conferme automatiche e permette ai clienti di consultare allergeni, piatti del giorno e disponibilità tavoli in tempo reale.",
     status: "In sviluppo",
     done: false,
-    accentColor: "from-amber-500/20 to-orange-500/10 border-amber-500/30",
     images: ["/images/BBPAGINA1.png"],
     github: "https://github.com/Walterinho07/Restaurant-Booking",
   },
@@ -139,9 +130,9 @@ const projects: Project[] = [
 const services = [
   {
     icon: Globe,
-    title: "Siti Web & Landing Page Spaziali",
+    title: "Siti Web & Piattaforme Digitali",
     desc: "Siti ad altissime prestazioni, veloci e responsive, curati nel dettaglio visivo per valorizzare la tua presenza online e convertire i visitatori.",
-    highlights: ["Design personalizzato", "SEO & Core Web Vitals", "Micro-interazioni fluide"],
+    highlights: ["Design minimale & rifinito", "SEO & Core Web Vitals", "Interazioni fluide"],
   },
   {
     icon: Code2,
@@ -151,9 +142,9 @@ const services = [
   },
   {
     icon: Calendar,
-    title: "Sistemi di Prenotazione Dedicati",
-    desc: "Booking online indipendente per B&B, locali e ristoranti. Riduci le commissioni di portali terzi e gestisci le disponibilità con semplicità.",
-    highlights: ["Calendari real-time", "Notifiche automatiche", "Pannello di amministrazione"],
+    title: "Sistemi di Prenotazione Indipendenti",
+    desc: "Booking online proprietario per B&B, locali e ristoranti. Riduci le commissioni di portali terzi e gestisci le disponibilità con semplicità.",
+    highlights: ["Calendari real-time", "Notifiche automatiche", "Pannello di controllo"],
   },
   {
     icon: Monitor,
@@ -161,31 +152,32 @@ const services = [
     desc: "Applicativi gestionali nativi, tool di monitoraggio o strumenti specialistici (es. tool OSINT) progettati per girare in locale con massime performance.",
     highlights: [
       "Interfacce JavaFX fluide",
-      "Accesso hardware/file system",
-      "Zero lag e alta reattività",
+      "Accesso hardware locale",
+      "Zero overhead del browser",
     ],
   },
   {
     icon: Wrench,
-    title: "Manutenzione, Supporto & Cloud",
+    title: "Manutenzione & Supporto Tecnico",
     desc: "Risoluzione bug, aggiornamenti periodici, ottimizzazione delle query e deploy su server o cloud. Sono al tuo fianco anche dopo il rilascio.",
-    highlights: ["SLA di intervento rapido", "Backup e sicurezza", "Evolutive su richiesta"],
+    highlights: ["Intervento rapido", "Backup e stabilità", "Sviluppi evolutivi"],
   },
   {
     icon: Briefcase,
-    title: "Consulenza Tecnica & Architettura",
+    title: "Consulenza Architetturale",
     desc: "Ti guido nella scelta dello stack tecnologico corretto evitando errori architetturali costosi prima ancora di scrivere la prima riga di codice.",
-    highlights: ["Analisi di fattibilità", "Scelta dello stack ottimale", "Ottimizzazione costi"],
+    highlights: ["Analisi di fattibilità", "Stack tecnologico ottimale", "Efficienza nei costi"],
   },
 ];
 
 /* =========================================================================
-   1. NAVIGATION BAR (Floating Antigravity Island Dock)
+   1. NAVIGATION BAR (Apple Dynamic Island Style Dock)
    ========================================================================= */
 function Nav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const links = [
+    { href: "#architecture", label: "Architettura" },
     { href: "#about", label: "About" },
     { href: "#projects", label: "Progetti" },
     { href: "#services", label: "Servizi" },
@@ -194,23 +186,20 @@ function Nav() {
   ];
 
   return (
-    <header className="fixed top-4 inset-x-0 z-50 px-4 sm:px-6 pointer-events-none">
-      <div className="mx-auto max-w-5xl rounded-full glass border border-white/10 shadow-[0_15px_35px_rgba(0,0,0,0.5)] px-5 py-2.5 flex items-center justify-between pointer-events-auto backdrop-blur-xl">
-        <a href="#top" className="flex items-center gap-2 font-mono text-sm tracking-tight group">
-          <span className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" />
-          <span className="text-gradient font-bold group-hover:opacity-80 transition">
-            {"<WalterFida/dev>"}
+    <header className="fixed top-5 inset-x-0 z-50 px-4 sm:px-6 pointer-events-none">
+      <div className="mx-auto max-w-4xl rounded-full apple-glass px-5 py-2.5 flex items-center justify-between pointer-events-auto shadow-2xl transition-all">
+        <a href="#top" className="flex items-center gap-2 font-mono text-xs tracking-tight group">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="font-semibold text-white tracking-wide group-hover:text-zinc-300 transition">
+            Walter Fida
           </span>
+          <span className="text-zinc-500 hidden sm:inline">/ developer</span>
         </a>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-6 text-xs lg:text-sm font-medium text-muted-foreground">
+        <nav className="hidden md:flex items-center gap-6 text-xs font-medium text-zinc-400">
           {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="hover:text-foreground hover:text-cyan-300 transition-colors py-1"
-            >
+            <a key={link.href} href={link.href} className="hover:text-white transition-colors py-1">
               {link.label}
             </a>
           ))}
@@ -221,31 +210,31 @@ function Nav() {
           <Button
             asChild
             size="sm"
-            className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_0_20px_var(--primary)] text-xs font-semibold px-4"
+            className="rounded-full bg-white text-zinc-950 hover:bg-zinc-200 text-xs font-medium px-4 h-8 shadow-sm transition"
           >
             <a href="#contact">Contattami</a>
           </Button>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-1.5 rounded-lg text-muted-foreground hover:text-foreground glass"
+            className="md:hidden p-1.5 rounded-lg text-zinc-400 hover:text-white apple-glass"
             aria-label="Toggle menu"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden mt-3 mx-auto max-w-sm rounded-2xl glass-card p-5 border border-white/10 shadow-2xl pointer-events-auto">
-          <nav className="flex flex-col gap-3 font-medium text-sm">
+        <div className="md:hidden mt-3 mx-auto max-w-sm rounded-2xl apple-card p-5 border border-white/10 shadow-2xl pointer-events-auto">
+          <nav className="flex flex-col gap-2.5 font-medium text-sm">
             {links.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-lg hover:bg-white/5 text-muted-foreground hover:text-foreground transition"
+                className="px-3 py-2 rounded-lg hover:bg-white/5 text-zinc-400 hover:text-white transition"
               >
                 {link.label}
               </a>
@@ -258,81 +247,71 @@ function Nav() {
 }
 
 /* =========================================================================
-   2. HERO SECTION (Spatial 2-Column with 3D DevTerminalCard)
+   2. HERO SECTION (Apple Minimal Studio Headline & Subtitle)
    ========================================================================= */
 function Hero() {
   return (
-    <section id="top" className="relative pt-36 sm:pt-44 pb-20 px-6 overflow-hidden">
-      <div className="mx-auto max-w-6xl">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Left Column: Headline, Bio & CTAs */}
-          <div className="lg:col-span-7 flex flex-col items-start">
-            {/* Live Status Pill */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-primary/30 text-xs font-mono text-cyan-300 mb-6 shadow-[0_0_20px_rgba(34,211,238,0.15)] animate-float-slow">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400" />
-              </span>
-              <span>Software & Full-Stack Developer · Calabria, IT</span>
-            </div>
+    <section id="top" className="relative pt-36 sm:pt-44 pb-16 px-6 overflow-hidden">
+      <div className="mx-auto max-w-4xl text-center flex flex-col items-center">
+        {/* Apple Precision Status Capsule */}
+        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full apple-glass text-xs font-mono text-zinc-300 mb-8 border border-white/10 shadow-xl animate-float-slow">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span>Software & Full-Stack Developer</span>
+          <span className="text-zinc-600">·</span>
+          <span className="text-zinc-400">Calabria, IT</span>
+        </div>
 
-            {/* Main Punchy Title */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.08] text-foreground">
-              Trasformo idee in{" "}
-              <span className="text-gradient drop-shadow-sm">software che funziona.</span>
-            </h1>
+        {/* Apple Style Monolithic Headline */}
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.08] max-w-3xl">
+          Codice essenziale. <br />
+          <span className="text-gradient">Software che funziona.</span>
+        </h1>
 
-            {/* Description */}
-            <p className="mt-6 text-base sm:text-xl text-muted-foreground leading-relaxed max-w-2xl">
-              Progetto e sviluppo applicazioni web su misura, architetture backend affidabili in{" "}
-              <span className="text-foreground font-medium">Java & Spring Boot</span>, interfacce
-              moderne e software desktop nativi in{" "}
-              <span className="text-foreground font-medium">JavaFX</span>.
-            </p>
+        {/* Subtitle */}
+        <p className="mt-6 text-base sm:text-xl text-zinc-400 max-w-2xl leading-relaxed">
+          Sviluppo web app ad alte prestazioni, backend robusti in{" "}
+          <span className="text-white font-medium">Java & Spring Boot</span> e applicativi desktop
+          nativi in <span className="text-white font-medium">JavaFX</span>.
+        </p>
 
-            {/* Action Buttons */}
-            <div className="mt-9 flex flex-wrap gap-4 items-center w-full sm:w-auto">
-              <Button
-                asChild
-                size="lg"
-                className="rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 shadow-[var(--shadow-glow)] font-semibold text-sm px-6 h-12"
-              >
-                <a href="#projects" className="flex items-center gap-2">
-                  Esplora i miei progetti <ArrowRight className="h-4 w-4" />
-                </a>
-              </Button>
+        {/* Minimal CTAs */}
+        <div className="mt-8 flex flex-wrap gap-3.5 justify-center">
+          <Button
+            asChild
+            size="lg"
+            className="rounded-full bg-white text-zinc-950 hover:bg-zinc-200 font-medium text-sm px-7 h-11 transition"
+          >
+            <a href="#projects" className="flex items-center gap-2">
+              Esplora i progetti <ArrowRight className="h-4 w-4" />
+            </a>
+          </Button>
 
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="rounded-xl border-white/15 bg-white/5 hover:bg-white/10 text-foreground text-sm px-6 h-12 glass"
-              >
-                <a href="#contact">Parliamo del tuo progetto</a>
-              </Button>
-            </div>
+          <Button
+            asChild
+            size="lg"
+            variant="outline"
+            className="rounded-full apple-glass border-white/10 hover:bg-white/10 text-white font-medium text-sm px-7 h-11 transition"
+          >
+            <a href="#contact">Parliamo del tuo progetto</a>
+          </Button>
+        </div>
 
-            {/* Quick Metrics Bar */}
-            <div className="mt-12 pt-8 border-t border-white/10 grid grid-cols-3 gap-6 w-full max-w-lg font-mono">
-              <div>
-                <p className="text-2xl sm:text-3xl font-bold text-foreground">100%</p>
-                <p className="text-xs text-muted-foreground mt-0.5">Codice Pulito & Manutenibile</p>
-              </div>
-              <div>
-                <p className="text-2xl sm:text-3xl font-bold text-primary">Full-Stack</p>
-                <p className="text-xs text-muted-foreground mt-0.5">Front + Back + Desktop</p>
-              </div>
-              <div>
-                <p className="text-2xl sm:text-3xl font-bold text-emerald-400">Attivo</p>
-                <p className="text-xs text-muted-foreground mt-0.5">Disponibile Subito</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: 3D DevTerminalCard */}
-          <div className="lg:col-span-5 flex justify-center lg:justify-end">
-            <DevTerminalCard />
-          </div>
+        {/* Specifications Bar */}
+        <div className="mt-14 pt-8 border-t border-white/5 flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-zinc-400">
+          <span className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
+            100% Architettura Pulita
+          </span>
+          <span className="text-zinc-700">|</span>
+          <span className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
+            Full-Stack + Desktop Native
+          </span>
+          <span className="text-zinc-700">|</span>
+          <span className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            Disponibilità Immediata
+          </span>
         </div>
       </div>
     </section>
@@ -340,18 +319,29 @@ function Hero() {
 }
 
 /* =========================================================================
-   3. PROJECTS SECTION (Spatial 3D Holo Cards & Gallery Modal)
+   3. ARCHITECTURE SECTION (Deconstructing Terminal on Scroll)
+   ========================================================================= */
+function ArchitectureSection() {
+  return (
+    <section id="architecture" className="relative px-6 py-12 border-t border-white/5">
+      <div className="mx-auto max-w-6xl">
+        <DeconstructingTerminal />
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================================
+   4. PROJECTS SHOWCASE (Apple Pro Minimal Cards)
    ========================================================================= */
 function Projects() {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<Project | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [fullscreenImageIndex, setFullscreenImageIndex] = useState<number | null>(null);
 
   const openProject = (p: Project) => {
     setSelected(p);
     setActiveImageIndex(0);
-    setFullscreenImageIndex(null);
     setOpen(true);
   };
 
@@ -361,65 +351,64 @@ function Projects() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-16">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border border-primary/30 text-xs font-mono text-primary mb-3">
-              <Layers className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full apple-glass text-xs font-mono text-zinc-400 mb-3">
+              <Layers className="w-3.5 h-3.5 text-zinc-300" />
               02 — Showcase Progetti
             </div>
-            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
               Cosa ho <span className="text-gradient">costruito.</span>
             </h2>
           </div>
-          <p className="text-muted-foreground max-w-md text-sm sm:text-base leading-relaxed">
-            Una selezione di progetti reali e tool open source sviluppati con attenzione alle
-            performance, all'architettura e alla user experience.
+          <p className="text-zinc-400 max-w-md text-sm sm:text-base leading-relaxed">
+            Una selezione di progetti completati e in sviluppo: dalle applicazioni desktop per OSINT
+            fino a piattaforme web full-stack.
           </p>
         </div>
 
-        {/* 3D Perspective Cards Grid */}
-        <div className="grid md:grid-cols-2 gap-8">
+        {/* Apple Pro Cards Grid */}
+        <div className="grid md:grid-cols-2 gap-7">
           {projects.map((p) => (
             <article
               key={p.name}
-              className="group relative rounded-3xl glass-card p-6 sm:p-8 transition-all duration-500 hover:-translate-y-2 hover:border-primary/40 hover:shadow-[var(--shadow-glow-lg)] flex flex-col justify-between"
+              className="group relative rounded-3xl apple-card p-7 transition-all duration-500 hover:-translate-y-1.5 hover:border-white/20 flex flex-col justify-between"
             >
-              {/* Card Header */}
               <div>
-                <div className="flex items-start justify-between gap-4 mb-4">
+                <div className="flex items-start justify-between gap-4 mb-3">
                   <div>
-                    <span className="font-mono text-xs uppercase tracking-wider text-primary">
+                    <span className="font-mono text-xs uppercase tracking-wider text-zinc-500">
                       {p.type}
                     </span>
-                    <h3 className="text-2xl sm:text-3xl font-bold tracking-tight mt-1 group-hover:text-cyan-300 transition-colors">
+                    <h3 className="text-2xl font-bold text-white tracking-tight mt-0.5 group-hover:text-zinc-200 transition-colors">
                       {p.name}
                     </h3>
                   </div>
 
-                  {/* Status Badge */}
+                  {/* Status Indicator */}
                   <span
                     className={`inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1 rounded-full border ${
                       p.done
-                        ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
-                        : "border-amber-500/30 bg-amber-500/10 text-amber-300"
+                        ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-400"
+                        : "border-amber-500/20 bg-amber-500/10 text-amber-300"
                     }`}
                   >
                     {p.done ? (
-                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+                      <CheckCircle2 className="h-3.5 w-3.5" />
                     ) : (
-                      <Loader2 className="h-3.5 w-3.5 animate-spin text-amber-400" />
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
                     )}
                     {p.status}
                   </span>
                 </div>
 
-                <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mb-6">
+                <p className="text-zinc-400 text-sm sm:text-base leading-relaxed mb-6">
                   {p.description}
                 </p>
 
-                {/* Image Preview Thumbnail (if exists) */}
+                {/* Screenshot Frame */}
                 {p.images && p.images.length > 0 && (
                   <div
                     onClick={() => openProject(p)}
-                    className="cursor-pointer mb-6 rounded-2xl overflow-hidden border border-white/10 bg-black/40 relative group/img aspect-video"
+                    className="cursor-pointer mb-6 rounded-2xl overflow-hidden border border-white/10 bg-black/60 relative group/img aspect-video"
                   >
                     <img
                       src={p.images[0]}
@@ -428,19 +417,19 @@ function Projects() {
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                      <span className="text-xs font-mono text-cyan-300 flex items-center gap-1">
-                        Clicca per aprire la galleria <ExternalLink className="w-3.5 h-3.5" />
+                      <span className="text-xs font-mono text-zinc-200 flex items-center gap-1">
+                        Vedi galleria screenshot <ExternalLink className="w-3.5 h-3.5" />
                       </span>
                     </div>
                   </div>
                 )}
 
-                {/* Tech Stack Pills */}
+                {/* Tech Pills */}
                 <div className="flex flex-wrap gap-2 mb-6">
                   {p.stack.map((tech) => (
                     <span
                       key={tech}
-                      className="font-mono text-xs px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-slate-300"
+                      className="font-mono text-xs px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-zinc-300"
                     >
                       {tech}
                     </span>
@@ -453,9 +442,9 @@ function Projects() {
                 <button
                   type="button"
                   onClick={() => openProject(p)}
-                  className="font-medium text-primary hover:text-cyan-300 inline-flex items-center gap-1.5 transition-colors group/btn"
+                  className="font-medium text-white hover:text-zinc-300 inline-flex items-center gap-1.5 transition-colors group/btn"
                 >
-                  Dettagli completi
+                  Dettagli progetto
                   <ChevronRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                 </button>
 
@@ -464,10 +453,10 @@ function Projects() {
                     href={p.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 transition-colors font-mono text-xs"
+                    className="text-zinc-400 hover:text-white inline-flex items-center gap-1.5 transition-colors font-mono text-xs"
                   >
                     <Github className="h-4 w-4" />
-                    Sorgente
+                    Codice GitHub
                   </a>
                 )}
               </div>
@@ -475,7 +464,7 @@ function Projects() {
           ))}
         </div>
 
-        {/* Project Details Modal */}
+        {/* Modal Gallery Dialog */}
         <Dialog
           open={open}
           onOpenChange={(val) => {
@@ -483,19 +472,13 @@ function Projects() {
             setOpen(val);
           }}
         >
-          <DialogContent className="max-w-3xl glass-card border border-white/15 bg-slate-950/95 backdrop-blur-2xl text-foreground rounded-3xl p-6 sm:p-8">
+          <DialogContent className="max-w-3xl apple-card border border-white/15 bg-zinc-950/95 backdrop-blur-2xl text-white rounded-3xl p-6 sm:p-8">
             <DialogHeader>
               <div className="flex items-center justify-between gap-4">
-                <span className="font-mono text-xs uppercase tracking-wider text-primary">
+                <span className="font-mono text-xs uppercase tracking-wider text-zinc-400">
                   {selected?.type}
                 </span>
-                <span
-                  className={`inline-flex items-center gap-1 text-xs font-mono px-2.5 py-0.5 rounded-full border ${
-                    selected?.done
-                      ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
-                      : "border-amber-500/30 bg-amber-500/10 text-amber-300"
-                  }`}
-                >
+                <span className="text-xs font-mono px-2.5 py-0.5 rounded-full border border-white/15 bg-white/5 text-zinc-300">
                   {selected?.status}
                 </span>
               </div>
@@ -504,22 +487,21 @@ function Projects() {
               </DialogTitle>
             </DialogHeader>
 
-            <DialogDescription className="text-muted-foreground text-sm sm:text-base leading-relaxed mt-2">
+            <DialogDescription className="text-zinc-400 text-sm sm:text-base leading-relaxed mt-2">
               {selected?.longDescription || selected?.description}
             </DialogDescription>
 
-            {/* Screenshots Gallery */}
+            {/* Screenshots */}
             {selected?.images && selected.images.length > 0 && (
               <div className="mt-6 space-y-3">
                 <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/60">
                   <img
                     src={selected.images[activeImageIndex]}
                     alt={`${selected.name} preview`}
-                    className="w-full h-auto max-h-[400px] object-contain mx-auto"
+                    className="w-full h-auto max-h-[380px] object-contain mx-auto"
                   />
                 </div>
 
-                {/* Thumbnails */}
                 {selected.images.length > 1 && (
                   <div className="flex gap-2.5 overflow-x-auto pb-1">
                     {selected.images.map((src, idx) => (
@@ -529,8 +511,8 @@ function Projects() {
                         onClick={() => setActiveImageIndex(idx)}
                         className={`rounded-xl overflow-hidden border p-0 w-24 h-16 shrink-0 transition ${
                           idx === activeImageIndex
-                            ? "border-primary ring-2 ring-primary/30"
-                            : "border-white/10 opacity-60 hover:opacity-100"
+                            ? "border-white ring-2 ring-white/20"
+                            : "border-white/10 opacity-50 hover:opacity-100"
                         }`}
                       >
                         <img src={src} alt="thumbnail" className="w-full h-full object-cover" />
@@ -541,13 +523,13 @@ function Projects() {
               </div>
             )}
 
-            {/* Stack list & GitHub in Modal */}
+            {/* Modal Bottom Footer */}
             <div className="mt-6 pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
               <div className="flex flex-wrap gap-1.5">
                 {selected?.stack.map((s) => (
                   <span
                     key={s}
-                    className="font-mono text-xs px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-slate-300"
+                    className="font-mono text-xs px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-zinc-300"
                   >
                     {s}
                   </span>
@@ -559,7 +541,7 @@ function Projects() {
                   asChild
                   size="sm"
                   variant="outline"
-                  className="rounded-xl border-white/15 glass hover:bg-white/10"
+                  className="rounded-xl apple-glass border-white/15 hover:bg-white/10"
                 >
                   <a
                     href={selected.github}
@@ -580,23 +562,23 @@ function Projects() {
 }
 
 /* =========================================================================
-   4. SERVICES SECTION (Modular Antigravity Cards)
+   5. SERVICES & CAPABILITIES
    ========================================================================= */
 function Services() {
   return (
     <section id="services" className="relative px-6 py-28 border-t border-white/5">
       <div className="mx-auto max-w-6xl">
         <div className="mb-16 max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border border-primary/30 text-xs font-mono text-primary mb-3">
-            <Sparkles className="w-3.5 h-3.5" />
-            03 — Servizi per il tuo Business
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full apple-glass text-xs font-mono text-zinc-400 mb-3">
+            <Sparkles className="w-3.5 h-3.5 text-zinc-300" />
+            03 — Servizi & Competenze
           </div>
-          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight">
-            Soluzioni ingegnerizzate per <span className="text-gradient">crescere.</span>
+          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
+            Soluzioni progettate per <span className="text-gradient">durare.</span>
           </h2>
-          <p className="mt-4 text-muted-foreground text-sm sm:text-base leading-relaxed">
-            Dalla digitalizzazione di attività locali calabresi fino a piattaforme scalabili su
-            misura: costruisco software stabile, veloce e senza dipendenze fragili.
+          <p className="mt-4 text-zinc-400 text-sm sm:text-base leading-relaxed">
+            Dalla digitalizzazione di attività locali fino ad architetture scalabili: sviluppo
+            software stabile, veloce e senza dipendenze fragili.
           </p>
         </div>
 
@@ -604,23 +586,20 @@ function Services() {
           {services.map((s) => (
             <div
               key={s.title}
-              className="rounded-3xl glass-card p-7 transition-all duration-300 hover:border-primary/40 hover:-translate-y-1.5 flex flex-col justify-between group"
+              className="rounded-3xl apple-card p-7 transition-all duration-300 hover:border-white/20 hover:-translate-y-1 flex flex-col justify-between group"
             >
               <div>
-                <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/25 text-primary flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-primary/20 transition-transform">
-                  <s.icon className="h-6 w-6" />
+                <div className="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 text-zinc-200 flex items-center justify-center mb-5 group-hover:bg-white/10 transition-colors">
+                  <s.icon className="h-5 w-5" />
                 </div>
-                <h3 className="font-bold text-lg sm:text-xl mb-3 text-foreground group-hover:text-cyan-300 transition-colors">
-                  {s.title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-6">{s.desc}</p>
+                <h3 className="font-bold text-lg mb-2.5 text-white">{s.title}</h3>
+                <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6">{s.desc}</p>
               </div>
 
-              {/* Highlights pills */}
               <div className="pt-4 border-t border-white/5 space-y-1.5">
                 {s.highlights.map((h) => (
-                  <div key={h} className="flex items-center gap-2 text-xs font-mono text-slate-300">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  <div key={h} className="flex items-center gap-2 text-xs font-mono text-zinc-300">
+                    <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
                     <span>{h}</span>
                   </div>
                 ))}
@@ -634,7 +613,7 @@ function Services() {
 }
 
 /* =========================================================================
-   5. CONTACT SECTION (Interactive Glass Communication Hub)
+   6. CONTACT SECTION (Apple Minimal Communication Hub)
    ========================================================================= */
 function Contact() {
   const [sending, setSending] = useState(false);
@@ -645,7 +624,7 @@ function Contact() {
     setSending(true);
     setTimeout(() => {
       setSending(false);
-      toast.success("Messaggio inviato con successo! Ti ricontatterò entro 24 ore.");
+      toast.success("Messaggio inviato con successo! Ti risponderò entro 24 ore.");
       (e.target as HTMLFormElement).reset();
     }, 800);
   };
@@ -680,7 +659,7 @@ function Contact() {
     },
     {
       icon: Github,
-      label: "GitHub Profile",
+      label: "GitHub",
       value: "@Walterinho07",
       href: "https://github.com/Walterinho07",
     },
@@ -692,38 +671,37 @@ function Contact() {
         <div className="grid lg:grid-cols-12 gap-12 items-start">
           {/* Left Column: Direct channels */}
           <div className="lg:col-span-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border border-primary/30 text-xs font-mono text-primary mb-3">
-              <Mail className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full apple-glass text-xs font-mono text-zinc-400 mb-3">
+              <Mail className="w-3.5 h-3.5 text-zinc-300" />
               04 — Iniziamo a Collaborare
             </div>
-            <h2 className="text-4xl sm:text-6xl font-bold tracking-tight">
+            <h2 className="text-4xl sm:text-6xl font-bold tracking-tight text-white">
               Hai un progetto? <br />
-              <span className="text-gradient">Realizziamolo.</span>
+              <span className="text-gradient">Parliamone.</span>
             </h2>
-            <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed max-w-md">
-              Che si tratti di un gestionale desktop, di un booking system per la tua attività o di
-              una nuova web app, scrivimi per una prima consulenza gratuita.
+            <p className="mt-4 text-base sm:text-lg text-zinc-400 leading-relaxed max-w-md">
+              Che si tratti di un gestionale desktop, di un sistema di prenotazione o di una nuova
+              web app, scrivimi per una prima valutazione senza impegno.
             </p>
 
-            {/* Communication Cards */}
-            <div className="mt-10 space-y-3.5 max-w-md">
+            <div className="mt-10 space-y-3 max-w-md">
               {channels.map((c) => (
                 <div
                   key={c.label}
-                  className="group flex items-center justify-between gap-4 rounded-2xl glass-card p-4 hover:border-primary/40 transition-colors"
+                  className="group flex items-center justify-between gap-4 rounded-2xl apple-card p-4 hover:border-white/20 transition-all"
                 >
                   <a
                     href={c.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-4 min-w-0 flex-1"
+                    className="flex items-center gap-3.5 min-w-0 flex-1"
                   >
-                    <div className="w-11 h-11 rounded-xl bg-primary/10 border border-primary/20 text-primary flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-zinc-200 flex items-center justify-center shrink-0">
                       <c.icon className="h-5 w-5" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-xs font-mono text-muted-foreground">{c.label}</p>
-                      <p className="font-semibold text-sm truncate text-foreground group-hover:text-cyan-300 transition-colors">
+                      <p className="text-xs font-mono text-zinc-500">{c.label}</p>
+                      <p className="font-semibold text-sm truncate text-white group-hover:text-zinc-300 transition-colors">
                         {c.value}
                       </p>
                     </div>
@@ -734,7 +712,7 @@ function Contact() {
                       type="button"
                       onClick={() => copyToClipboard(c.copyValue!, c.label)}
                       title="Copia negli appunti"
-                      className="p-2 rounded-lg hover:bg-white/10 text-muted-foreground hover:text-foreground transition"
+                      className="p-2 rounded-lg hover:bg-white/10 text-zinc-400 hover:text-white transition"
                     >
                       {copiedChannel === c.label ? (
                         <Check className="w-4 h-4 text-emerald-400" />
@@ -743,7 +721,7 @@ function Contact() {
                       )}
                     </button>
                   ) : (
-                    <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors shrink-0 mr-2" />
+                    <ArrowRight className="h-4 w-4 text-zinc-500 group-hover:text-white transition-colors shrink-0 mr-2" />
                   )}
                 </div>
               ))}
@@ -754,30 +732,30 @@ function Contact() {
           <div className="lg:col-span-6">
             <form
               onSubmit={onSubmit}
-              className="rounded-3xl glass-card p-7 sm:p-9 border border-white/15 relative overflow-hidden"
+              className="rounded-3xl apple-card p-7 sm:p-9 border border-white/10 shadow-2xl"
             >
-              <div className="absolute top-0 right-0 w-48 h-48 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-
-              <h3 className="text-xl sm:text-2xl font-bold mb-2">Invia un messaggio diretto</h3>
-              <p className="text-sm text-muted-foreground mb-6">
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
+                Invia un messaggio diretto
+              </h3>
+              <p className="text-sm text-zinc-400 mb-6">
                 Compila i campi qui sotto. Rispondo rapidamente a ogni richiesta.
               </p>
 
               <div className="space-y-4">
                 <div>
-                  <label className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                  <label className="font-mono text-xs uppercase tracking-wider text-zinc-400">
                     Nome o Azienda
                   </label>
                   <Input
                     required
                     name="name"
-                    placeholder="Es. Mario Rossi"
-                    className="mt-2 rounded-xl bg-black/40 border-white/10 focus-visible:ring-primary h-11"
+                    placeholder="Mario Rossi"
+                    className="mt-2 rounded-xl bg-white/[0.03] border-white/10 focus-visible:ring-white/20 h-11 text-white placeholder:text-zinc-600"
                   />
                 </div>
 
                 <div>
-                  <label className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                  <label className="font-mono text-xs uppercase tracking-wider text-zinc-400">
                     Indirizzo Email
                   </label>
                   <Input
@@ -785,12 +763,12 @@ function Contact() {
                     type="email"
                     name="email"
                     placeholder="mario@azienda.it"
-                    className="mt-2 rounded-xl bg-black/40 border-white/10 focus-visible:ring-primary h-11"
+                    className="mt-2 rounded-xl bg-white/[0.03] border-white/10 focus-visible:ring-white/20 h-11 text-white placeholder:text-zinc-600"
                   />
                 </div>
 
                 <div>
-                  <label className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                  <label className="font-mono text-xs uppercase tracking-wider text-zinc-400">
                     Dettagli del Progetto
                   </label>
                   <Textarea
@@ -798,14 +776,14 @@ function Contact() {
                     name="message"
                     rows={4}
                     placeholder="Descrivi brevemente l'idea, le tempistiche o gli obiettivi del software..."
-                    className="mt-2 rounded-xl bg-black/40 border-white/10 focus-visible:ring-primary resize-none"
+                    className="mt-2 rounded-xl bg-white/[0.03] border-white/10 focus-visible:ring-white/20 resize-none text-white placeholder:text-zinc-600"
                   />
                 </div>
 
                 <Button
                   type="submit"
                   disabled={sending}
-                  className="w-full rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 h-12 shadow-[var(--shadow-glow)] font-semibold mt-2"
+                  className="w-full rounded-xl bg-white text-zinc-950 hover:bg-zinc-200 h-12 font-medium mt-2 transition"
                 >
                   {sending ? (
                     <span className="flex items-center gap-2">
@@ -827,14 +805,14 @@ function Contact() {
 }
 
 /* =========================================================================
-   6. FOOTER
+   7. FOOTER
    ========================================================================= */
 function Footer() {
   return (
     <footer className="relative px-6 py-12 border-t border-white/5">
-      <div className="mx-auto max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-6 text-xs font-mono text-muted-foreground">
+      <div className="mx-auto max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-6 text-xs font-mono text-zinc-500">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
           <span>© {new Date().getFullYear()} Walter Fida · Software & Full-Stack Developer</span>
         </div>
 
@@ -843,7 +821,7 @@ function Footer() {
             href="https://github.com/Walterinho07"
             target="_blank"
             rel="noreferrer"
-            className="hover:text-foreground transition"
+            className="hover:text-white transition"
           >
             GitHub
           </a>
@@ -851,11 +829,11 @@ function Footer() {
             href="https://www.linkedin.com/in/walter-fida-a7749b1bb/"
             target="_blank"
             rel="noreferrer"
-            className="hover:text-foreground transition"
+            className="hover:text-white transition"
           >
             LinkedIn
           </a>
-          <a href="#top" className="text-primary hover:underline">
+          <a href="#top" className="text-white hover:underline">
             Torna in cima ↑
           </a>
         </div>
@@ -869,16 +847,17 @@ function Footer() {
    ========================================================================= */
 export default function Index() {
   return (
-    <div className="relative min-h-screen bg-background text-foreground selection:bg-primary/30 selection:text-primary-foreground">
-      {/* Zero-G Antigravity Ambient Canvas */}
+    <div className="relative min-h-screen bg-[#0a0a0c] text-white selection:bg-white/20 selection:text-white">
+      {/* Floating Lenses & Ambient Apple Space */}
       <AntigravityBackground />
 
-      {/* Floating Island Dock Navigation */}
+      {/* Apple Dynamic Island Floating Navigation */}
       <Nav />
 
       {/* Page Sections */}
       <main>
         <Hero />
+        <ArchitectureSection />
         <BentoAbout />
         <Projects />
         <Services />
@@ -886,7 +865,7 @@ export default function Index() {
         <Contact />
       </main>
 
-      {/* Developer Footer */}
+      {/* Minimal Footer */}
       <Footer />
     </div>
   );
