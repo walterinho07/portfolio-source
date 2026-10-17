@@ -377,7 +377,7 @@ function getSerializedResponseState() {
 }
 var HEADERS = { TSS_SHELL: "X-TSS_SHELL" };
 async function getStartManifest(matchedRoutes) {
-  const { tsrStartManifest } = await import("./_tanstack-start-manifest_v-D7QHfm0g.js");
+  const { tsrStartManifest } = await import("./_tanstack-start-manifest_v-huanpqV_.js");
   const startManifest = tsrStartManifest();
   let routes = startManifest.routes;
   routes[rootRouteId];
@@ -402,7 +402,7 @@ async function getServerFnById(id, access) {
   if (!serverFnInfo) {
     throw new Error("Server function info not found for " + id);
   }
-  const fnModule = serverFnInfo.module ?? await serverFnInfo.importer();
+  const fnModule = serverFnInfo.module ??= await serverFnInfo.importer();
   if (!fnModule) {
     throw new Error("Server function module not resolved for " + id);
   }
