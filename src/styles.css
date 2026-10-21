@@ -218,12 +218,29 @@
   perspective: 1000px;
 }
 
+@utility perspective-1200 {
+  perspective: 1200px;
+}
+
 @utility perspective-1400 {
   perspective: 1400px;
 }
 
 @utility transform-style-3d {
   transform-style: preserve-3d;
+}
+
+@keyframes radar-sweep {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-radar-sweep {
+  animation: radar-sweep 8s linear infinite;
 }
 
 @keyframes apple-float-slow {

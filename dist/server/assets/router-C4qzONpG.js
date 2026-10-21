@@ -4,13 +4,13 @@ import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { Toaster as Toaster$1, toast } from "sonner";
 import * as React from "react";
 import { useState, useRef, useEffect } from "react";
-import { X, Minimize2, Maximize2, FileCode2, Layers, Terminal, Check, Copy, ArrowDown, Server, Shield, TerminalSquare, Code2, Sparkles, CheckCircle, Activity, Monitor, MapPin, Zap, ShieldCheck, HelpCircle, ChevronDown, Menu, ArrowRight, CheckCircle2, Loader2, ExternalLink, ChevronRight, Github, Globe, Calendar, Wrench, Briefcase, Mail, MessageCircle, Linkedin } from "lucide-react";
+import { X, Minimize2, Maximize2, FileCode2, Layers, Terminal, Check, Copy, ArrowDown, Server, Shield, TerminalSquare, Code2, Sparkles, CheckCircle, Activity, Monitor, MapPin, Zap, ShieldCheck, HelpCircle, ChevronDown, Menu, ArrowRight, Github, Globe, Calendar, Wrench, Briefcase, Mail, MessageCircle, Linkedin, Loader2, CheckCircle2, ExternalLink, ChevronRight } from "lucide-react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-const appCss = "/assets/styles-DVME4ARo.css";
+const appCss = "/assets/styles-BD7Ryr5s.css";
 const Toaster = ({ ...props }) => {
   return /* @__PURE__ */ jsx(
     Toaster$1,
@@ -1104,11 +1104,7 @@ const services = [
     icon: Monitor,
     title: "Software Desktop in Java & JavaFX",
     desc: "Applicativi gestionali nativi, tool di monitoraggio o strumenti specialistici (es. tool OSINT) progettati per girare in locale con massime performance.",
-    highlights: [
-      "Interfacce JavaFX fluide",
-      "Accesso hardware locale",
-      "Zero overhead del browser"
-    ]
+    highlights: ["Interfacce JavaFX fluide", "Accesso hardware locale", "Zero overhead del browser"]
   },
   {
     icon: Wrench,
@@ -1125,6 +1121,17 @@ const services = [
 ];
 function Nav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        setScrollProgress(window.scrollY / totalHeight * 100);
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   const links = [
     { href: "#architecture", label: "Architettura" },
     { href: "#about", label: "About" },
@@ -1133,21 +1140,42 @@ function Nav() {
     { href: "#faq", label: "FAQ" },
     { href: "#contact", label: "Contatti" }
   ];
-  return /* @__PURE__ */ jsxs("header", { className: "fixed top-3 sm:top-5 inset-x-0 z-50 px-3 sm:px-6 pointer-events-none", children: [
-    /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-4xl rounded-full bg-[#0a0a0c]/85 backdrop-blur-2xl border border-white/12 px-5 py-2.5 flex items-center justify-between pointer-events-auto shadow-[0_12px_35px_rgba(0,0,0,0.8)] transition-all", children: [
-      /* @__PURE__ */ jsxs("a", { href: "#top", className: "flex items-center gap-2 font-mono text-xs tracking-tight group", children: [
-        /* @__PURE__ */ jsx("span", { className: "w-2 h-2 rounded-full bg-emerald-400 animate-pulse" }),
-        /* @__PURE__ */ jsx("span", { className: "font-semibold text-white tracking-wide group-hover:text-zinc-300 transition", children: "Walter Fida" }),
-        /* @__PURE__ */ jsx("span", { className: "text-zinc-500 hidden sm:inline", children: "/ developer" })
+  return /* @__PURE__ */ jsxs("header", { className: "sticky top-0 inset-x-0 z-50 w-full bg-[#0a0a0c]/90 backdrop-blur-3xl border-b border-white/10 shadow-2xl transition-all", children: [
+    /* @__PURE__ */ jsx(
+      "div",
+      {
+        className: "absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-sky-400 via-indigo-400 to-emerald-400 transition-all duration-150 ease-out z-10",
+        style: { width: `${scrollProgress}%` }
+      }
+    ),
+    /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-6xl px-6 h-16 sm:h-20 flex items-center justify-between", children: [
+      /* @__PURE__ */ jsxs("a", { href: "#top", className: "flex items-center gap-2.5 font-mono text-sm tracking-tight group", children: [
+        /* @__PURE__ */ jsxs("span", { className: "relative flex h-2.5 w-2.5", children: [
+          /* @__PURE__ */ jsx("span", { className: "animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" }),
+          /* @__PURE__ */ jsx("span", { className: "relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400" })
+        ] }),
+        /* @__PURE__ */ jsx("span", { className: "font-bold text-white tracking-wide group-hover:text-zinc-300 transition", children: "Walter Fida" }),
+        /* @__PURE__ */ jsx("span", { className: "text-zinc-500 font-mono text-xs hidden sm:inline", children: "<dev/>" })
       ] }),
-      /* @__PURE__ */ jsx("nav", { className: "hidden md:flex items-center gap-6 text-xs font-medium text-zinc-400", children: links.map((link) => /* @__PURE__ */ jsx("a", { href: link.href, className: "hover:text-white transition-colors py-1", children: link.label }, link.href)) }),
+      /* @__PURE__ */ jsx("nav", { className: "hidden md:flex items-center gap-8 text-xs lg:text-sm font-medium text-zinc-400", children: links.map((link) => /* @__PURE__ */ jsxs(
+        "a",
+        {
+          href: link.href,
+          className: "hover:text-white transition-colors py-1 relative group",
+          children: [
+            link.label,
+            /* @__PURE__ */ jsx("span", { className: "absolute bottom-0 left-0 w-0 h-[1.5px] bg-white group-hover:w-full transition-all duration-300" })
+          ]
+        },
+        link.href
+      )) }),
       /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
         /* @__PURE__ */ jsx(
           Button,
           {
             asChild: true,
             size: "sm",
-            className: "rounded-full bg-white text-zinc-950 hover:bg-zinc-200 text-xs font-medium px-4 h-8 shadow-sm transition active:scale-95",
+            className: "rounded-full bg-white text-zinc-950 hover:bg-zinc-200 text-xs font-semibold px-5 h-9 shadow-sm transition active:scale-95",
             children: /* @__PURE__ */ jsx("a", { href: "#contact", children: "Contattami" })
           }
         ),
@@ -1155,14 +1183,14 @@ function Nav() {
           "button",
           {
             onClick: () => setMobileMenuOpen(!mobileMenuOpen),
-            className: "md:hidden p-1.5 rounded-lg text-zinc-400 hover:text-white apple-glass",
+            className: "md:hidden p-2 rounded-xl text-zinc-400 hover:text-white bg-white/5 border border-white/10",
             "aria-label": "Toggle menu",
-            children: mobileMenuOpen ? /* @__PURE__ */ jsx(X, { className: "w-4 h-4" }) : /* @__PURE__ */ jsx(Menu, { className: "w-4 h-4" })
+            children: mobileMenuOpen ? /* @__PURE__ */ jsx(X, { className: "w-5 h-5" }) : /* @__PURE__ */ jsx(Menu, { className: "w-5 h-5" })
           }
         )
       ] })
     ] }),
-    mobileMenuOpen && /* @__PURE__ */ jsx("div", { className: "md:hidden mt-2 mx-auto max-w-sm rounded-3xl bg-[#101014]/95 backdrop-blur-3xl p-5 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.9)] pointer-events-auto", children: /* @__PURE__ */ jsx("nav", { className: "flex flex-col gap-2 font-medium text-sm", children: links.map((link) => /* @__PURE__ */ jsx(
+    mobileMenuOpen && /* @__PURE__ */ jsx("div", { className: "md:hidden border-t border-white/10 bg-[#0c0c10]/95 backdrop-blur-3xl px-6 py-4 shadow-2xl", children: /* @__PURE__ */ jsx("nav", { className: "flex flex-col gap-2 font-medium text-sm", children: links.map((link) => /* @__PURE__ */ jsx(
       "a",
       {
         href: link.href,
@@ -1175,7 +1203,7 @@ function Nav() {
   ] });
 }
 function Hero() {
-  return /* @__PURE__ */ jsx("section", { id: "top", className: "relative pt-36 sm:pt-48 pb-16 px-6 overflow-hidden scroll-mt-28", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-4xl text-center flex flex-col items-center", children: [
+  return /* @__PURE__ */ jsx("section", { id: "top", className: "relative pt-16 sm:pt-24 pb-20 px-6 overflow-hidden scroll-mt-28", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-4xl text-center flex flex-col items-center", children: [
     /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full apple-glass text-xs font-mono text-zinc-300 mb-8 border border-white/10 shadow-xl animate-float-slow", children: [
       /* @__PURE__ */ jsx("span", { className: "w-2 h-2 rounded-full bg-emerald-400 animate-pulse" }),
       /* @__PURE__ */ jsx("span", { children: "Software & Full-Stack Developer" }),
@@ -1240,218 +1268,241 @@ function Hero() {
 function ArchitectureSection() {
   return /* @__PURE__ */ jsx("section", { id: "architecture", className: "relative px-6 py-12 border-t border-white/5 scroll-mt-28", children: /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-6xl", children: /* @__PURE__ */ jsx(DeconstructingTerminal, {}) }) });
 }
-function Projects() {
-  const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(null);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [isRevealed, setIsRevealed] = useState(false);
-  const sectionRef = useRef(null);
+function ScrollProjectCard({
+  project,
+  index,
+  total,
+  onOpen
+}) {
+  const cardRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsRevealed(true);
+          setIsVisible(true);
         }
       },
-      { threshold: 0.1 }
+      {
+        threshold: 0.15,
+        // Only triggers when this specific card enters the viewport!
+        rootMargin: "0px 0px -40px 0px"
+      }
     );
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
     }
     return () => observer.disconnect();
   }, []);
+  return /* @__PURE__ */ jsxs(
+    "article",
+    {
+      ref: cardRef,
+      className: `group relative rounded-3xl apple-card p-7 sm:p-8 transition-all duration-1000 cubic-bezier(0.16, 1, 0.3, 1) flex flex-col justify-between hover:border-white/35 hover:-translate-y-2 shadow-2xl ${isVisible ? "opacity-100 translate-y-0 scale-100 blur-none" : "opacity-0 translate-y-24 scale-[0.93] blur-sm"}`,
+      children: [
+        /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between gap-4 mb-4", children: [
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 mb-1", children: [
+                /* @__PURE__ */ jsxs("span", { className: "font-mono text-xs text-sky-400 font-semibold tracking-wider", children: [
+                  "[",
+                  `0${index + 1}`,
+                  " / ",
+                  `0${total}`,
+                  "]"
+                ] }),
+                /* @__PURE__ */ jsx("span", { className: "text-zinc-600", children: "·" }),
+                /* @__PURE__ */ jsx("span", { className: "font-mono text-xs uppercase tracking-wider text-zinc-400", children: project.type })
+              ] }),
+              /* @__PURE__ */ jsx("h3", { className: "text-2xl sm:text-3xl font-bold text-white tracking-tight group-hover:text-zinc-200 transition-colors", children: project.name })
+            ] }),
+            /* @__PURE__ */ jsxs(
+              "span",
+              {
+                className: `inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1 rounded-full border ${project.done ? "border-emerald-500/25 bg-emerald-500/10 text-emerald-400" : "border-amber-500/25 bg-amber-500/10 text-amber-300"}`,
+                children: [
+                  project.done ? /* @__PURE__ */ jsx(CheckCircle2, { className: "h-3.5 w-3.5" }) : /* @__PURE__ */ jsx(Loader2, { className: "h-3.5 w-3.5 animate-spin" }),
+                  project.status
+                ]
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsx("p", { className: "text-zinc-400 text-sm sm:text-base leading-relaxed mb-6", children: project.description }),
+          project.images && project.images.length > 0 && /* @__PURE__ */ jsxs(
+            "div",
+            {
+              onClick: () => onOpen(project),
+              className: "cursor-pointer mb-6 rounded-2xl overflow-hidden border border-white/10 bg-black/60 relative group/img aspect-video",
+              children: [
+                /* @__PURE__ */ jsx(
+                  "img",
+                  {
+                    src: project.images[0],
+                    alt: project.name,
+                    className: "w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-105",
+                    loading: "lazy"
+                  }
+                ),
+                /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-end p-4", children: /* @__PURE__ */ jsxs("span", { className: "text-xs font-mono text-zinc-200 flex items-center gap-1.5 bg-black/70 px-3.5 py-1.5 rounded-full border border-white/20 backdrop-blur-md shadow-lg", children: [
+                  "Esplora screenshot ",
+                  /* @__PURE__ */ jsx(ExternalLink, { className: "w-3.5 h-3.5" })
+                ] }) })
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-6", children: project.stack.map((tech) => /* @__PURE__ */ jsx(
+            "span",
+            {
+              className: "font-mono text-xs px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-zinc-300 group-hover:border-white/25 transition-colors",
+              children: tech
+            },
+            tech
+          )) })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "pt-5 border-t border-white/10 flex items-center justify-between text-sm", children: [
+          /* @__PURE__ */ jsxs(
+            "button",
+            {
+              type: "button",
+              onClick: () => onOpen(project),
+              className: "font-medium text-white hover:text-zinc-300 inline-flex items-center gap-1.5 transition-colors group/btn cursor-pointer",
+              children: [
+                "Dettagli progetto",
+                /* @__PURE__ */ jsx(ChevronRight, { className: "h-4 w-4 transition-transform group-hover/btn:translate-x-1" })
+              ]
+            }
+          ),
+          project.github && /* @__PURE__ */ jsxs(
+            "a",
+            {
+              href: project.github,
+              target: "_blank",
+              rel: "noreferrer",
+              className: "text-zinc-400 hover:text-white inline-flex items-center gap-1.5 transition-colors font-mono text-xs",
+              children: [
+                /* @__PURE__ */ jsx(Github, { className: "h-4 w-4" }),
+                "Codice GitHub"
+              ]
+            }
+          )
+        ] })
+      ]
+    }
+  );
+}
+function Projects() {
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
   const openProject = (p) => {
     setSelected(p);
     setActiveImageIndex(0);
     setOpen(true);
   };
-  return /* @__PURE__ */ jsx(
-    "section",
-    {
-      id: "projects",
-      ref: sectionRef,
-      className: "relative px-6 py-28 border-t border-white/5 scroll-mt-28",
-      children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-6xl", children: [
-        /* @__PURE__ */ jsxs(
-          "div",
-          {
-            className: `flex flex-col md:flex-row md:items-end justify-between gap-4 mb-16 transition-all duration-700 ease-out ${isRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`,
-            children: [
-              /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full apple-glass text-xs font-mono text-zinc-400 mb-3", children: [
-                  /* @__PURE__ */ jsx(Layers, { className: "w-3.5 h-3.5 text-zinc-300" }),
-                  "02 — Showcase Progetti"
-                ] }),
-                /* @__PURE__ */ jsxs("h2", { className: "text-3xl sm:text-5xl font-bold tracking-tight text-white", children: [
-                  "Cosa ho ",
-                  /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "costruito." })
-                ] })
-              ] }),
-              /* @__PURE__ */ jsx("p", { className: "text-zinc-400 max-w-md text-sm sm:text-base leading-relaxed", children: "Una selezione di progetti reali sviluppati con cura per architettura, velocità e design. Compaiono progressivamente durante lo scorrimento." })
-            ]
-          }
-        ),
-        /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 gap-7", children: projects.map((p, idx) => /* @__PURE__ */ jsxs(
-          "article",
-          {
-            className: `group relative rounded-3xl apple-card p-7 transition-all duration-700 ease-out flex flex-col justify-between hover:border-white/30 hover:-translate-y-2 shadow-xl ${isRevealed ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-16 scale-[0.97]"}`,
-            style: { transitionDelay: `${idx * 140}ms` },
-            children: [
-              /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between gap-4 mb-3", children: [
-                  /* @__PURE__ */ jsxs("div", { children: [
-                    /* @__PURE__ */ jsx("span", { className: "font-mono text-xs uppercase tracking-wider text-zinc-500", children: p.type }),
-                    /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white tracking-tight mt-0.5 group-hover:text-zinc-200 transition-colors", children: p.name })
-                  ] }),
-                  /* @__PURE__ */ jsxs(
-                    "span",
-                    {
-                      className: `inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1 rounded-full border ${p.done ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-400" : "border-amber-500/20 bg-amber-500/10 text-amber-300"}`,
-                      children: [
-                        p.done ? /* @__PURE__ */ jsx(CheckCircle2, { className: "h-3.5 w-3.5" }) : /* @__PURE__ */ jsx(Loader2, { className: "h-3.5 w-3.5 animate-spin" }),
-                        p.status
-                      ]
-                    }
-                  )
-                ] }),
-                /* @__PURE__ */ jsx("p", { className: "text-zinc-400 text-sm sm:text-base leading-relaxed mb-6", children: p.description }),
-                p.images && p.images.length > 0 && /* @__PURE__ */ jsxs(
-                  "div",
-                  {
-                    onClick: () => openProject(p),
-                    className: "cursor-pointer mb-6 rounded-2xl overflow-hidden border border-white/10 bg-black/60 relative group/img aspect-video",
-                    children: [
-                      /* @__PURE__ */ jsx(
-                        "img",
-                        {
-                          src: p.images[0],
-                          alt: p.name,
-                          className: "w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-105",
-                          loading: "lazy"
-                        }
-                      ),
-                      /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-end p-4", children: /* @__PURE__ */ jsxs("span", { className: "text-xs font-mono text-zinc-200 flex items-center gap-1.5 bg-black/60 px-3 py-1.5 rounded-full border border-white/15 backdrop-blur-sm", children: [
-                        "Vedi galleria screenshot ",
-                        /* @__PURE__ */ jsx(ExternalLink, { className: "w-3.5 h-3.5" })
-                      ] }) })
-                    ]
-                  }
-                ),
-                /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-6", children: p.stack.map((tech) => /* @__PURE__ */ jsx(
-                  "span",
-                  {
-                    className: "font-mono text-xs px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-zinc-300 group-hover:border-white/20 transition-colors",
-                    children: tech
-                  },
-                  tech
-                )) })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { className: "pt-4 border-t border-white/10 flex items-center justify-between text-sm", children: [
-                /* @__PURE__ */ jsxs(
-                  "button",
-                  {
-                    type: "button",
-                    onClick: () => openProject(p),
-                    className: "font-medium text-white hover:text-zinc-300 inline-flex items-center gap-1.5 transition-colors group/btn",
-                    children: [
-                      "Dettagli progetto",
-                      /* @__PURE__ */ jsx(ChevronRight, { className: "h-4 w-4 transition-transform group-hover/btn:translate-x-1" })
-                    ]
-                  }
-                ),
-                p.github && /* @__PURE__ */ jsxs(
-                  "a",
-                  {
-                    href: p.github,
-                    target: "_blank",
-                    rel: "noreferrer",
-                    className: "text-zinc-400 hover:text-white inline-flex items-center gap-1.5 transition-colors font-mono text-xs",
-                    children: [
-                      /* @__PURE__ */ jsx(Github, { className: "h-4 w-4" }),
-                      "Codice GitHub"
-                    ]
-                  }
-                )
-              ] })
-            ]
-          },
-          p.name
-        )) }),
-        /* @__PURE__ */ jsx(
-          Dialog,
-          {
-            open,
-            onOpenChange: (val) => {
-              if (!val) setSelected(null);
-              setOpen(val);
-            },
-            children: /* @__PURE__ */ jsxs(DialogContent, { className: "max-w-3xl apple-card border border-white/15 bg-zinc-950/95 backdrop-blur-2xl text-white rounded-3xl p-6 sm:p-8", children: [
-              /* @__PURE__ */ jsxs(DialogHeader, { children: [
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-4", children: [
-                  /* @__PURE__ */ jsx("span", { className: "font-mono text-xs uppercase tracking-wider text-zinc-400", children: selected?.type }),
-                  /* @__PURE__ */ jsx("span", { className: "text-xs font-mono px-2.5 py-0.5 rounded-full border border-white/15 bg-white/5 text-zinc-300", children: selected?.status })
-                ] }),
-                /* @__PURE__ */ jsx(DialogTitle, { className: "text-2xl sm:text-3xl font-bold mt-2", children: selected?.name })
-              ] }),
-              /* @__PURE__ */ jsx(DialogDescription, { className: "text-zinc-400 text-sm sm:text-base leading-relaxed mt-2", children: selected?.longDescription || selected?.description }),
-              selected?.images && selected.images.length > 0 && /* @__PURE__ */ jsxs("div", { className: "mt-6 space-y-3", children: [
-                /* @__PURE__ */ jsx("div", { className: "overflow-hidden rounded-2xl border border-white/10 bg-black/60", children: /* @__PURE__ */ jsx(
+  return /* @__PURE__ */ jsx("section", { id: "projects", className: "relative px-6 py-28 border-t border-white/5 scroll-mt-28", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-6xl", children: [
+    /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row md:items-end justify-between gap-4 mb-16", children: [
+      /* @__PURE__ */ jsxs("div", { children: [
+        /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full apple-glass text-xs font-mono text-zinc-400 mb-3 border border-white/10", children: [
+          /* @__PURE__ */ jsx(Layers, { className: "w-3.5 h-3.5 text-zinc-300" }),
+          "02 — Showcase Progetti"
+        ] }),
+        /* @__PURE__ */ jsxs("h2", { className: "text-3xl sm:text-5xl font-bold tracking-tight text-white", children: [
+          "Cosa ho ",
+          /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "costruito." })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsx("p", { className: "text-zinc-400 max-w-md text-sm sm:text-base leading-relaxed", children: "Una selezione di progetti reali sviluppati con cura per architettura, velocità e design. I progetti si svelano singolarmente durante lo scorrimento verso il basso." })
+    ] }),
+    /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 gap-8", children: projects.map((p, idx) => /* @__PURE__ */ jsx(
+      ScrollProjectCard,
+      {
+        project: p,
+        index: idx,
+        total: projects.length,
+        onOpen: openProject
+      },
+      p.name
+    )) }),
+    /* @__PURE__ */ jsx(
+      Dialog,
+      {
+        open,
+        onOpenChange: (val) => {
+          if (!val) setSelected(null);
+          setOpen(val);
+        },
+        children: /* @__PURE__ */ jsxs(DialogContent, { className: "max-w-3xl apple-card border border-white/15 bg-zinc-950/95 backdrop-blur-2xl text-white rounded-3xl p-6 sm:p-8", children: [
+          /* @__PURE__ */ jsxs(DialogHeader, { children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-4", children: [
+              /* @__PURE__ */ jsx("span", { className: "font-mono text-xs uppercase tracking-wider text-zinc-400", children: selected?.type }),
+              /* @__PURE__ */ jsx("span", { className: "text-xs font-mono px-2.5 py-0.5 rounded-full border border-white/15 bg-white/5 text-zinc-300", children: selected?.status })
+            ] }),
+            /* @__PURE__ */ jsx(DialogTitle, { className: "text-2xl sm:text-3xl font-bold mt-2", children: selected?.name })
+          ] }),
+          /* @__PURE__ */ jsx(DialogDescription, { className: "text-zinc-400 text-sm sm:text-base leading-relaxed mt-2", children: selected?.longDescription || selected?.description }),
+          selected?.images && selected.images.length > 0 && /* @__PURE__ */ jsxs("div", { className: "mt-6 space-y-3", children: [
+            /* @__PURE__ */ jsx("div", { className: "overflow-hidden rounded-2xl border border-white/10 bg-black/60", children: /* @__PURE__ */ jsx(
+              "img",
+              {
+                src: selected.images[activeImageIndex],
+                alt: `${selected.name} preview`,
+                className: "w-full h-auto max-h-[380px] object-contain mx-auto"
+              }
+            ) }),
+            selected.images.length > 1 && /* @__PURE__ */ jsx("div", { className: "flex gap-2.5 overflow-x-auto pb-1", children: selected.images.map((src, idx) => /* @__PURE__ */ jsx(
+              "button",
+              {
+                type: "button",
+                onClick: () => setActiveImageIndex(idx),
+                className: `rounded-xl overflow-hidden border p-0 w-24 h-16 shrink-0 transition ${idx === activeImageIndex ? "border-white ring-2 ring-white/20" : "border-white/10 opacity-50 hover:opacity-100"}`,
+                children: /* @__PURE__ */ jsx(
                   "img",
                   {
-                    src: selected.images[activeImageIndex],
-                    alt: `${selected.name} preview`,
-                    className: "w-full h-auto max-h-[380px] object-contain mx-auto"
-                  }
-                ) }),
-                selected.images.length > 1 && /* @__PURE__ */ jsx("div", { className: "flex gap-2.5 overflow-x-auto pb-1", children: selected.images.map((src, idx) => /* @__PURE__ */ jsx(
-                  "button",
-                  {
-                    type: "button",
-                    onClick: () => setActiveImageIndex(idx),
-                    className: `rounded-xl overflow-hidden border p-0 w-24 h-16 shrink-0 transition ${idx === activeImageIndex ? "border-white ring-2 ring-white/20" : "border-white/10 opacity-50 hover:opacity-100"}`,
-                    children: /* @__PURE__ */ jsx("img", { src, alt: "thumbnail", className: "w-full h-full object-cover" })
-                  },
-                  idx
-                )) })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { className: "mt-6 pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-4", children: [
-                /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-1.5", children: selected?.stack.map((s) => /* @__PURE__ */ jsx(
-                  "span",
-                  {
-                    className: "font-mono text-xs px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-zinc-300",
-                    children: s
-                  },
-                  s
-                )) }),
-                selected?.github && /* @__PURE__ */ jsx(
-                  Button,
-                  {
-                    asChild: true,
-                    size: "sm",
-                    variant: "outline",
-                    className: "rounded-xl apple-glass border-white/15 hover:bg-white/10",
-                    children: /* @__PURE__ */ jsxs(
-                      "a",
-                      {
-                        href: selected.github,
-                        target: "_blank",
-                        rel: "noreferrer",
-                        className: "inline-flex items-center gap-2 text-xs font-mono",
-                        children: [
-                          /* @__PURE__ */ jsx(Github, { className: "h-4 w-4" }),
-                          " Repository GitHub"
-                        ]
-                      }
-                    )
+                    src,
+                    alt: "thumbnail",
+                    className: "w-full h-full object-cover"
                   }
                 )
-              ] })
-            ] })
-          }
-        )
-      ] })
-    }
-  );
+              },
+              idx
+            )) })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "mt-6 pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-4", children: [
+            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-1.5", children: selected?.stack.map((s) => /* @__PURE__ */ jsx(
+              "span",
+              {
+                className: "font-mono text-xs px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-zinc-300",
+                children: s
+              },
+              s
+            )) }),
+            selected?.github && /* @__PURE__ */ jsx(
+              Button,
+              {
+                asChild: true,
+                size: "sm",
+                variant: "outline",
+                className: "rounded-xl apple-glass border-white/15 hover:bg-white/10",
+                children: /* @__PURE__ */ jsxs(
+                  "a",
+                  {
+                    href: selected.github,
+                    target: "_blank",
+                    rel: "noreferrer",
+                    className: "inline-flex items-center gap-2 text-xs font-mono",
+                    children: [
+                      /* @__PURE__ */ jsx(Github, { className: "h-4 w-4" }),
+                      " Repository GitHub"
+                    ]
+                  }
+                )
+              }
+            )
+          ] })
+        ] })
+      }
+    )
+  ] }) });
 }
 function Services() {
   const [isRevealed, setIsRevealed] = useState(false);
@@ -1482,7 +1533,7 @@ function Services() {
           {
             className: `mb-16 max-w-2xl transition-all duration-700 ease-out ${isRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`,
             children: [
-              /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full apple-glass text-xs font-mono text-zinc-400 mb-3", children: [
+              /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full apple-glass text-xs font-mono text-zinc-400 mb-3 border border-white/10", children: [
                 /* @__PURE__ */ jsx(Sparkles, { className: "w-3.5 h-3.5 text-zinc-300" }),
                 "03 — Servizi & Competenze"
               ] }),
@@ -1505,10 +1556,17 @@ function Services() {
                 /* @__PURE__ */ jsx("h3", { className: "font-bold text-lg mb-2.5 text-white", children: s.title }),
                 /* @__PURE__ */ jsx("p", { className: "text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6", children: s.desc })
               ] }),
-              /* @__PURE__ */ jsx("div", { className: "pt-4 border-t border-white/5 space-y-1.5", children: s.highlights.map((h) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-xs font-mono text-zinc-300", children: [
-                /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-white/40" }),
-                /* @__PURE__ */ jsx("span", { children: h })
-              ] }, h)) })
+              /* @__PURE__ */ jsx("div", { className: "pt-4 border-t border-white/5 space-y-1.5", children: s.highlights.map((h) => /* @__PURE__ */ jsxs(
+                "div",
+                {
+                  className: "flex items-center gap-2 text-xs font-mono text-zinc-300",
+                  children: [
+                    /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-white/40" }),
+                    /* @__PURE__ */ jsx("span", { children: h })
+                  ]
+                },
+                h
+              )) })
             ]
           },
           s.title
@@ -1565,7 +1623,7 @@ function Contact() {
   ];
   return /* @__PURE__ */ jsx("section", { id: "contact", className: "relative px-6 py-28 border-t border-white/5 scroll-mt-28", children: /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-6xl", children: /* @__PURE__ */ jsxs("div", { className: "grid lg:grid-cols-12 gap-12 items-start", children: [
     /* @__PURE__ */ jsxs("div", { className: "lg:col-span-6", children: [
-      /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full apple-glass text-xs font-mono text-zinc-400 mb-3", children: [
+      /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full apple-glass text-xs font-mono text-zinc-400 mb-3 border border-white/10", children: [
         /* @__PURE__ */ jsx(Mail, { className: "w-3.5 h-3.5 text-zinc-300" }),
         "04 — Iniziamo a Collaborare"
       ] }),
@@ -1602,7 +1660,7 @@ function Contact() {
                 type: "button",
                 onClick: () => copyToClipboard(c.copyValue, c.label),
                 title: "Copia negli appunti",
-                className: "p-2 rounded-lg hover:bg-white/10 text-zinc-400 hover:text-white transition",
+                className: "p-2 rounded-lg hover:bg-white/10 text-zinc-400 hover:text-white transition cursor-pointer",
                 children: copiedChannel === c.label ? /* @__PURE__ */ jsx(Check, { className: "w-4 h-4 text-emerald-400" }) : /* @__PURE__ */ jsx(Copy, { className: "w-4 h-4" })
               }
             ) : /* @__PURE__ */ jsx(ArrowRight, { className: "h-4 w-4 text-zinc-500 group-hover:text-white transition-colors shrink-0 mr-2" })
@@ -1663,7 +1721,7 @@ function Contact() {
               {
                 type: "submit",
                 disabled: sending,
-                className: "w-full rounded-xl bg-white text-zinc-950 hover:bg-zinc-200 h-12 font-medium mt-2 transition active:scale-95 shadow-lg",
+                className: "w-full rounded-xl bg-white text-zinc-950 hover:bg-zinc-200 h-12 font-medium mt-2 transition active:scale-95 shadow-lg cursor-pointer",
                 children: sending ? /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2", children: [
                   /* @__PURE__ */ jsx(Loader2, { className: "h-4 w-4 animate-spin" }),
                   " Invio in corso..."

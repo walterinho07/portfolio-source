@@ -31,7 +31,7 @@ function renderErrorPage() {
 let serverEntryPromise;
 async function getServerEntry() {
   if (!serverEntryPromise) {
-    serverEntryPromise = import("./assets/server-Dzvu79Au.js").then(
+    serverEntryPromise = import("./assets/server-Cs9k2DmO.js").then(
       (m) => m.default ?? m
     );
   }
