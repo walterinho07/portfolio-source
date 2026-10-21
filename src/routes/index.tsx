@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   ArrowRight,
   Mail,
@@ -171,7 +171,7 @@ const services = [
 ];
 
 /* =========================================================================
-   1. NAVIGATION BAR (Apple Dynamic Island Style Dock)
+   1. NAVIGATION BAR (Apple Dynamic Island Style Dock with Strong Backdrop)
    ========================================================================= */
 function Nav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -186,8 +186,8 @@ function Nav() {
   ];
 
   return (
-    <header className="fixed top-5 inset-x-0 z-50 px-4 sm:px-6 pointer-events-none">
-      <div className="mx-auto max-w-4xl rounded-full apple-glass px-5 py-2.5 flex items-center justify-between pointer-events-auto shadow-2xl transition-all">
+    <header className="fixed top-3 sm:top-5 inset-x-0 z-50 px-3 sm:px-6 pointer-events-none">
+      <div className="mx-auto max-w-4xl rounded-full bg-[#0a0a0c]/85 backdrop-blur-2xl border border-white/12 px-5 py-2.5 flex items-center justify-between pointer-events-auto shadow-[0_12px_35px_rgba(0,0,0,0.8)] transition-all">
         <a href="#top" className="flex items-center gap-2 font-mono text-xs tracking-tight group">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
           <span className="font-semibold text-white tracking-wide group-hover:text-zinc-300 transition">
@@ -210,7 +210,7 @@ function Nav() {
           <Button
             asChild
             size="sm"
-            className="rounded-full bg-white text-zinc-950 hover:bg-zinc-200 text-xs font-medium px-4 h-8 shadow-sm transition"
+            className="rounded-full bg-white text-zinc-950 hover:bg-zinc-200 text-xs font-medium px-4 h-8 shadow-sm transition active:scale-95"
           >
             <a href="#contact">Contattami</a>
           </Button>
@@ -227,14 +227,14 @@ function Nav() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden mt-3 mx-auto max-w-sm rounded-2xl apple-card p-5 border border-white/10 shadow-2xl pointer-events-auto">
-          <nav className="flex flex-col gap-2.5 font-medium text-sm">
+        <div className="md:hidden mt-2 mx-auto max-w-sm rounded-3xl bg-[#101014]/95 backdrop-blur-3xl p-5 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.9)] pointer-events-auto">
+          <nav className="flex flex-col gap-2 font-medium text-sm">
             {links.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-lg hover:bg-white/5 text-zinc-400 hover:text-white transition"
+                className="px-3.5 py-2.5 rounded-xl hover:bg-white/10 text-zinc-300 hover:text-white transition"
               >
                 {link.label}
               </a>
@@ -247,11 +247,11 @@ function Nav() {
 }
 
 /* =========================================================================
-   2. HERO SECTION (Apple Minimal Studio Headline & Subtitle)
+   2. HERO SECTION
    ========================================================================= */
 function Hero() {
   return (
-    <section id="top" className="relative pt-36 sm:pt-44 pb-16 px-6 overflow-hidden">
+    <section id="top" className="relative pt-36 sm:pt-48 pb-16 px-6 overflow-hidden scroll-mt-28">
       <div className="mx-auto max-w-4xl text-center flex flex-col items-center">
         {/* Apple Precision Status Capsule */}
         <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full apple-glass text-xs font-mono text-zinc-300 mb-8 border border-white/10 shadow-xl animate-float-slow">
@@ -279,7 +279,7 @@ function Hero() {
           <Button
             asChild
             size="lg"
-            className="rounded-full bg-white text-zinc-950 hover:bg-zinc-200 font-medium text-sm px-7 h-11 transition"
+            className="rounded-full bg-white text-zinc-950 hover:bg-zinc-200 font-medium text-sm px-7 h-11 transition shadow-lg active:scale-95"
           >
             <a href="#projects" className="flex items-center gap-2">
               Esplora i progetti <ArrowRight className="h-4 w-4" />
@@ -290,7 +290,7 @@ function Hero() {
             asChild
             size="lg"
             variant="outline"
-            className="rounded-full apple-glass border-white/10 hover:bg-white/10 text-white font-medium text-sm px-7 h-11 transition"
+            className="rounded-full apple-glass border-white/10 hover:bg-white/10 text-white font-medium text-sm px-7 h-11 transition active:scale-95"
           >
             <a href="#contact">Parliamo del tuo progetto</a>
           </Button>
@@ -323,7 +323,7 @@ function Hero() {
    ========================================================================= */
 function ArchitectureSection() {
   return (
-    <section id="architecture" className="relative px-6 py-12 border-t border-white/5">
+    <section id="architecture" className="relative px-6 py-12 border-t border-white/5 scroll-mt-28">
       <div className="mx-auto max-w-6xl">
         <DeconstructingTerminal />
       </div>
@@ -332,12 +332,30 @@ function ArchitectureSection() {
 }
 
 /* =========================================================================
-   4. PROJECTS SHOWCASE (Apple Pro Minimal Cards)
+   4. PROJECTS SHOWCASE (Scroll-Revealed Animated Cards)
    ========================================================================= */
 function Projects() {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<Project | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [isRevealed, setIsRevealed] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsRevealed(true);
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
 
   const openProject = (p: Project) => {
     setSelected(p);
@@ -346,10 +364,18 @@ function Projects() {
   };
 
   return (
-    <section id="projects" className="relative px-6 py-28 border-t border-white/5">
+    <section
+      id="projects"
+      ref={sectionRef}
+      className="relative px-6 py-28 border-t border-white/5 scroll-mt-28"
+    >
       <div className="mx-auto max-w-6xl">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-16">
+        <div
+          className={`flex flex-col md:flex-row md:items-end justify-between gap-4 mb-16 transition-all duration-700 ease-out ${
+            isRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full apple-glass text-xs font-mono text-zinc-400 mb-3">
               <Layers className="w-3.5 h-3.5 text-zinc-300" />
@@ -360,17 +386,22 @@ function Projects() {
             </h2>
           </div>
           <p className="text-zinc-400 max-w-md text-sm sm:text-base leading-relaxed">
-            Una selezione di progetti completati e in sviluppo: dalle applicazioni desktop per OSINT
-            fino a piattaforme web full-stack.
+            Una selezione di progetti reali sviluppati con cura per architettura, velocità e design.
+            Compaiono progressivamente durante lo scorrimento.
           </p>
         </div>
 
-        {/* Apple Pro Cards Grid */}
+        {/* Scroll-Revealed Projects Grid */}
         <div className="grid md:grid-cols-2 gap-7">
-          {projects.map((p) => (
+          {projects.map((p, idx) => (
             <article
               key={p.name}
-              className="group relative rounded-3xl apple-card p-7 transition-all duration-500 hover:-translate-y-1.5 hover:border-white/20 flex flex-col justify-between"
+              className={`group relative rounded-3xl apple-card p-7 transition-all duration-700 ease-out flex flex-col justify-between hover:border-white/30 hover:-translate-y-2 shadow-xl ${
+                isRevealed
+                  ? "opacity-100 translate-y-0 scale-100"
+                  : "opacity-0 translate-y-16 scale-[0.97]"
+              }`}
+              style={{ transitionDelay: `${idx * 140}ms` }}
             >
               <div>
                 <div className="flex items-start justify-between gap-4 mb-3">
@@ -404,7 +435,7 @@ function Projects() {
                   {p.description}
                 </p>
 
-                {/* Screenshot Frame */}
+                {/* Screenshot Frame with Micro-Zoom */}
                 {p.images && p.images.length > 0 && (
                   <div
                     onClick={() => openProject(p)}
@@ -413,23 +444,23 @@ function Projects() {
                     <img
                       src={p.images[0]}
                       alt={p.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-105"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                      <span className="text-xs font-mono text-zinc-200 flex items-center gap-1">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                      <span className="text-xs font-mono text-zinc-200 flex items-center gap-1.5 bg-black/60 px-3 py-1.5 rounded-full border border-white/15 backdrop-blur-sm">
                         Vedi galleria screenshot <ExternalLink className="w-3.5 h-3.5" />
                       </span>
                     </div>
                   </div>
                 )}
 
-                {/* Tech Pills */}
+                {/* Tech Stack Pills */}
                 <div className="flex flex-wrap gap-2 mb-6">
                   {p.stack.map((tech) => (
                     <span
                       key={tech}
-                      className="font-mono text-xs px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-zinc-300"
+                      className="font-mono text-xs px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-zinc-300 group-hover:border-white/20 transition-colors"
                     >
                       {tech}
                     </span>
@@ -562,13 +593,40 @@ function Projects() {
 }
 
 /* =========================================================================
-   5. SERVICES & CAPABILITIES
+   5. SERVICES & CAPABILITIES (With Animated Entrance)
    ========================================================================= */
 function Services() {
+  const [isRevealed, setIsRevealed] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsRevealed(true);
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="services" className="relative px-6 py-28 border-t border-white/5">
+    <section
+      id="services"
+      ref={sectionRef}
+      className="relative px-6 py-28 border-t border-white/5 scroll-mt-28"
+    >
       <div className="mx-auto max-w-6xl">
-        <div className="mb-16 max-w-2xl">
+        <div
+          className={`mb-16 max-w-2xl transition-all duration-700 ease-out ${
+            isRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full apple-glass text-xs font-mono text-zinc-400 mb-3">
             <Sparkles className="w-3.5 h-3.5 text-zinc-300" />
             03 — Servizi & Competenze
@@ -583,13 +641,18 @@ function Services() {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((s) => (
+          {services.map((s, idx) => (
             <div
               key={s.title}
-              className="rounded-3xl apple-card p-7 transition-all duration-300 hover:border-white/20 hover:-translate-y-1 flex flex-col justify-between group"
+              className={`rounded-3xl apple-card p-7 transition-all duration-700 ease-out hover:border-white/25 hover:-translate-y-1.5 flex flex-col justify-between group shadow-lg ${
+                isRevealed
+                  ? "opacity-100 translate-y-0 scale-100"
+                  : "opacity-0 translate-y-12 scale-[0.98]"
+              }`}
+              style={{ transitionDelay: `${idx * 100}ms` }}
             >
               <div>
-                <div className="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 text-zinc-200 flex items-center justify-center mb-5 group-hover:bg-white/10 transition-colors">
+                <div className="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 text-zinc-200 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-white/10 transition-all">
                   <s.icon className="h-5 w-5" />
                 </div>
                 <h3 className="font-bold text-lg mb-2.5 text-white">{s.title}</h3>
@@ -666,7 +729,7 @@ function Contact() {
   ];
 
   return (
-    <section id="contact" className="relative px-6 py-28 border-t border-white/5">
+    <section id="contact" className="relative px-6 py-28 border-t border-white/5 scroll-mt-28">
       <div className="mx-auto max-w-6xl">
         <div className="grid lg:grid-cols-12 gap-12 items-start">
           {/* Left Column: Direct channels */}
@@ -783,7 +846,7 @@ function Contact() {
                 <Button
                   type="submit"
                   disabled={sending}
-                  className="w-full rounded-xl bg-white text-zinc-950 hover:bg-zinc-200 h-12 font-medium mt-2 transition"
+                  className="w-full rounded-xl bg-white text-zinc-950 hover:bg-zinc-200 h-12 font-medium mt-2 transition active:scale-95 shadow-lg"
                 >
                   {sending ? (
                     <span className="flex items-center gap-2">

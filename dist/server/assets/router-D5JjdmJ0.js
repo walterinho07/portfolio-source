@@ -4,13 +4,13 @@ import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { Toaster as Toaster$1, toast } from "sonner";
 import * as React from "react";
 import { useState, useRef, useEffect } from "react";
-import { X, Minimize2, Maximize2, FileCode2, Layers, Terminal, Check, Copy, ArrowDown, Server, Shield, TerminalSquare, Code2, Sparkles, Monitor, MapPin, HelpCircle, ChevronDown, Menu, ArrowRight, CheckCircle2, Loader2, ExternalLink, ChevronRight, Github, Globe, Calendar, Wrench, Briefcase, Mail, MessageCircle, Linkedin } from "lucide-react";
+import { X, Minimize2, Maximize2, FileCode2, Layers, Terminal, Check, Copy, ArrowDown, Server, Shield, TerminalSquare, Code2, Sparkles, CheckCircle, Activity, Monitor, MapPin, Zap, ShieldCheck, HelpCircle, ChevronDown, Menu, ArrowRight, CheckCircle2, Loader2, ExternalLink, ChevronRight, Github, Globe, Calendar, Wrench, Briefcase, Mail, MessageCircle, Linkedin } from "lucide-react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-const appCss = "/assets/styles-CksyHNom.css";
+const appCss = "/assets/styles-DVME4ARo.css";
 const Toaster = ({ ...props }) => {
   return /* @__PURE__ */ jsx(
     Toaster$1,
@@ -315,8 +315,16 @@ function DeconstructingTerminal() {
   const [activeTab, setActiveTab] = useState("profile");
   const [copied, setCopied] = useState(false);
   const [isDeconstructed, setIsDeconstructed] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef(null);
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile, { passive: true });
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
   useEffect(() => {
     const handleScroll = () => {
       if (!containerRef.current) return;
@@ -325,7 +333,6 @@ function DeconstructingTerminal() {
       const start = windowHeight * 0.85;
       const end = windowHeight * 0.25;
       const progress = Math.min(Math.max((start - rect.top) / (start - end), 0), 1);
-      setScrollProgress(progress);
       if (progress > 0.45 && !isDeconstructed) {
         setIsDeconstructed(true);
       } else if (progress < 0.2 && isDeconstructed) {
@@ -341,8 +348,8 @@ function DeconstructingTerminal() {
     navigator.clipboard?.writeText("git clone https://github.com/Walterinho07/walter-portfolio");
     setTimeout(() => setCopied(false), 2e3);
   };
-  return /* @__PURE__ */ jsxs("div", { ref: containerRef, className: "relative w-full py-12 transition-all duration-700", children: [
-    /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between max-w-xl mx-auto mb-6 px-4", children: [
+  return /* @__PURE__ */ jsxs("div", { ref: containerRef, className: "relative w-full py-8 sm:py-12 transition-all duration-700", children: [
+    /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center justify-between gap-3 max-w-xl mx-auto mb-6 px-4", children: [
       /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 text-xs font-mono text-zinc-400", children: [
         /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" }),
         /* @__PURE__ */ jsx("span", { children: "Architettura Software" }),
@@ -354,7 +361,7 @@ function DeconstructingTerminal() {
         {
           type: "button",
           onClick: () => setIsDeconstructed(!isDeconstructed),
-          className: "inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1 rounded-full apple-glass text-zinc-300 hover:text-white hover:border-white/20 transition-all cursor-pointer",
+          className: "inline-flex items-center gap-1.5 text-xs font-mono px-3.5 py-1.5 rounded-full apple-glass text-zinc-300 hover:text-white hover:border-white/25 transition-all cursor-pointer shadow-sm active:scale-95",
           children: isDeconstructed ? /* @__PURE__ */ jsxs(Fragment, { children: [
             /* @__PURE__ */ jsx(Minimize2, { className: "w-3.5 h-3.5 text-sky-400" }),
             /* @__PURE__ */ jsx("span", { children: "Compatta Terminale" })
@@ -365,30 +372,30 @@ function DeconstructingTerminal() {
         }
       )
     ] }),
-    /* @__PURE__ */ jsx("div", { className: "perspective-1400 w-full max-w-5xl mx-auto", children: !isDeconstructed ? (
+    /* @__PURE__ */ jsx("div", { className: "md:perspective-1400 w-full max-w-5xl mx-auto", children: !isDeconstructed ? (
       /* ==============================================================
          STATE A: COMPACT MONOLITHIC APPLE TERMINAL
          ============================================================== */
-      /* @__PURE__ */ jsxs("div", { className: "relative max-w-2xl mx-auto group", children: [
+      /* @__PURE__ */ jsxs("div", { className: "relative max-w-2xl mx-auto group px-2 sm:px-0", children: [
         /* @__PURE__ */ jsx("div", { className: "absolute -inset-1 rounded-3xl bg-gradient-to-b from-white/10 to-transparent blur-2xl opacity-40 group-hover:opacity-60 transition duration-700" }),
         /* @__PURE__ */ jsxs("div", { className: "hidden sm:flex absolute -top-4 -right-3 z-20 items-center gap-2 px-3 py-1 rounded-full apple-glass border border-white/10 text-[11px] font-mono text-zinc-300 shadow-xl animate-float-slow", children: [
           /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" }),
           /* @__PURE__ */ jsx("span", { children: "Core Engine Active" })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "relative rounded-2xl apple-card overflow-hidden shadow-2xl transition-transform duration-500 hover:scale-[1.01]", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between px-4 py-3 bg-zinc-950/60 border-b border-white/10 select-none", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
-              /* @__PURE__ */ jsx("span", { className: "w-3 h-3 rounded-full bg-[#ff5f56]/90 border border-[#ff5f56]/30 inline-block" }),
-              /* @__PURE__ */ jsx("span", { className: "w-3 h-3 rounded-full bg-[#ffbd2e]/90 border border-[#ffbd2e]/30 inline-block" }),
-              /* @__PURE__ */ jsx("span", { className: "w-3 h-3 rounded-full bg-[#27c93f]/90 border border-[#27c93f]/30 inline-block" }),
-              /* @__PURE__ */ jsx("span", { className: "ml-2 font-mono text-xs text-zinc-400", children: "walter@developer-studio: ~" })
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between px-3 sm:px-4 py-3 bg-zinc-950/60 border-b border-white/10 select-none", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 shrink-0", children: [
+              /* @__PURE__ */ jsx("span", { className: "w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#ff5f56]/90 border border-[#ff5f56]/30 inline-block" }),
+              /* @__PURE__ */ jsx("span", { className: "w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#ffbd2e]/90 border border-[#ffbd2e]/30 inline-block" }),
+              /* @__PURE__ */ jsx("span", { className: "w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#27c93f]/90 border border-[#27c93f]/30 inline-block" }),
+              /* @__PURE__ */ jsx("span", { className: "ml-1.5 font-mono text-[11px] text-zinc-400 hidden md:inline", children: "walter@developer-studio: ~" })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1 font-mono text-xs", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1 font-mono text-xs overflow-x-auto py-0.5", children: [
               /* @__PURE__ */ jsxs(
                 "button",
                 {
                   onClick: () => setActiveTab("profile"),
-                  className: `flex items-center gap-1.5 px-3 py-1 rounded-lg transition ${activeTab === "profile" ? "bg-white/10 text-white font-medium" : "text-zinc-400 hover:text-white"}`,
+                  className: `flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-lg text-xs whitespace-nowrap transition ${activeTab === "profile" ? "bg-white/10 text-white font-medium" : "text-zinc-400 hover:text-white"}`,
                   children: [
                     /* @__PURE__ */ jsx(FileCode2, { className: "w-3.5 h-3.5 text-sky-400" }),
                     "developer.ts"
@@ -399,7 +406,7 @@ function DeconstructingTerminal() {
                 "button",
                 {
                   onClick: () => setActiveTab("stack"),
-                  className: `flex items-center gap-1.5 px-3 py-1 rounded-lg transition ${activeTab === "stack" ? "bg-white/10 text-white font-medium" : "text-zinc-400 hover:text-white"}`,
+                  className: `flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-lg text-xs whitespace-nowrap transition ${activeTab === "stack" ? "bg-white/10 text-white font-medium" : "text-zinc-400 hover:text-white"}`,
                   children: [
                     /* @__PURE__ */ jsx(Layers, { className: "w-3.5 h-3.5 text-zinc-300" }),
                     "stack.json"
@@ -410,7 +417,7 @@ function DeconstructingTerminal() {
                 "button",
                 {
                   onClick: () => setActiveTab("cli"),
-                  className: `flex items-center gap-1.5 px-3 py-1 rounded-lg transition ${activeTab === "cli" ? "bg-white/10 text-white font-medium" : "text-zinc-400 hover:text-white"}`,
+                  className: `flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-lg text-xs whitespace-nowrap transition ${activeTab === "cli" ? "bg-white/10 text-white font-medium" : "text-zinc-400 hover:text-white"}`,
                   children: [
                     /* @__PURE__ */ jsx(Terminal, { className: "w-3.5 h-3.5 text-emerald-400" }),
                     "status.sh"
@@ -423,12 +430,12 @@ function DeconstructingTerminal() {
               {
                 onClick: copySnippet,
                 title: "Copia negli appunti",
-                className: "text-zinc-400 hover:text-white transition p-1",
+                className: "text-zinc-400 hover:text-white transition p-1 shrink-0 ml-1",
                 children: copied ? /* @__PURE__ */ jsx(Check, { className: "w-3.5 h-3.5 text-emerald-400" }) : /* @__PURE__ */ jsx(Copy, { className: "w-3.5 h-3.5" })
               }
             )
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto min-h-[290px] bg-black/40", children: [
+          /* @__PURE__ */ jsxs("div", { className: "p-4 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto min-h-[260px] sm:min-h-[290px] bg-black/40", children: [
             activeTab === "profile" && /* @__PURE__ */ jsxs("div", { className: "space-y-1.5 text-zinc-300", children: [
               /* @__PURE__ */ jsx("p", { children: /* @__PURE__ */ jsx("span", { className: "text-zinc-500", children: "// Walter Fida — Software Architecture" }) }),
               /* @__PURE__ */ jsxs("p", { children: [
@@ -546,16 +553,17 @@ function DeconstructingTerminal() {
               /* @__PURE__ */ jsx("div", { className: "pt-2 text-emerald-400 pl-3", children: "> All software modules operational." })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "px-4 py-2.5 bg-zinc-950/80 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-zinc-400", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+          /* @__PURE__ */ jsxs("div", { className: "px-3 sm:px-4 py-2.5 bg-zinc-950/80 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-zinc-400", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 sm:gap-3", children: [
               /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1 text-emerald-400", children: [
                 /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" }),
                 "Clean Architecture"
               ] }),
-              /* @__PURE__ */ jsx("span", { children: "TypeScript · UTF-8" })
+              /* @__PURE__ */ jsx("span", { className: "hidden sm:inline", children: "TypeScript · UTF-8" })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1.5 text-zinc-400", children: [
-              /* @__PURE__ */ jsx("span", { children: "Scorri verso il basso per decomporre" }),
+              /* @__PURE__ */ jsx("span", { className: "hidden sm:inline", children: "Scorri verso il basso per decomporre" }),
+              /* @__PURE__ */ jsx("span", { className: "sm:hidden", children: "Scorri ↓" }),
               /* @__PURE__ */ jsx(ArrowDown, { className: "w-3 h-3 animate-bounce" })
             ] })
           ] })
@@ -563,14 +571,14 @@ function DeconstructingTerminal() {
       ] })
     ) : (
       /* ==============================================================
-         STATE B: DECONSTRUCTED / EXPLODED 3D VIEW (Scroll Triggered)
+         STATE B: DECONSTRUCTED / EXPLODED 3D VIEW (Mobile-Optimized)
          ============================================================== */
-      /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-700", children: [
+      /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 transition-all duration-700 px-2 sm:px-0", children: [
         /* @__PURE__ */ jsxs(
           "div",
           {
-            className: "relative rounded-2xl apple-card p-6 border border-white/10 shadow-2xl transition-all duration-700 hover:border-sky-400/40 hover:-translate-y-2",
-            style: {
+            className: "relative rounded-2xl apple-card p-6 border border-white/10 shadow-2xl transition-all duration-500 hover:border-sky-400/40 hover:-translate-y-1.5",
+            style: isMobile ? void 0 : {
               transform: "perspective(1000px) rotateY(-4deg) rotateX(2deg) translateZ(30px)"
             },
             children: [
@@ -600,8 +608,8 @@ function DeconstructingTerminal() {
         /* @__PURE__ */ jsxs(
           "div",
           {
-            className: "relative rounded-2xl apple-card p-6 border border-white/15 shadow-2xl transition-all duration-700 hover:border-white/30 hover:-translate-y-2",
-            style: {
+            className: "relative rounded-2xl apple-card p-6 border border-white/15 shadow-2xl transition-all duration-500 hover:border-white/30 hover:-translate-y-1.5",
+            style: isMobile ? void 0 : {
               transform: "perspective(1000px) translateZ(60px) scale(1.02)"
             },
             children: [
@@ -631,8 +639,8 @@ function DeconstructingTerminal() {
         /* @__PURE__ */ jsxs(
           "div",
           {
-            className: "relative rounded-2xl apple-card p-6 border border-white/10 shadow-2xl transition-all duration-700 hover:border-emerald-400/40 hover:-translate-y-2",
-            style: {
+            className: "relative rounded-2xl apple-card p-6 border border-white/10 shadow-2xl transition-all duration-500 hover:border-emerald-400/40 hover:-translate-y-1.5",
+            style: isMobile ? void 0 : {
               transform: "perspective(1000px) rotateY(4deg) rotateX(2deg) translateZ(30px)"
             },
             children: [
@@ -676,113 +684,215 @@ const stackList = [
   "Git & GitHub"
 ];
 function BentoAbout() {
-  return /* @__PURE__ */ jsx("section", { id: "about", className: "relative px-6 py-28 border-t border-white/5", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-6xl", children: [
-    /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row md:items-end justify-between gap-4 mb-14", children: [
-      /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full apple-glass text-xs font-mono text-zinc-400 mb-3", children: [
-          /* @__PURE__ */ jsx(TerminalSquare, { className: "w-3.5 h-3.5 text-zinc-300" }),
-          "01 — Architettura & Metodo"
-        ] }),
-        /* @__PURE__ */ jsxs("h2", { className: "text-3xl sm:text-5xl font-bold tracking-tight text-white", children: [
-          "Ingegneria essenziale, ",
-          /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "risultati concreti." })
-        ] })
-      ] }),
-      /* @__PURE__ */ jsx("p", { className: "text-zinc-400 max-w-md text-sm sm:text-base leading-relaxed", children: "Nessun sovraccarico. Progetto codice solido, manutenibile e orientato alla risoluzione di problemi reali." })
-    ] }),
-    /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5", children: [
-      /* @__PURE__ */ jsxs("div", { className: "md:col-span-2 lg:col-span-2 rounded-2xl apple-card p-7 relative overflow-hidden group hover:border-white/20 transition-all duration-500", children: [
-        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-5", children: [
-          /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-zinc-200", children: /* @__PURE__ */ jsx(Code2, { className: "w-5 h-5" }) }),
-          /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx("span", { className: "text-xs font-mono text-zinc-500 uppercase tracking-wider", children: "Profilo Professionale" }),
-            /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white", children: "Walter Fida" })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxs("p", { className: "text-zinc-300 leading-relaxed text-sm sm:text-base", children: [
-          "Studente al terzo anno di ",
-          /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Informatica" }),
-          " ",
-          "con una forte vocazione per lo sviluppo full-stack e desktop. Mi occupo dell'intero ciclo di vita del software: dalla modellazione del database e delle API backend fino alla progettazione di interfacce web e applicativi nativi fluidi."
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "mt-6 pt-5 border-t border-white/10 flex flex-wrap items-center gap-4 text-xs font-mono text-zinc-400", children: [
-          /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1.5 text-zinc-200", children: [
-            /* @__PURE__ */ jsx(Sparkles, { className: "w-3.5 h-3.5 text-sky-400" }),
-            "Approccio pragmatico"
-          ] }),
-          /* @__PURE__ */ jsx("span", { children: "·" }),
-          /* @__PURE__ */ jsx("span", { children: "Design patterns" }),
-          /* @__PURE__ */ jsx("span", { children: "·" }),
-          /* @__PURE__ */ jsx("span", { children: "Codice leggibile" })
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "rounded-2xl apple-card p-7 relative overflow-hidden group hover:border-white/20 transition-all duration-500", children: [
-        /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-zinc-200 mb-5", children: /* @__PURE__ */ jsx(Server, { className: "w-5 h-5" }) }),
-        /* @__PURE__ */ jsx("span", { className: "text-xs font-mono text-zinc-500 uppercase tracking-wider", children: "Backend Platform" }),
-        /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mt-1 mb-2", children: "Java & Spring Boot" }),
-        /* @__PURE__ */ jsx("p", { className: "text-xs sm:text-sm text-zinc-400 leading-relaxed", children: "Architetture robuste, logica di business transazionale, gestione sicura delle sessioni e database relazionali SQL." })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "rounded-2xl apple-card p-7 relative overflow-hidden group hover:border-white/20 transition-all duration-500", children: [
-        /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-zinc-200 mb-5", children: /* @__PURE__ */ jsx(Monitor, { className: "w-5 h-5" }) }),
-        /* @__PURE__ */ jsx("span", { className: "text-xs font-mono text-zinc-500 uppercase tracking-wider", children: "Desktop & OSINT" }),
-        /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mt-1 mb-2", children: "JavaFX & Tools" }),
-        /* @__PURE__ */ jsx("p", { className: "text-xs sm:text-sm text-zinc-400 leading-relaxed", children: "Applicativi desktop ad alte prestazioni per analisi geospaziale da fonti aperte e software gestionali locali." })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "md:col-span-2 lg:col-span-2 rounded-2xl apple-card p-7 relative overflow-hidden group hover:border-white/20 transition-all duration-500", children: [
-        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-4", children: [
-          /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-zinc-200", children: /* @__PURE__ */ jsx(Layers, { className: "w-5 h-5" }) }),
-          /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx("span", { className: "text-xs font-mono text-zinc-500 uppercase tracking-wider", children: "Interfacce Utente" }),
-            /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white", children: "Angular, React & TypeScript" })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsx("p", { className: "text-xs sm:text-sm text-zinc-400 leading-relaxed mb-5", children: "Applicazioni web tipizzate con cura maniacale per i dettagli, performance e accessibilità." }),
-        /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2", children: stackList.map((tech) => /* @__PURE__ */ jsx(
-          "span",
+  const sectionRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.15 }
+    );
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
+  return /* @__PURE__ */ jsx(
+    "section",
+    {
+      id: "about",
+      ref: sectionRef,
+      className: "relative px-6 py-28 border-t border-white/5 scroll-mt-28",
+      children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-6xl", children: [
+        /* @__PURE__ */ jsxs(
+          "div",
           {
-            className: "font-mono text-xs px-3 py-1 rounded-lg border border-white/10 bg-white/5 text-zinc-300 hover:text-white hover:border-white/25 transition",
-            children: tech
-          },
-          tech
-        )) })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "md:col-span-2 lg:col-span-2 rounded-2xl apple-card p-7 relative overflow-hidden group hover:border-white/20 transition-all duration-500 flex flex-col justify-between", children: [
-        /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between gap-4", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-            /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-zinc-200", children: /* @__PURE__ */ jsx(MapPin, { className: "w-5 h-5" }) }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("span", { className: "text-xs font-mono text-zinc-500 uppercase tracking-wider", children: "Base Operativa" }),
-              /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white", children: "Calabria, Italia · Remoto Globale" })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-300 text-xs font-mono", children: [
-            /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" }),
-            "Disponibile per progetti"
-          ] })
-        ] }),
-        /* @__PURE__ */ jsx("p", { className: "mt-4 text-xs sm:text-sm text-zinc-400 leading-relaxed", children: "Supporto attività locali e aziende su tutto il territorio nazionale con sviluppo dedicato da remoto." })
+            className: `flex flex-col md:flex-row md:items-end justify-between gap-4 mb-14 transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`,
+            children: [
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-3.5 py-1 rounded-full apple-glass text-xs font-mono text-zinc-300 mb-3 border border-white/10 shadow-sm", children: [
+                  /* @__PURE__ */ jsx(TerminalSquare, { className: "w-3.5 h-3.5 text-sky-400 animate-pulse" }),
+                  /* @__PURE__ */ jsx("span", { children: "01 — Architettura & Metodo" })
+                ] }),
+                /* @__PURE__ */ jsxs("h2", { className: "text-3xl sm:text-5xl font-extrabold tracking-tight text-white", children: [
+                  "Ingegneria essenziale, ",
+                  /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "risultati concreti." })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-zinc-400 max-w-md text-sm sm:text-base leading-relaxed", children: "Nessun sovraccarico. Progetto codice solido, manutenibile e orientato alla risoluzione di problemi reali." })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5", children: [
+          /* @__PURE__ */ jsxs(
+            "div",
+            {
+              className: `md:col-span-2 lg:col-span-2 rounded-3xl apple-card p-7 sm:p-8 relative overflow-hidden group hover:border-white/25 transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`,
+              style: { transitionDelay: "100ms" },
+              children: [
+                /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-80 h-80 bg-white/[0.03] rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-700" }),
+                /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-4 mb-6", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3.5", children: [
+                    /* @__PURE__ */ jsx("div", { className: "w-11 h-11 rounded-2xl bg-white/5 border border-white/15 flex items-center justify-center text-zinc-100 shadow-md group-hover:bg-white/10 group-hover:scale-105 transition-all", children: /* @__PURE__ */ jsx(Code2, { className: "w-5 h-5 text-sky-400" }) }),
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("span", { className: "text-xs font-mono text-zinc-500 uppercase tracking-wider block", children: "Profilo Professionale" }),
+                      /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white tracking-tight", children: "Walter Fida" })
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "hidden sm:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/10 text-xs font-mono text-zinc-300", children: [
+                    /* @__PURE__ */ jsxs("span", { className: "relative flex h-2 w-2", children: [
+                      /* @__PURE__ */ jsx("span", { className: "animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" }),
+                      /* @__PURE__ */ jsx("span", { className: "relative inline-flex rounded-full h-2 w-2 bg-emerald-400" })
+                    ] }),
+                    /* @__PURE__ */ jsx("span", { children: "Active Dev" })
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("p", { className: "text-zinc-300 leading-relaxed text-sm sm:text-base mb-6", children: [
+                  "Studente al terzo anno di ",
+                  /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Informatica" }),
+                  " ",
+                  "con una forte vocazione per lo sviluppo full-stack e desktop. Mi occupo dell'intero ciclo di vita del software: dalla modellazione del database e delle API backend fino alla progettazione di interfacce web reattive e applicativi nativi fluidi."
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "pt-5 border-t border-white/10 flex flex-wrap items-center gap-4 text-xs font-mono text-zinc-400", children: [
+                  /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1.5 text-zinc-200", children: [
+                    /* @__PURE__ */ jsx(
+                      Sparkles,
+                      {
+                        className: "w-3.5 h-3.5 text-sky-400 animate-spin",
+                        style: { animationDuration: "6s" }
+                      }
+                    ),
+                    "Approccio pragmatico"
+                  ] }),
+                  /* @__PURE__ */ jsx("span", { children: "·" }),
+                  /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1 text-zinc-300", children: [
+                    /* @__PURE__ */ jsx(CheckCircle, { className: "w-3.5 h-3.5 text-emerald-400" }),
+                    " Design patterns"
+                  ] }),
+                  /* @__PURE__ */ jsx("span", { children: "·" }),
+                  /* @__PURE__ */ jsx("span", { children: "Codice leggibile & documentato" })
+                ] })
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxs(
+            "div",
+            {
+              className: `rounded-3xl apple-card p-7 relative overflow-hidden group hover:border-white/25 transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`,
+              style: { transitionDelay: "200ms" },
+              children: [
+                /* @__PURE__ */ jsx("div", { className: "w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-zinc-200 mb-5 group-hover:scale-105 group-hover:border-sky-400/30 transition-all", children: /* @__PURE__ */ jsx(Server, { className: "w-5 h-5 text-sky-400" }) }),
+                /* @__PURE__ */ jsx("span", { className: "text-xs font-mono text-zinc-500 uppercase tracking-wider block", children: "Backend Platform" }),
+                /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mt-1 mb-2", children: "Java & Spring Boot" }),
+                /* @__PURE__ */ jsx("p", { className: "text-xs sm:text-sm text-zinc-400 leading-relaxed mb-4", children: "Architetture robuste, logica di business transazionale, gestione sicura delle sessioni e database relazionali SQL." }),
+                /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-1.5 text-[11px] font-mono text-sky-400", children: [
+                  /* @__PURE__ */ jsx(Activity, { className: "w-3 h-3" }),
+                  /* @__PURE__ */ jsx("span", { children: "High Throughput" })
+                ] })
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxs(
+            "div",
+            {
+              className: `rounded-3xl apple-card p-7 relative overflow-hidden group hover:border-white/25 transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`,
+              style: { transitionDelay: "300ms" },
+              children: [
+                /* @__PURE__ */ jsx("div", { className: "w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-zinc-200 mb-5 group-hover:scale-105 group-hover:border-emerald-400/30 transition-all", children: /* @__PURE__ */ jsx(Monitor, { className: "w-5 h-5 text-emerald-400" }) }),
+                /* @__PURE__ */ jsx("span", { className: "text-xs font-mono text-zinc-500 uppercase tracking-wider block", children: "Desktop & OSINT" }),
+                /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mt-1 mb-2", children: "JavaFX & Tools" }),
+                /* @__PURE__ */ jsx("p", { className: "text-xs sm:text-sm text-zinc-400 leading-relaxed mb-4", children: "Applicativi desktop nativi ad alte prestazioni per analisi geospaziale da fonti aperte e software gestionali locali." }),
+                /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-1.5 text-[11px] font-mono text-emerald-400", children: [
+                  /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" }),
+                  /* @__PURE__ */ jsx("span", { children: "Native Execution" })
+                ] })
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxs(
+            "div",
+            {
+              className: `md:col-span-2 lg:col-span-2 rounded-3xl apple-card p-7 relative overflow-hidden group hover:border-white/25 transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`,
+              style: { transitionDelay: "400ms" },
+              children: [
+                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3.5 mb-4", children: [
+                  /* @__PURE__ */ jsx("div", { className: "w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-zinc-200 group-hover:scale-105 transition-all", children: /* @__PURE__ */ jsx(Layers, { className: "w-5 h-5 text-zinc-100" }) }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("span", { className: "text-xs font-mono text-zinc-500 uppercase tracking-wider block", children: "Interfacce Utente Reattive" }),
+                    /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white", children: "Angular, React & TypeScript" })
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "text-xs sm:text-sm text-zinc-400 leading-relaxed mb-5", children: "Applicazioni web tipizzate con cura dei dettagli, animazioni a 60 FPS, accessibilità e performance elevate." }),
+                /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2", children: stackList.map((tech) => /* @__PURE__ */ jsx(
+                  "span",
+                  {
+                    className: "font-mono text-xs px-3 py-1.5 rounded-xl border border-white/10 bg-white/[0.03] text-zinc-300 hover:text-white hover:border-white/30 hover:bg-white/[0.08] transition duration-200 cursor-default",
+                    children: tech
+                  },
+                  tech
+                )) })
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxs(
+            "div",
+            {
+              className: `md:col-span-2 lg:col-span-2 rounded-3xl apple-card p-7 relative overflow-hidden group hover:border-white/25 transition-all duration-700 ease-out flex flex-col justify-between ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`,
+              style: { transitionDelay: "500ms" },
+              children: [
+                /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between gap-4", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3.5", children: [
+                    /* @__PURE__ */ jsx("div", { className: "w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-zinc-200 group-hover:scale-105 transition-all", children: /* @__PURE__ */ jsx(MapPin, { className: "w-5 h-5 text-emerald-400" }) }),
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("span", { className: "text-xs font-mono text-zinc-500 uppercase tracking-wider block", children: "Base Operativa" }),
+                      /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white", children: "Calabria, Italia · Remoto Globale" })
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-xs font-mono shadow-sm", children: [
+                    /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" }),
+                    "Disponibile subito"
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "mt-4 text-xs sm:text-sm text-zinc-400 leading-relaxed", children: "Supporto attività locali e aziende su tutto il territorio nazionale con sviluppo dedicato da remoto, comunicazione costante e deliverable chiari." })
+              ]
+            }
+          )
+        ] })
       ] })
-    ] })
-  ] }) });
+    }
+  );
 }
 const faqItems = [
   {
+    tag: "Architettura & Stack",
+    icon: Layers,
     question: "Di quali tipologie di software ti occupi principalmente?",
-    answer: "Sviluppo sia applicazioni web complete (frontend con Angular/React/TypeScript e backend Spring Boot/Java) sia software desktop ad alte prestazioni in JavaFX (come strumenti OSINT, gestionali o tool di analisi dati). Realizzo inoltre sistemi di prenotazione dedicati e siti web su misura."
+    answer: "Sviluppo sia applicazioni web complete (frontend reattivo in Angular o React e backend solido in Spring Boot/Java con PostgreSQL) sia software desktop ad alte prestazioni in JavaFX (come strumenti OSINT, gestionali o tool di analisi dati). Realizzo inoltre sistemi di prenotazione dedicati e piattaforme su misura."
   },
   {
+    tag: "Operatività & Remoto",
+    icon: Zap,
     question: "Lavori solo con realtà in Calabria o anche da remoto?",
-    answer: "Entrambe le cose: ho base in Calabria e supporto con entusiasmo le attività locali (B&B, ristoranti, professionisti e imprese) che vogliono digitalizzarsi, ma collaboro stabilmente anche da remoto con clienti e team in tutta Italia."
+    answer: "Entrambe le cose: ho base in Calabria e supporto con entusiasmo le attività locali (B&B, ristoranti, professionisti e PMI) che desiderano digitalizzarsi senza intermediari costosi, ma collaboro stabilmente anche da remoto con clienti e team in tutta Italia."
   },
   {
+    tag: "Metodologia & Rilascio",
+    icon: ShieldCheck,
     question: "Come viene gestito lo sviluppo e la consegna del progetto?",
     answer: "Adotto un approccio trasparente e iterativo: partiamo da un'analisi dettagliata dei requisiti, definendo tempistiche chiare e deliverable intermedi. Durante lo sviluppo condivido avanzamenti regolari e demo funzionanti, fino al rilascio in produzione e al collaudo finale."
   },
   {
+    tag: "Assistenza Post-Lancio",
+    icon: Sparkles,
     question: "Fornisci assistenza e manutenzione dopo il rilascio?",
     answer: "Certamente. Non lascio mai il cliente da solo dopo la consegna. Offro pacchetti di supporto per aggiornamenti, monitoraggio, backup, correzione bug e l'aggiunta di nuove funzionalità nel tempo."
   },
   {
+    tag: "Preventivo & Consulenza",
+    icon: HelpCircle,
     question: "Come posso richiedere una stima o un preventivo per la mia idea?",
     answer: "Puoi scrivermi direttamente tramite il form contatti qui sotto, inviarmi una mail a info@walterfidadev.it oppure contattarmi su WhatsApp. Rispondo solitamente entro 24 ore con una prima valutazione gratuita e senza impegno."
   }
@@ -792,51 +902,120 @@ function Faq() {
   const toggle = (idx) => {
     setOpenIndex(openIndex === idx ? null : idx);
   };
-  return /* @__PURE__ */ jsx("section", { id: "faq", className: "relative px-6 py-28 border-t border-white/5", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-4xl", children: [
-    /* @__PURE__ */ jsxs("div", { className: "mb-14 text-center", children: [
-      /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-3.5 py-1 rounded-full apple-glass text-xs font-mono text-zinc-400 mb-3", children: [
-        /* @__PURE__ */ jsx(HelpCircle, { className: "w-3.5 h-3.5 text-zinc-300" }),
-        "Domande Frequenti"
-      ] }),
-      /* @__PURE__ */ jsxs("h2", { className: "text-3xl sm:text-5xl font-bold tracking-tight text-white", children: [
-        "Tutto ciò che ",
-        /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "ti serve sapere." })
-      ] }),
-      /* @__PURE__ */ jsx("p", { className: "mx-auto mt-4 max-w-xl text-zinc-400 text-sm sm:text-base leading-relaxed", children: "Risposte chiare su metodo di lavoro, stack tecnologico e modalità di collaborazione." })
-    ] }),
-    /* @__PURE__ */ jsx("div", { className: "space-y-3.5", children: faqItems.map((item, idx) => {
-      const isOpen = openIndex === idx;
-      return /* @__PURE__ */ jsxs(
+  return /* @__PURE__ */ jsxs("section", { id: "faq", className: "relative px-6 py-32 border-t border-white/10 overflow-hidden", children: [
+    /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 pointer-events-none -z-10 overflow-hidden select-none", children: [
+      /* @__PURE__ */ jsx(
         "div",
         {
-          className: `rounded-2xl apple-card transition-all duration-300 overflow-hidden ${isOpen ? "border-white/20 shadow-xl" : "hover:border-white/15"}`,
-          children: [
-            /* @__PURE__ */ jsxs(
-              "button",
-              {
-                type: "button",
-                onClick: () => toggle(idx),
-                className: "w-full flex items-center justify-between gap-4 p-5 sm:p-6 text-left cursor-pointer",
-                "aria-expanded": isOpen,
-                children: [
-                  /* @__PURE__ */ jsx("span", { className: "font-semibold text-base sm:text-lg text-white", children: item.question }),
-                  /* @__PURE__ */ jsx(
-                    "div",
-                    {
-                      className: `shrink-0 w-8 h-8 rounded-full flex items-center justify-center apple-glass transition-transform duration-300 ${isOpen ? "rotate-180 bg-white/10 text-white" : "text-zinc-400"}`,
-                      children: /* @__PURE__ */ jsx(ChevronDown, { className: "w-4 h-4" })
-                    }
-                  )
-                ]
-              }
-            ),
-            isOpen && /* @__PURE__ */ jsx("div", { className: "px-5 pb-6 sm:px-6 pt-0 text-sm sm:text-base text-zinc-400 leading-relaxed border-t border-white/5 mt-1 pt-4", children: item.answer })
-          ]
-        },
-        item.question
-      );
-    }) })
-  ] }) });
+          className: "absolute -top-[10%] -left-[10%] w-[550px] h-[550px] rounded-full blur-[100px] animate-mercury-blob",
+          style: {
+            background: "radial-gradient(circle, rgba(255,255,255,0.18) 0%, rgba(148,163,184,0.08) 50%, transparent 80%)",
+            animationDuration: "12s"
+          }
+        }
+      ),
+      /* @__PURE__ */ jsx(
+        "div",
+        {
+          className: "absolute top-[30%] -right-[15%] w-[650px] h-[650px] rounded-full blur-[120px] animate-mercury-blob",
+          style: {
+            background: "radial-gradient(circle, rgba(226,232,240,0.14) 0%, rgba(56,189,248,0.06) 40%, transparent 75%)",
+            animationDuration: "16s",
+            animationDelay: "-4s"
+          }
+        }
+      ),
+      /* @__PURE__ */ jsx(
+        "div",
+        {
+          className: "absolute inset-0 opacity-[0.06] animate-liquid-flow",
+          style: {
+            backgroundImage: "linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.8) 25%, transparent 50%, rgba(255,255,255,0.6) 75%, transparent 100%)"
+          }
+        }
+      ),
+      /* @__PURE__ */ jsx(
+        "div",
+        {
+          className: "absolute top-20 right-[18%] w-16 h-16 rounded-full border border-white/30 bg-gradient-to-br from-white/25 via-zinc-400/10 to-transparent shadow-[0_15px_30px_rgba(0,0,0,0.6),inset_0_2px_4px_rgba(255,255,255,0.5)] backdrop-blur-md animate-float-slow",
+          style: { animationDuration: "9s" }
+        }
+      ),
+      /* @__PURE__ */ jsx(
+        "div",
+        {
+          className: "absolute bottom-24 left-[14%] w-24 h-24 rounded-full border border-white/20 bg-gradient-to-br from-white/20 via-slate-400/10 to-transparent shadow-[0_20px_40px_rgba(0,0,0,0.7),inset_0_2px_6px_rgba(255,255,255,0.4)] backdrop-blur-md animate-float-reverse",
+          style: { animationDuration: "13s" }
+        }
+      ),
+      /* @__PURE__ */ jsx(
+        "div",
+        {
+          className: "absolute top-[55%] left-[6%] w-10 h-10 rounded-full border border-white/25 bg-gradient-to-br from-white/20 via-zinc-400/10 to-transparent shadow-[0_10px_25px_rgba(0,0,0,0.5),inset_0_1.5px_3px_rgba(255,255,255,0.5)] backdrop-blur-sm animate-float-medium",
+          style: { animationDuration: "7s" }
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-4xl relative", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mb-16 text-center", children: [
+        /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-metal-card text-xs font-mono text-zinc-300 mb-4 shadow-lg border border-white/25", children: [
+          /* @__PURE__ */ jsx(Sparkles, { className: "w-3.5 h-3.5 text-zinc-100" }),
+          /* @__PURE__ */ jsx("span", { children: "Domande Frequenti & Risposte" })
+        ] }),
+        /* @__PURE__ */ jsxs("h2", { className: "text-3xl sm:text-5xl font-extrabold tracking-tight text-white", children: [
+          "Tutto ciò che ",
+          /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "ti serve sapere." })
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "mx-auto mt-4 max-w-xl text-zinc-400 text-sm sm:text-base leading-relaxed", children: "Risposte trasparenti su architettura software, modalità di collaborazione e tempi di consegna." })
+      ] }),
+      /* @__PURE__ */ jsx("div", { className: "space-y-4", children: faqItems.map((item, idx) => {
+        const isOpen = openIndex === idx;
+        const ItemIcon = item.icon;
+        return /* @__PURE__ */ jsxs(
+          "div",
+          {
+            className: `relative rounded-3xl transition-all duration-500 overflow-hidden group ${isOpen ? "liquid-metal-card-active scale-[1.01]" : "liquid-metal-card hover:border-white/30"}`,
+            children: [
+              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-r from-transparent via-white/[0.07] to-transparent -translate-x-full group-hover:translate-x-full duration-1000" }),
+              /* @__PURE__ */ jsxs(
+                "button",
+                {
+                  type: "button",
+                  onClick: () => toggle(idx),
+                  className: "w-full flex items-center justify-between gap-4 p-5 sm:p-7 text-left cursor-pointer",
+                  "aria-expanded": isOpen,
+                  children: [
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 min-w-0", children: [
+                      /* @__PURE__ */ jsx(
+                        "div",
+                        {
+                          className: `w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 border transition-all duration-300 ${isOpen ? "bg-white/20 border-white/40 text-white shadow-[0_0_15px_rgba(255,255,255,0.3)]" : "bg-white/5 border-white/10 text-zinc-400 group-hover:text-white"}`,
+                          children: /* @__PURE__ */ jsx(ItemIcon, { className: "w-5 h-5" })
+                        }
+                      ),
+                      /* @__PURE__ */ jsxs("div", { className: "min-w-0", children: [
+                        /* @__PURE__ */ jsx("span", { className: "font-mono text-[11px] uppercase tracking-wider text-zinc-400 block mb-1", children: item.tag }),
+                        /* @__PURE__ */ jsx("h3", { className: "font-bold text-base sm:text-lg text-white leading-snug", children: item.question })
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsx(
+                      "div",
+                      {
+                        className: `shrink-0 w-9 h-9 rounded-full flex items-center justify-center border transition-all duration-300 ${isOpen ? "rotate-180 bg-white text-zinc-950 border-white shadow-[0_4px_12px_rgba(255,255,255,0.4)]" : "bg-white/5 border-white/15 text-zinc-400 group-hover:text-white group-hover:border-white/30"}`,
+                        children: /* @__PURE__ */ jsx(ChevronDown, { className: "w-4 h-4" })
+                      }
+                    )
+                  ]
+                }
+              ),
+              isOpen && /* @__PURE__ */ jsx("div", { className: "px-6 pb-7 sm:px-8 pt-1 text-sm sm:text-base text-zinc-300 leading-relaxed border-t border-white/10 mt-1", children: /* @__PURE__ */ jsx("p", { className: "pt-3", children: item.answer }) })
+            ]
+          },
+          item.question
+        );
+      }) })
+    ] })
+  ] });
 }
 const Route = createFileRoute("/")({
   head: () => ({
@@ -954,8 +1133,8 @@ function Nav() {
     { href: "#faq", label: "FAQ" },
     { href: "#contact", label: "Contatti" }
   ];
-  return /* @__PURE__ */ jsxs("header", { className: "fixed top-5 inset-x-0 z-50 px-4 sm:px-6 pointer-events-none", children: [
-    /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-4xl rounded-full apple-glass px-5 py-2.5 flex items-center justify-between pointer-events-auto shadow-2xl transition-all", children: [
+  return /* @__PURE__ */ jsxs("header", { className: "fixed top-3 sm:top-5 inset-x-0 z-50 px-3 sm:px-6 pointer-events-none", children: [
+    /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-4xl rounded-full bg-[#0a0a0c]/85 backdrop-blur-2xl border border-white/12 px-5 py-2.5 flex items-center justify-between pointer-events-auto shadow-[0_12px_35px_rgba(0,0,0,0.8)] transition-all", children: [
       /* @__PURE__ */ jsxs("a", { href: "#top", className: "flex items-center gap-2 font-mono text-xs tracking-tight group", children: [
         /* @__PURE__ */ jsx("span", { className: "w-2 h-2 rounded-full bg-emerald-400 animate-pulse" }),
         /* @__PURE__ */ jsx("span", { className: "font-semibold text-white tracking-wide group-hover:text-zinc-300 transition", children: "Walter Fida" }),
@@ -968,7 +1147,7 @@ function Nav() {
           {
             asChild: true,
             size: "sm",
-            className: "rounded-full bg-white text-zinc-950 hover:bg-zinc-200 text-xs font-medium px-4 h-8 shadow-sm transition",
+            className: "rounded-full bg-white text-zinc-950 hover:bg-zinc-200 text-xs font-medium px-4 h-8 shadow-sm transition active:scale-95",
             children: /* @__PURE__ */ jsx("a", { href: "#contact", children: "Contattami" })
           }
         ),
@@ -983,12 +1162,12 @@ function Nav() {
         )
       ] })
     ] }),
-    mobileMenuOpen && /* @__PURE__ */ jsx("div", { className: "md:hidden mt-3 mx-auto max-w-sm rounded-2xl apple-card p-5 border border-white/10 shadow-2xl pointer-events-auto", children: /* @__PURE__ */ jsx("nav", { className: "flex flex-col gap-2.5 font-medium text-sm", children: links.map((link) => /* @__PURE__ */ jsx(
+    mobileMenuOpen && /* @__PURE__ */ jsx("div", { className: "md:hidden mt-2 mx-auto max-w-sm rounded-3xl bg-[#101014]/95 backdrop-blur-3xl p-5 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.9)] pointer-events-auto", children: /* @__PURE__ */ jsx("nav", { className: "flex flex-col gap-2 font-medium text-sm", children: links.map((link) => /* @__PURE__ */ jsx(
       "a",
       {
         href: link.href,
         onClick: () => setMobileMenuOpen(false),
-        className: "px-3 py-2 rounded-lg hover:bg-white/5 text-zinc-400 hover:text-white transition",
+        className: "px-3.5 py-2.5 rounded-xl hover:bg-white/10 text-zinc-300 hover:text-white transition",
         children: link.label
       },
       link.href
@@ -996,7 +1175,7 @@ function Nav() {
   ] });
 }
 function Hero() {
-  return /* @__PURE__ */ jsx("section", { id: "top", className: "relative pt-36 sm:pt-44 pb-16 px-6 overflow-hidden", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-4xl text-center flex flex-col items-center", children: [
+  return /* @__PURE__ */ jsx("section", { id: "top", className: "relative pt-36 sm:pt-48 pb-16 px-6 overflow-hidden scroll-mt-28", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-4xl text-center flex flex-col items-center", children: [
     /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full apple-glass text-xs font-mono text-zinc-300 mb-8 border border-white/10 shadow-xl animate-float-slow", children: [
       /* @__PURE__ */ jsx("span", { className: "w-2 h-2 rounded-full bg-emerald-400 animate-pulse" }),
       /* @__PURE__ */ jsx("span", { children: "Software & Full-Stack Developer" }),
@@ -1022,7 +1201,7 @@ function Hero() {
         {
           asChild: true,
           size: "lg",
-          className: "rounded-full bg-white text-zinc-950 hover:bg-zinc-200 font-medium text-sm px-7 h-11 transition",
+          className: "rounded-full bg-white text-zinc-950 hover:bg-zinc-200 font-medium text-sm px-7 h-11 transition shadow-lg active:scale-95",
           children: /* @__PURE__ */ jsxs("a", { href: "#projects", className: "flex items-center gap-2", children: [
             "Esplora i progetti ",
             /* @__PURE__ */ jsx(ArrowRight, { className: "h-4 w-4" })
@@ -1035,7 +1214,7 @@ function Hero() {
           asChild: true,
           size: "lg",
           variant: "outline",
-          className: "rounded-full apple-glass border-white/10 hover:bg-white/10 text-white font-medium text-sm px-7 h-11 transition",
+          className: "rounded-full apple-glass border-white/10 hover:bg-white/10 text-white font-medium text-sm px-7 h-11 transition active:scale-95",
           children: /* @__PURE__ */ jsx("a", { href: "#contact", children: "Parliamo del tuo progetto" })
         }
       )
@@ -1059,222 +1238,284 @@ function Hero() {
   ] }) });
 }
 function ArchitectureSection() {
-  return /* @__PURE__ */ jsx("section", { id: "architecture", className: "relative px-6 py-12 border-t border-white/5", children: /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-6xl", children: /* @__PURE__ */ jsx(DeconstructingTerminal, {}) }) });
+  return /* @__PURE__ */ jsx("section", { id: "architecture", className: "relative px-6 py-12 border-t border-white/5 scroll-mt-28", children: /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-6xl", children: /* @__PURE__ */ jsx(DeconstructingTerminal, {}) }) });
 }
 function Projects() {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [isRevealed, setIsRevealed] = useState(false);
+  const sectionRef = useRef(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsRevealed(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
   const openProject = (p) => {
     setSelected(p);
     setActiveImageIndex(0);
     setOpen(true);
   };
-  return /* @__PURE__ */ jsx("section", { id: "projects", className: "relative px-6 py-28 border-t border-white/5", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-6xl", children: [
-    /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row md:items-end justify-between gap-4 mb-16", children: [
-      /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full apple-glass text-xs font-mono text-zinc-400 mb-3", children: [
-          /* @__PURE__ */ jsx(Layers, { className: "w-3.5 h-3.5 text-zinc-300" }),
-          "02 — Showcase Progetti"
-        ] }),
-        /* @__PURE__ */ jsxs("h2", { className: "text-3xl sm:text-5xl font-bold tracking-tight text-white", children: [
-          "Cosa ho ",
-          /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "costruito." })
-        ] })
-      ] }),
-      /* @__PURE__ */ jsx("p", { className: "text-zinc-400 max-w-md text-sm sm:text-base leading-relaxed", children: "Una selezione di progetti completati e in sviluppo: dalle applicazioni desktop per OSINT fino a piattaforme web full-stack." })
-    ] }),
-    /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 gap-7", children: projects.map((p) => /* @__PURE__ */ jsxs(
-      "article",
-      {
-        className: "group relative rounded-3xl apple-card p-7 transition-all duration-500 hover:-translate-y-1.5 hover:border-white/20 flex flex-col justify-between",
-        children: [
-          /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between gap-4 mb-3", children: [
+  return /* @__PURE__ */ jsx(
+    "section",
+    {
+      id: "projects",
+      ref: sectionRef,
+      className: "relative px-6 py-28 border-t border-white/5 scroll-mt-28",
+      children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-6xl", children: [
+        /* @__PURE__ */ jsxs(
+          "div",
+          {
+            className: `flex flex-col md:flex-row md:items-end justify-between gap-4 mb-16 transition-all duration-700 ease-out ${isRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`,
+            children: [
               /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("span", { className: "font-mono text-xs uppercase tracking-wider text-zinc-500", children: p.type }),
-                /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white tracking-tight mt-0.5 group-hover:text-zinc-200 transition-colors", children: p.name })
+                /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full apple-glass text-xs font-mono text-zinc-400 mb-3", children: [
+                  /* @__PURE__ */ jsx(Layers, { className: "w-3.5 h-3.5 text-zinc-300" }),
+                  "02 — Showcase Progetti"
+                ] }),
+                /* @__PURE__ */ jsxs("h2", { className: "text-3xl sm:text-5xl font-bold tracking-tight text-white", children: [
+                  "Cosa ho ",
+                  /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "costruito." })
+                ] })
               ] }),
-              /* @__PURE__ */ jsxs(
-                "span",
-                {
-                  className: `inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1 rounded-full border ${p.done ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-400" : "border-amber-500/20 bg-amber-500/10 text-amber-300"}`,
-                  children: [
-                    p.done ? /* @__PURE__ */ jsx(CheckCircle2, { className: "h-3.5 w-3.5" }) : /* @__PURE__ */ jsx(Loader2, { className: "h-3.5 w-3.5 animate-spin" }),
-                    p.status
-                  ]
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsx("p", { className: "text-zinc-400 text-sm sm:text-base leading-relaxed mb-6", children: p.description }),
-            p.images && p.images.length > 0 && /* @__PURE__ */ jsxs(
-              "div",
-              {
-                onClick: () => openProject(p),
-                className: "cursor-pointer mb-6 rounded-2xl overflow-hidden border border-white/10 bg-black/60 relative group/img aspect-video",
-                children: [
-                  /* @__PURE__ */ jsx(
-                    "img",
+              /* @__PURE__ */ jsx("p", { className: "text-zinc-400 max-w-md text-sm sm:text-base leading-relaxed", children: "Una selezione di progetti reali sviluppati con cura per architettura, velocità e design. Compaiono progressivamente durante lo scorrimento." })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 gap-7", children: projects.map((p, idx) => /* @__PURE__ */ jsxs(
+          "article",
+          {
+            className: `group relative rounded-3xl apple-card p-7 transition-all duration-700 ease-out flex flex-col justify-between hover:border-white/30 hover:-translate-y-2 shadow-xl ${isRevealed ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-16 scale-[0.97]"}`,
+            style: { transitionDelay: `${idx * 140}ms` },
+            children: [
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between gap-4 mb-3", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("span", { className: "font-mono text-xs uppercase tracking-wider text-zinc-500", children: p.type }),
+                    /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white tracking-tight mt-0.5 group-hover:text-zinc-200 transition-colors", children: p.name })
+                  ] }),
+                  /* @__PURE__ */ jsxs(
+                    "span",
                     {
-                      src: p.images[0],
-                      alt: p.name,
-                      className: "w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105",
-                      loading: "lazy"
+                      className: `inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1 rounded-full border ${p.done ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-400" : "border-amber-500/20 bg-amber-500/10 text-amber-300"}`,
+                      children: [
+                        p.done ? /* @__PURE__ */ jsx(CheckCircle2, { className: "h-3.5 w-3.5" }) : /* @__PURE__ */ jsx(Loader2, { className: "h-3.5 w-3.5 animate-spin" }),
+                        p.status
+                      ]
                     }
-                  ),
-                  /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-end p-4", children: /* @__PURE__ */ jsxs("span", { className: "text-xs font-mono text-zinc-200 flex items-center gap-1", children: [
-                    "Vedi galleria screenshot ",
-                    /* @__PURE__ */ jsx(ExternalLink, { className: "w-3.5 h-3.5" })
-                  ] }) })
-                ]
-              }
-            ),
-            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-6", children: p.stack.map((tech) => /* @__PURE__ */ jsx(
-              "span",
-              {
-                className: "font-mono text-xs px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-zinc-300",
-                children: tech
-              },
-              tech
-            )) })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "pt-4 border-t border-white/10 flex items-center justify-between text-sm", children: [
-            /* @__PURE__ */ jsxs(
-              "button",
-              {
-                type: "button",
-                onClick: () => openProject(p),
-                className: "font-medium text-white hover:text-zinc-300 inline-flex items-center gap-1.5 transition-colors group/btn",
-                children: [
-                  "Dettagli progetto",
-                  /* @__PURE__ */ jsx(ChevronRight, { className: "h-4 w-4 transition-transform group-hover/btn:translate-x-1" })
-                ]
-              }
-            ),
-            p.github && /* @__PURE__ */ jsxs(
-              "a",
-              {
-                href: p.github,
-                target: "_blank",
-                rel: "noreferrer",
-                className: "text-zinc-400 hover:text-white inline-flex items-center gap-1.5 transition-colors font-mono text-xs",
-                children: [
-                  /* @__PURE__ */ jsx(Github, { className: "h-4 w-4" }),
-                  "Codice GitHub"
-                ]
-              }
-            )
-          ] })
-        ]
-      },
-      p.name
-    )) }),
-    /* @__PURE__ */ jsx(
-      Dialog,
-      {
-        open,
-        onOpenChange: (val) => {
-          if (!val) setSelected(null);
-          setOpen(val);
-        },
-        children: /* @__PURE__ */ jsxs(DialogContent, { className: "max-w-3xl apple-card border border-white/15 bg-zinc-950/95 backdrop-blur-2xl text-white rounded-3xl p-6 sm:p-8", children: [
-          /* @__PURE__ */ jsxs(DialogHeader, { children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-4", children: [
-              /* @__PURE__ */ jsx("span", { className: "font-mono text-xs uppercase tracking-wider text-zinc-400", children: selected?.type }),
-              /* @__PURE__ */ jsx("span", { className: "text-xs font-mono px-2.5 py-0.5 rounded-full border border-white/15 bg-white/5 text-zinc-300", children: selected?.status })
-            ] }),
-            /* @__PURE__ */ jsx(DialogTitle, { className: "text-2xl sm:text-3xl font-bold mt-2", children: selected?.name })
-          ] }),
-          /* @__PURE__ */ jsx(DialogDescription, { className: "text-zinc-400 text-sm sm:text-base leading-relaxed mt-2", children: selected?.longDescription || selected?.description }),
-          selected?.images && selected.images.length > 0 && /* @__PURE__ */ jsxs("div", { className: "mt-6 space-y-3", children: [
-            /* @__PURE__ */ jsx("div", { className: "overflow-hidden rounded-2xl border border-white/10 bg-black/60", children: /* @__PURE__ */ jsx(
-              "img",
-              {
-                src: selected.images[activeImageIndex],
-                alt: `${selected.name} preview`,
-                className: "w-full h-auto max-h-[380px] object-contain mx-auto"
-              }
-            ) }),
-            selected.images.length > 1 && /* @__PURE__ */ jsx("div", { className: "flex gap-2.5 overflow-x-auto pb-1", children: selected.images.map((src, idx) => /* @__PURE__ */ jsx(
-              "button",
-              {
-                type: "button",
-                onClick: () => setActiveImageIndex(idx),
-                className: `rounded-xl overflow-hidden border p-0 w-24 h-16 shrink-0 transition ${idx === activeImageIndex ? "border-white ring-2 ring-white/20" : "border-white/10 opacity-50 hover:opacity-100"}`,
-                children: /* @__PURE__ */ jsx("img", { src, alt: "thumbnail", className: "w-full h-full object-cover" })
-              },
-              idx
-            )) })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "mt-6 pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-4", children: [
-            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-1.5", children: selected?.stack.map((s) => /* @__PURE__ */ jsx(
-              "span",
-              {
-                className: "font-mono text-xs px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-zinc-300",
-                children: s
-              },
-              s
-            )) }),
-            selected?.github && /* @__PURE__ */ jsx(
-              Button,
-              {
-                asChild: true,
-                size: "sm",
-                variant: "outline",
-                className: "rounded-xl apple-glass border-white/15 hover:bg-white/10",
-                children: /* @__PURE__ */ jsxs(
+                  )
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "text-zinc-400 text-sm sm:text-base leading-relaxed mb-6", children: p.description }),
+                p.images && p.images.length > 0 && /* @__PURE__ */ jsxs(
+                  "div",
+                  {
+                    onClick: () => openProject(p),
+                    className: "cursor-pointer mb-6 rounded-2xl overflow-hidden border border-white/10 bg-black/60 relative group/img aspect-video",
+                    children: [
+                      /* @__PURE__ */ jsx(
+                        "img",
+                        {
+                          src: p.images[0],
+                          alt: p.name,
+                          className: "w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-105",
+                          loading: "lazy"
+                        }
+                      ),
+                      /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-end p-4", children: /* @__PURE__ */ jsxs("span", { className: "text-xs font-mono text-zinc-200 flex items-center gap-1.5 bg-black/60 px-3 py-1.5 rounded-full border border-white/15 backdrop-blur-sm", children: [
+                        "Vedi galleria screenshot ",
+                        /* @__PURE__ */ jsx(ExternalLink, { className: "w-3.5 h-3.5" })
+                      ] }) })
+                    ]
+                  }
+                ),
+                /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-6", children: p.stack.map((tech) => /* @__PURE__ */ jsx(
+                  "span",
+                  {
+                    className: "font-mono text-xs px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-zinc-300 group-hover:border-white/20 transition-colors",
+                    children: tech
+                  },
+                  tech
+                )) })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "pt-4 border-t border-white/10 flex items-center justify-between text-sm", children: [
+                /* @__PURE__ */ jsxs(
+                  "button",
+                  {
+                    type: "button",
+                    onClick: () => openProject(p),
+                    className: "font-medium text-white hover:text-zinc-300 inline-flex items-center gap-1.5 transition-colors group/btn",
+                    children: [
+                      "Dettagli progetto",
+                      /* @__PURE__ */ jsx(ChevronRight, { className: "h-4 w-4 transition-transform group-hover/btn:translate-x-1" })
+                    ]
+                  }
+                ),
+                p.github && /* @__PURE__ */ jsxs(
                   "a",
                   {
-                    href: selected.github,
+                    href: p.github,
                     target: "_blank",
                     rel: "noreferrer",
-                    className: "inline-flex items-center gap-2 text-xs font-mono",
+                    className: "text-zinc-400 hover:text-white inline-flex items-center gap-1.5 transition-colors font-mono text-xs",
                     children: [
                       /* @__PURE__ */ jsx(Github, { className: "h-4 w-4" }),
-                      " Repository GitHub"
+                      "Codice GitHub"
                     ]
                   }
                 )
-              }
-            )
-          ] })
-        ] })
-      }
-    )
-  ] }) });
+              ] })
+            ]
+          },
+          p.name
+        )) }),
+        /* @__PURE__ */ jsx(
+          Dialog,
+          {
+            open,
+            onOpenChange: (val) => {
+              if (!val) setSelected(null);
+              setOpen(val);
+            },
+            children: /* @__PURE__ */ jsxs(DialogContent, { className: "max-w-3xl apple-card border border-white/15 bg-zinc-950/95 backdrop-blur-2xl text-white rounded-3xl p-6 sm:p-8", children: [
+              /* @__PURE__ */ jsxs(DialogHeader, { children: [
+                /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-4", children: [
+                  /* @__PURE__ */ jsx("span", { className: "font-mono text-xs uppercase tracking-wider text-zinc-400", children: selected?.type }),
+                  /* @__PURE__ */ jsx("span", { className: "text-xs font-mono px-2.5 py-0.5 rounded-full border border-white/15 bg-white/5 text-zinc-300", children: selected?.status })
+                ] }),
+                /* @__PURE__ */ jsx(DialogTitle, { className: "text-2xl sm:text-3xl font-bold mt-2", children: selected?.name })
+              ] }),
+              /* @__PURE__ */ jsx(DialogDescription, { className: "text-zinc-400 text-sm sm:text-base leading-relaxed mt-2", children: selected?.longDescription || selected?.description }),
+              selected?.images && selected.images.length > 0 && /* @__PURE__ */ jsxs("div", { className: "mt-6 space-y-3", children: [
+                /* @__PURE__ */ jsx("div", { className: "overflow-hidden rounded-2xl border border-white/10 bg-black/60", children: /* @__PURE__ */ jsx(
+                  "img",
+                  {
+                    src: selected.images[activeImageIndex],
+                    alt: `${selected.name} preview`,
+                    className: "w-full h-auto max-h-[380px] object-contain mx-auto"
+                  }
+                ) }),
+                selected.images.length > 1 && /* @__PURE__ */ jsx("div", { className: "flex gap-2.5 overflow-x-auto pb-1", children: selected.images.map((src, idx) => /* @__PURE__ */ jsx(
+                  "button",
+                  {
+                    type: "button",
+                    onClick: () => setActiveImageIndex(idx),
+                    className: `rounded-xl overflow-hidden border p-0 w-24 h-16 shrink-0 transition ${idx === activeImageIndex ? "border-white ring-2 ring-white/20" : "border-white/10 opacity-50 hover:opacity-100"}`,
+                    children: /* @__PURE__ */ jsx("img", { src, alt: "thumbnail", className: "w-full h-full object-cover" })
+                  },
+                  idx
+                )) })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "mt-6 pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-4", children: [
+                /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-1.5", children: selected?.stack.map((s) => /* @__PURE__ */ jsx(
+                  "span",
+                  {
+                    className: "font-mono text-xs px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-zinc-300",
+                    children: s
+                  },
+                  s
+                )) }),
+                selected?.github && /* @__PURE__ */ jsx(
+                  Button,
+                  {
+                    asChild: true,
+                    size: "sm",
+                    variant: "outline",
+                    className: "rounded-xl apple-glass border-white/15 hover:bg-white/10",
+                    children: /* @__PURE__ */ jsxs(
+                      "a",
+                      {
+                        href: selected.github,
+                        target: "_blank",
+                        rel: "noreferrer",
+                        className: "inline-flex items-center gap-2 text-xs font-mono",
+                        children: [
+                          /* @__PURE__ */ jsx(Github, { className: "h-4 w-4" }),
+                          " Repository GitHub"
+                        ]
+                      }
+                    )
+                  }
+                )
+              ] })
+            ] })
+          }
+        )
+      ] })
+    }
+  );
 }
 function Services() {
-  return /* @__PURE__ */ jsx("section", { id: "services", className: "relative px-6 py-28 border-t border-white/5", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-6xl", children: [
-    /* @__PURE__ */ jsxs("div", { className: "mb-16 max-w-2xl", children: [
-      /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full apple-glass text-xs font-mono text-zinc-400 mb-3", children: [
-        /* @__PURE__ */ jsx(Sparkles, { className: "w-3.5 h-3.5 text-zinc-300" }),
-        "03 — Servizi & Competenze"
-      ] }),
-      /* @__PURE__ */ jsxs("h2", { className: "text-3xl sm:text-5xl font-bold tracking-tight text-white", children: [
-        "Soluzioni progettate per ",
-        /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "durare." })
-      ] }),
-      /* @__PURE__ */ jsx("p", { className: "mt-4 text-zinc-400 text-sm sm:text-base leading-relaxed", children: "Dalla digitalizzazione di attività locali fino ad architetture scalabili: sviluppo software stabile, veloce e senza dipendenze fragili." })
-    ] }),
-    /* @__PURE__ */ jsx("div", { className: "grid sm:grid-cols-2 lg:grid-cols-3 gap-6", children: services.map((s) => /* @__PURE__ */ jsxs(
-      "div",
-      {
-        className: "rounded-3xl apple-card p-7 transition-all duration-300 hover:border-white/20 hover:-translate-y-1 flex flex-col justify-between group",
-        children: [
-          /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx("div", { className: "w-11 h-11 rounded-2xl bg-white/5 border border-white/10 text-zinc-200 flex items-center justify-center mb-5 group-hover:bg-white/10 transition-colors", children: /* @__PURE__ */ jsx(s.icon, { className: "h-5 w-5" }) }),
-            /* @__PURE__ */ jsx("h3", { className: "font-bold text-lg mb-2.5 text-white", children: s.title }),
-            /* @__PURE__ */ jsx("p", { className: "text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6", children: s.desc })
-          ] }),
-          /* @__PURE__ */ jsx("div", { className: "pt-4 border-t border-white/5 space-y-1.5", children: s.highlights.map((h) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-xs font-mono text-zinc-300", children: [
-            /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-white/40" }),
-            /* @__PURE__ */ jsx("span", { children: h })
-          ] }, h)) })
-        ]
+  const [isRevealed, setIsRevealed] = useState(false);
+  const sectionRef = useRef(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsRevealed(true);
+        }
       },
-      s.title
-    )) })
-  ] }) });
+      { threshold: 0.1 }
+    );
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
+  return /* @__PURE__ */ jsx(
+    "section",
+    {
+      id: "services",
+      ref: sectionRef,
+      className: "relative px-6 py-28 border-t border-white/5 scroll-mt-28",
+      children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-6xl", children: [
+        /* @__PURE__ */ jsxs(
+          "div",
+          {
+            className: `mb-16 max-w-2xl transition-all duration-700 ease-out ${isRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`,
+            children: [
+              /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full apple-glass text-xs font-mono text-zinc-400 mb-3", children: [
+                /* @__PURE__ */ jsx(Sparkles, { className: "w-3.5 h-3.5 text-zinc-300" }),
+                "03 — Servizi & Competenze"
+              ] }),
+              /* @__PURE__ */ jsxs("h2", { className: "text-3xl sm:text-5xl font-bold tracking-tight text-white", children: [
+                "Soluzioni progettate per ",
+                /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "durare." })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "mt-4 text-zinc-400 text-sm sm:text-base leading-relaxed", children: "Dalla digitalizzazione di attività locali fino ad architetture scalabili: sviluppo software stabile, veloce e senza dipendenze fragili." })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsx("div", { className: "grid sm:grid-cols-2 lg:grid-cols-3 gap-6", children: services.map((s, idx) => /* @__PURE__ */ jsxs(
+          "div",
+          {
+            className: `rounded-3xl apple-card p-7 transition-all duration-700 ease-out hover:border-white/25 hover:-translate-y-1.5 flex flex-col justify-between group shadow-lg ${isRevealed ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-12 scale-[0.98]"}`,
+            style: { transitionDelay: `${idx * 100}ms` },
+            children: [
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("div", { className: "w-11 h-11 rounded-2xl bg-white/5 border border-white/10 text-zinc-200 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-white/10 transition-all", children: /* @__PURE__ */ jsx(s.icon, { className: "h-5 w-5" }) }),
+                /* @__PURE__ */ jsx("h3", { className: "font-bold text-lg mb-2.5 text-white", children: s.title }),
+                /* @__PURE__ */ jsx("p", { className: "text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6", children: s.desc })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "pt-4 border-t border-white/5 space-y-1.5", children: s.highlights.map((h) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-xs font-mono text-zinc-300", children: [
+                /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-white/40" }),
+                /* @__PURE__ */ jsx("span", { children: h })
+              ] }, h)) })
+            ]
+          },
+          s.title
+        )) })
+      ] })
+    }
+  );
 }
 function Contact() {
   const [sending, setSending] = useState(false);
@@ -1322,7 +1563,7 @@ function Contact() {
       href: "https://github.com/Walterinho07"
     }
   ];
-  return /* @__PURE__ */ jsx("section", { id: "contact", className: "relative px-6 py-28 border-t border-white/5", children: /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-6xl", children: /* @__PURE__ */ jsxs("div", { className: "grid lg:grid-cols-12 gap-12 items-start", children: [
+  return /* @__PURE__ */ jsx("section", { id: "contact", className: "relative px-6 py-28 border-t border-white/5 scroll-mt-28", children: /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-6xl", children: /* @__PURE__ */ jsxs("div", { className: "grid lg:grid-cols-12 gap-12 items-start", children: [
     /* @__PURE__ */ jsxs("div", { className: "lg:col-span-6", children: [
       /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full apple-glass text-xs font-mono text-zinc-400 mb-3", children: [
         /* @__PURE__ */ jsx(Mail, { className: "w-3.5 h-3.5 text-zinc-300" }),
@@ -1422,7 +1663,7 @@ function Contact() {
               {
                 type: "submit",
                 disabled: sending,
-                className: "w-full rounded-xl bg-white text-zinc-950 hover:bg-zinc-200 h-12 font-medium mt-2 transition",
+                className: "w-full rounded-xl bg-white text-zinc-950 hover:bg-zinc-200 h-12 font-medium mt-2 transition active:scale-95 shadow-lg",
                 children: sending ? /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2", children: [
                   /* @__PURE__ */ jsx(Loader2, { className: "h-4 w-4 animate-spin" }),
                   " Invio in corso..."

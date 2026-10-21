@@ -4,13 +4,11 @@ import {
   Layers,
   Terminal,
   FileCode2,
-  Cpu,
   Shield,
   Copy,
   Check,
   Maximize2,
   Minimize2,
-  Sparkles,
   ArrowDown,
 } from "lucide-react";
 
@@ -18,8 +16,18 @@ export function DeconstructingTerminal() {
   const [activeTab, setActiveTab] = useState<"profile" | "stack" | "cli">("profile");
   const [copied, setCopied] = useState(false);
   const [isDeconstructed, setIsDeconstructed] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Detect mobile view to disable heavy 3D transforms on mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile, { passive: true });
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Track scroll position of the section to trigger smooth decomposition
   useEffect(() => {
@@ -33,7 +41,6 @@ export function DeconstructingTerminal() {
       const end = windowHeight * 0.25;
       const progress = Math.min(Math.max((start - rect.top) / (start - end), 0), 1);
 
-      setScrollProgress(progress);
       if (progress > 0.45 && !isDeconstructed) {
         setIsDeconstructed(true);
       } else if (progress < 0.2 && isDeconstructed) {
@@ -53,9 +60,9 @@ export function DeconstructingTerminal() {
   };
 
   return (
-    <div ref={containerRef} className="relative w-full py-12 transition-all duration-700">
+    <div ref={containerRef} className="relative w-full py-8 sm:py-12 transition-all duration-700">
       {/* Interactive Control Pill (Apple Minimal Dynamic Island Style) */}
-      <div className="flex items-center justify-between max-w-xl mx-auto mb-6 px-4">
+      <div className="flex flex-wrap items-center justify-between gap-3 max-w-xl mx-auto mb-6 px-4">
         <div className="inline-flex items-center gap-2 text-xs font-mono text-zinc-400">
           <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
           <span>Architettura Software</span>
@@ -68,7 +75,7 @@ export function DeconstructingTerminal() {
         <button
           type="button"
           onClick={() => setIsDeconstructed(!isDeconstructed)}
-          className="inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1 rounded-full apple-glass text-zinc-300 hover:text-white hover:border-white/20 transition-all cursor-pointer"
+          className="inline-flex items-center gap-1.5 text-xs font-mono px-3.5 py-1.5 rounded-full apple-glass text-zinc-300 hover:text-white hover:border-white/25 transition-all cursor-pointer shadow-sm active:scale-95"
         >
           {isDeconstructed ? (
             <>
@@ -85,12 +92,12 @@ export function DeconstructingTerminal() {
       </div>
 
       {/* Main Perspective Container */}
-      <div className="perspective-1400 w-full max-w-5xl mx-auto">
+      <div className="md:perspective-1400 w-full max-w-5xl mx-auto">
         {!isDeconstructed ? (
           /* ==============================================================
              STATE A: COMPACT MONOLITHIC APPLE TERMINAL
              ============================================================== */
-          <div className="relative max-w-2xl mx-auto group">
+          <div className="relative max-w-2xl mx-auto group px-2 sm:px-0">
             {/* Soft Titanium Reflected Glow */}
             <div className="absolute -inset-1 rounded-3xl bg-gradient-to-b from-white/10 to-transparent blur-2xl opacity-40 group-hover:opacity-60 transition duration-700" />
 
@@ -102,21 +109,21 @@ export function DeconstructingTerminal() {
 
             <div className="relative rounded-2xl apple-card overflow-hidden shadow-2xl transition-transform duration-500 hover:scale-[1.01]">
               {/* macOS Window Title Bar */}
-              <div className="flex items-center justify-between px-4 py-3 bg-zinc-950/60 border-b border-white/10 select-none">
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-[#ff5f56]/90 border border-[#ff5f56]/30 inline-block" />
-                  <span className="w-3 h-3 rounded-full bg-[#ffbd2e]/90 border border-[#ffbd2e]/30 inline-block" />
-                  <span className="w-3 h-3 rounded-full bg-[#27c93f]/90 border border-[#27c93f]/30 inline-block" />
-                  <span className="ml-2 font-mono text-xs text-zinc-400">
+              <div className="flex items-center justify-between px-3 sm:px-4 py-3 bg-zinc-950/60 border-b border-white/10 select-none">
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#ff5f56]/90 border border-[#ff5f56]/30 inline-block" />
+                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#ffbd2e]/90 border border-[#ffbd2e]/30 inline-block" />
+                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#27c93f]/90 border border-[#27c93f]/30 inline-block" />
+                  <span className="ml-1.5 font-mono text-[11px] text-zinc-400 hidden md:inline">
                     walter@developer-studio: ~
                   </span>
                 </div>
 
                 {/* Tabs */}
-                <div className="flex items-center gap-1 font-mono text-xs">
+                <div className="flex items-center gap-1 font-mono text-xs overflow-x-auto py-0.5">
                   <button
                     onClick={() => setActiveTab("profile")}
-                    className={`flex items-center gap-1.5 px-3 py-1 rounded-lg transition ${
+                    className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-lg text-xs whitespace-nowrap transition ${
                       activeTab === "profile"
                         ? "bg-white/10 text-white font-medium"
                         : "text-zinc-400 hover:text-white"
@@ -127,7 +134,7 @@ export function DeconstructingTerminal() {
                   </button>
                   <button
                     onClick={() => setActiveTab("stack")}
-                    className={`flex items-center gap-1.5 px-3 py-1 rounded-lg transition ${
+                    className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-lg text-xs whitespace-nowrap transition ${
                       activeTab === "stack"
                         ? "bg-white/10 text-white font-medium"
                         : "text-zinc-400 hover:text-white"
@@ -138,7 +145,7 @@ export function DeconstructingTerminal() {
                   </button>
                   <button
                     onClick={() => setActiveTab("cli")}
-                    className={`flex items-center gap-1.5 px-3 py-1 rounded-lg transition ${
+                    className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-lg text-xs whitespace-nowrap transition ${
                       activeTab === "cli"
                         ? "bg-white/10 text-white font-medium"
                         : "text-zinc-400 hover:text-white"
@@ -152,7 +159,7 @@ export function DeconstructingTerminal() {
                 <button
                   onClick={copySnippet}
                   title="Copia negli appunti"
-                  className="text-zinc-400 hover:text-white transition p-1"
+                  className="text-zinc-400 hover:text-white transition p-1 shrink-0 ml-1"
                 >
                   {copied ? (
                     <Check className="w-3.5 h-3.5 text-emerald-400" />
@@ -163,7 +170,7 @@ export function DeconstructingTerminal() {
               </div>
 
               {/* Code Surface */}
-              <div className="p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto min-h-[290px] bg-black/40">
+              <div className="p-4 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto min-h-[260px] sm:min-h-[290px] bg-black/40">
                 {activeTab === "profile" && (
                   <div className="space-y-1.5 text-zinc-300">
                     <p>
@@ -254,16 +261,17 @@ export function DeconstructingTerminal() {
               </div>
 
               {/* Status bar */}
-              <div className="px-4 py-2.5 bg-zinc-950/80 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-zinc-400">
-                <div className="flex items-center gap-3">
+              <div className="px-3 sm:px-4 py-2.5 bg-zinc-950/80 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-zinc-400">
+                <div className="flex items-center gap-2 sm:gap-3">
                   <span className="flex items-center gap-1 text-emerald-400">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
                     Clean Architecture
                   </span>
-                  <span>TypeScript · UTF-8</span>
+                  <span className="hidden sm:inline">TypeScript · UTF-8</span>
                 </div>
                 <div className="flex items-center gap-1.5 text-zinc-400">
-                  <span>Scorri verso il basso per decomporre</span>
+                  <span className="hidden sm:inline">Scorri verso il basso per decomporre</span>
+                  <span className="sm:hidden">Scorri ↓</span>
                   <ArrowDown className="w-3 h-3 animate-bounce" />
                 </div>
               </div>
@@ -271,15 +279,20 @@ export function DeconstructingTerminal() {
           </div>
         ) : (
           /* ==============================================================
-             STATE B: DECONSTRUCTED / EXPLODED 3D VIEW (Scroll Triggered)
+             STATE B: DECONSTRUCTED / EXPLODED 3D VIEW (Mobile-Optimized)
              ============================================================== */
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-700">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 transition-all duration-700 px-2 sm:px-0">
             {/* Card 1: Backend Core Module */}
             <div
-              className="relative rounded-2xl apple-card p-6 border border-white/10 shadow-2xl transition-all duration-700 hover:border-sky-400/40 hover:-translate-y-2"
-              style={{
-                transform: "perspective(1000px) rotateY(-4deg) rotateX(2deg) translateZ(30px)",
-              }}
+              className="relative rounded-2xl apple-card p-6 border border-white/10 shadow-2xl transition-all duration-500 hover:border-sky-400/40 hover:-translate-y-1.5"
+              style={
+                isMobile
+                  ? undefined
+                  : {
+                      transform:
+                        "perspective(1000px) rotateY(-4deg) rotateX(2deg) translateZ(30px)",
+                    }
+              }
             >
               <div className="flex items-center justify-between mb-4">
                 <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-sky-400">
@@ -312,10 +325,14 @@ export function DeconstructingTerminal() {
 
             {/* Card 2: Interface Studio Module (Centerpiece) */}
             <div
-              className="relative rounded-2xl apple-card p-6 border border-white/15 shadow-2xl transition-all duration-700 hover:border-white/30 hover:-translate-y-2"
-              style={{
-                transform: "perspective(1000px) translateZ(60px) scale(1.02)",
-              }}
+              className="relative rounded-2xl apple-card p-6 border border-white/15 shadow-2xl transition-all duration-500 hover:border-white/30 hover:-translate-y-1.5"
+              style={
+                isMobile
+                  ? undefined
+                  : {
+                      transform: "perspective(1000px) translateZ(60px) scale(1.02)",
+                    }
+              }
             >
               <div className="flex items-center justify-between mb-4">
                 <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-white">
@@ -348,10 +365,14 @@ export function DeconstructingTerminal() {
 
             {/* Card 3: Desktop & Intelligence Module */}
             <div
-              className="relative rounded-2xl apple-card p-6 border border-white/10 shadow-2xl transition-all duration-700 hover:border-emerald-400/40 hover:-translate-y-2"
-              style={{
-                transform: "perspective(1000px) rotateY(4deg) rotateX(2deg) translateZ(30px)",
-              }}
+              className="relative rounded-2xl apple-card p-6 border border-white/10 shadow-2xl transition-all duration-500 hover:border-emerald-400/40 hover:-translate-y-1.5"
+              style={
+                isMobile
+                  ? undefined
+                  : {
+                      transform: "perspective(1000px) rotateY(4deg) rotateX(2deg) translateZ(30px)",
+                    }
+              }
             >
               <div className="flex items-center justify-between mb-4">
                 <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400">

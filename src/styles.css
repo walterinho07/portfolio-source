@@ -284,11 +284,94 @@
   animation: subtle-lens-drift 12s ease-in-out infinite;
 }
 
+@keyframes liquid-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes chrome-shimmer {
+  0% {
+    transform: translateX(-100%) rotate(25deg);
+  }
+  100% {
+    transform: translateX(200%) rotate(25deg);
+  }
+}
+
+@keyframes mercury-pulse {
+  0%,
+  100% {
+    transform: scale(1) translate(0px, 0px);
+    opacity: 0.35;
+  }
+  33% {
+    transform: scale(1.08, 0.94) translate(15px, -10px);
+    opacity: 0.55;
+  }
+  66% {
+    transform: scale(0.95, 1.05) translate(-12px, 8px);
+    opacity: 0.45;
+  }
+}
+
+.animate-liquid-flow {
+  background-size: 200% 200%;
+  animation: liquid-flow 10s ease infinite;
+}
+
+.animate-mercury-blob {
+  animation: mercury-pulse 8s ease-in-out infinite;
+}
+
+@utility liquid-metal-card {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.14) 0%, rgba(18, 18, 22, 0.8) 75%),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(140, 150, 170, 0.03) 50%,
+      rgba(255, 255, 255, 0.06) 100%
+    );
+  backdrop-filter: blur(28px) saturate(200%);
+  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 30px 60px -15px rgba(0, 0, 0, 0.8),
+    inset 0 1px 2px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.5);
+}
+
+@utility liquid-metal-card-active {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.22) 0%, rgba(22, 22, 28, 0.9) 75%),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(160, 175, 200, 0.05) 50%,
+      rgba(255, 255, 255, 0.12) 100%
+    );
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow:
+    0 35px 70px -15px rgba(0, 0, 0, 0.9),
+    0 0 35px rgba(255, 255, 255, 0.1),
+    inset 0 1.5px 3px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.6);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-float-slow,
   .animate-float-medium,
   .animate-float-reverse,
-  .animate-lens-drift {
+  .animate-lens-drift,
+  .animate-liquid-flow,
+  .animate-mercury-blob {
     animation: none !important;
     transform: none !important;
   }
