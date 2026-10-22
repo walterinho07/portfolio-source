@@ -226,8 +226,93 @@
   perspective: 1400px;
 }
 
+@utility perspective-stage-1200 {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
 @utility transform-style-3d {
   transform-style: preserve-3d;
+}
+
+/* Custom Sleek Titanium Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+@keyframes gyro-rotate-1 {
+  0% {
+    transform: rotateX(65deg) rotateY(15deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(65deg) rotateY(15deg) rotateZ(360deg);
+  }
+}
+
+@keyframes gyro-rotate-2 {
+  0% {
+    transform: rotateX(-45deg) rotateY(35deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(-45deg) rotateY(35deg) rotateZ(-360deg);
+  }
+}
+
+@keyframes chrome-orbit-pulse {
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
+  }
+  50% {
+    transform: translateY(-12px) scale(1.04);
+    filter: drop-shadow(0 0 25px rgba(56, 189, 248, 0.35));
+  }
+}
+
+@keyframes progress-orb-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 10px 2px rgba(56, 189, 248, 0.8),
+      0 0 20px 4px rgba(129, 140, 248, 0.5);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow:
+      0 0 16px 4px rgba(56, 189, 248, 1),
+      0 0 28px 6px rgba(129, 140, 248, 0.7);
+    transform: scale(1.15);
+  }
+}
+
+.animate-gyro-1 {
+  animation: gyro-rotate-1 22s linear infinite;
+}
+
+.animate-gyro-2 {
+  animation: gyro-rotate-2 18s linear infinite;
+}
+
+.animate-chrome-pulse {
+  animation: chrome-orbit-pulse 6s ease-in-out infinite;
+}
+
+.animate-progress-orb {
+  animation: progress-orb-glow 2.5s ease-in-out infinite;
 }
 
 @keyframes radar-sweep {
@@ -382,13 +467,36 @@
     inset 0 -1px 2px 0 rgba(0, 0, 0, 0.6);
 }
 
+@utility liquid-metal-modal {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.16) 0%, rgba(12, 12, 16, 0.96) 65%),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(148, 163, 184, 0.03) 50%,
+      rgba(255, 255, 255, 0.06) 100%
+    );
+  backdrop-filter: blur(32px) saturate(210%);
+  -webkit-backdrop-filter: blur(32px) saturate(210%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 40px 90px -20px rgba(0, 0, 0, 0.95),
+    0 0 50px rgba(255, 255, 255, 0.08),
+    inset 0 1.5px 3px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.6);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-float-slow,
   .animate-float-medium,
   .animate-float-reverse,
   .animate-lens-drift,
   .animate-liquid-flow,
-  .animate-mercury-blob {
+  .animate-mercury-blob,
+  .animate-gyro-1,
+  .animate-gyro-2,
+  .animate-chrome-pulse,
+  .animate-progress-orb {
     animation: none !important;
     transform: none !important;
   }

@@ -24,6 +24,72 @@ const stackList = [
   "Git & GitHub",
 ];
 
+/* -------------------------------------------------------------------------
+   Spatial Bento Tile with 3D Mouse Tilt & Specular Shine
+   ------------------------------------------------------------------------- */
+function SpatialBentoTile({
+  children,
+  className = "",
+  delay = "0ms",
+  isVisible = false,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  delay?: string;
+  isVisible?: boolean;
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [rotate, setRotate] = useState({ x: 0, y: 0 });
+  const [spotlight, setSpotlight] = useState({ x: 50, y: 50, opacity: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current || window.innerWidth < 1024) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((y - centerY) / centerY) * -5;
+    const rotateY = ((x - centerX) / centerX) * 5;
+    setRotate({ x: rotateX, y: rotateY });
+    setSpotlight({
+      x: (x / rect.width) * 100,
+      y: (y / rect.height) * 100,
+      opacity: 0.16,
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setRotate({ x: 0, y: 0 });
+    setSpotlight((prev) => ({ ...prev, opacity: 0 }));
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transform: `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
+        transformStyle: "preserve-3d",
+        transitionDelay: delay,
+      }}
+      className={`relative rounded-3xl apple-card overflow-hidden group hover:border-white/35 transition-all duration-700 ease-out shadow-2xl ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+      } ${className}`}
+    >
+      <div
+        className="pointer-events-none absolute -inset-px rounded-3xl transition-opacity duration-300 z-30 hidden lg:block"
+        style={{
+          opacity: spotlight.opacity,
+          background: `radial-gradient(circle 300px at ${spotlight.x}% ${spotlight.y}%, rgba(255, 255, 255, 0.25), transparent 70%)`,
+        }}
+      />
+      {children}
+    </div>
+  );
+}
+
 export function BentoAbout() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -72,14 +138,13 @@ export function BentoAbout() {
           </p>
         </div>
 
-        {/* Animated Bento Grid */}
+        {/* Animated Bento Grid with 3D Spatial Tilt */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {/* Bento Tile 1: Main Philosophy (Spans 2 cols) */}
-          <div
-            className={`md:col-span-2 lg:col-span-2 rounded-3xl apple-card p-7 sm:p-8 relative overflow-hidden group hover:border-white/25 transition-all duration-700 ease-out ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-            }`}
-            style={{ transitionDelay: "100ms" }}
+          <SpatialBentoTile
+            className="md:col-span-2 lg:col-span-2 p-7 sm:p-8"
+            delay="100ms"
+            isVisible={isVisible}
           >
             {/* Subtle Specular Horizon Shine */}
             <div className="absolute top-0 right-0 w-80 h-80 bg-white/[0.03] rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-700" />
@@ -129,15 +194,10 @@ export function BentoAbout() {
               <span>·</span>
               <span>Codice leggibile & documentato</span>
             </div>
-          </div>
+          </SpatialBentoTile>
 
           {/* Bento Tile 2: Backend Architecture */}
-          <div
-            className={`rounded-3xl apple-card p-7 relative overflow-hidden group hover:border-white/25 transition-all duration-700 ease-out ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-            }`}
-            style={{ transitionDelay: "200ms" }}
-          >
+          <SpatialBentoTile className="p-7" delay="200ms" isVisible={isVisible}>
             <div className="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-zinc-200 mb-5 group-hover:scale-105 group-hover:border-sky-400/30 transition-all">
               <Server className="w-5 h-5 text-sky-400" />
             </div>
@@ -153,15 +213,10 @@ export function BentoAbout() {
               <Activity className="w-3 h-3" />
               <span>High Throughput</span>
             </div>
-          </div>
+          </SpatialBentoTile>
 
           {/* Bento Tile 3: Desktop Systems */}
-          <div
-            className={`rounded-3xl apple-card p-7 relative overflow-hidden group hover:border-white/25 transition-all duration-700 ease-out ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-            }`}
-            style={{ transitionDelay: "300ms" }}
-          >
+          <SpatialBentoTile className="p-7" delay="300ms" isVisible={isVisible}>
             <div className="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-zinc-200 mb-5 group-hover:scale-105 group-hover:border-emerald-400/30 transition-all">
               <Monitor className="w-5 h-5 text-emerald-400" />
             </div>
@@ -177,14 +232,13 @@ export function BentoAbout() {
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
               <span>Native Execution</span>
             </div>
-          </div>
+          </SpatialBentoTile>
 
           {/* Bento Tile 4: Frontend & Typography (Spans 2 cols) */}
-          <div
-            className={`md:col-span-2 lg:col-span-2 rounded-3xl apple-card p-7 relative overflow-hidden group hover:border-white/25 transition-all duration-700 ease-out ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-            }`}
-            style={{ transitionDelay: "400ms" }}
+          <SpatialBentoTile
+            className="md:col-span-2 lg:col-span-2 p-7"
+            delay="400ms"
+            isVisible={isVisible}
           >
             <div className="flex items-center gap-3.5 mb-4">
               <div className="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-zinc-200 group-hover:scale-105 transition-all">
@@ -211,14 +265,13 @@ export function BentoAbout() {
                 </span>
               ))}
             </div>
-          </div>
+          </SpatialBentoTile>
 
           {/* Bento Tile 5: Location & Availability (Spans 2 cols) */}
-          <div
-            className={`md:col-span-2 lg:col-span-2 rounded-3xl apple-card p-7 relative overflow-hidden group hover:border-white/25 transition-all duration-700 ease-out flex flex-col justify-between ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-            }`}
-            style={{ transitionDelay: "500ms" }}
+          <SpatialBentoTile
+            className="md:col-span-2 lg:col-span-2 p-7 flex flex-col justify-between"
+            delay="500ms"
+            isVisible={isVisible}
           >
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-3.5">
@@ -243,7 +296,7 @@ export function BentoAbout() {
               Supporto attività locali e aziende su tutto il territorio nazionale con sviluppo
               dedicato da remoto, comunicazione costante e deliverable chiari.
             </p>
-          </div>
+          </SpatialBentoTile>
         </div>
       </div>
     </section>

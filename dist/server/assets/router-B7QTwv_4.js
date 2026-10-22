@@ -4,13 +4,13 @@ import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { Toaster as Toaster$1, toast } from "sonner";
 import * as React from "react";
 import { useState, useRef, useEffect } from "react";
-import { X, Minimize2, Maximize2, FileCode2, Layers, Terminal, Check, Copy, ArrowDown, Server, Shield, TerminalSquare, Code2, Sparkles, CheckCircle, Activity, Monitor, MapPin, Zap, ShieldCheck, HelpCircle, ChevronDown, Menu, ArrowRight, Github, Globe, Calendar, Wrench, Briefcase, Mail, MessageCircle, Linkedin, Loader2, CheckCircle2, ExternalLink, ChevronRight } from "lucide-react";
+import { X, Cpu, Minimize2, Maximize2, FileCode2, Layers, Terminal, Check, Copy, ArrowRight, Server, Database, Radio, Shield, Play, Globe, TerminalSquare, Code2, Sparkles, CheckCircle, Activity, Monitor, MapPin, Zap, ShieldCheck, HelpCircle, ChevronDown, Menu, Github, Calendar, Wrench, Briefcase, Mail, MessageCircle, Linkedin, Loader2, CheckCircle2, ExternalLink, ChevronRight } from "lucide-react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-const appCss = "/assets/styles-BD7Ryr5s.css";
+const appCss = "/assets/styles-BE6I2g_m.css";
 const Toaster = ({ ...props }) => {
   return /* @__PURE__ */ jsx(
     Toaster$1,
@@ -217,15 +217,15 @@ const DialogContent = React.forwardRef(({ className, children, ...props }, ref) 
     {
       ref,
       className: cn(
-        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:rounded-lg",
+        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg max-h-[92vh] overflow-y-auto custom-scrollbar translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-2xl duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:rounded-2xl",
         className
       ),
       ...props,
       children: [
         children,
-        /* @__PURE__ */ jsxs(DialogPrimitive.Close, { className: "absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background cursor-pointer transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground", children: [
+        /* @__PURE__ */ jsxs(DialogPrimitive.Close, { className: "absolute right-4 top-4 z-50 flex items-center justify-center w-8 h-8 rounded-full bg-white/10 hover:bg-white/25 border border-white/25 text-white/80 hover:text-white backdrop-blur-xl shadow-lg transition-all duration-200 active:scale-90 cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/40", children: [
           /* @__PURE__ */ jsx(X, { className: "h-4 w-4" }),
-          /* @__PURE__ */ jsx("span", { className: "sr-only", children: "Close" })
+          /* @__PURE__ */ jsx("span", { className: "sr-only", children: "Chiudi" })
         ] })
       ]
     }
@@ -263,6 +263,22 @@ function AntigravityBackground() {
         /* @__PURE__ */ jsx("div", { className: "absolute top-[35%] -right-[10%] w-[650px] h-[650px] rounded-full bg-sky-500/[0.035] blur-[150px] animate-float-slow" }),
         /* @__PURE__ */ jsx("div", { className: "absolute top-[65%] left-[5%] w-[500px] h-[500px] rounded-full bg-zinc-300/[0.03] blur-[130px] animate-float-reverse" }),
         /* @__PURE__ */ jsx("div", { className: "absolute -bottom-[15%] right-[20%] w-[700px] h-[700px] rounded-full bg-slate-500/[0.03] blur-[160px]" }),
+        /* @__PURE__ */ jsx("div", { className: "absolute top-[18%] right-[18%] w-80 h-80 perspective-stage-1200 opacity-25 pointer-events-none", children: /* @__PURE__ */ jsx("div", { className: "w-full h-full rounded-full border border-sky-400/30 animate-gyro-1 shadow-[0_0_25px_rgba(56,189,248,0.15)]" }) }),
+        /* @__PURE__ */ jsx("div", { className: "absolute top-[55%] left-[10%] w-96 h-96 perspective-stage-1200 opacity-20 pointer-events-none", children: /* @__PURE__ */ jsx("div", { className: "w-full h-full rounded-full border border-indigo-400/25 animate-gyro-2 shadow-[0_0_30px_rgba(129,140,248,0.12)]" }) }),
+        /* @__PURE__ */ jsx(
+          "div",
+          {
+            className: "absolute top-[28%] right-[12%] w-20 h-20 rounded-full border border-white/35 bg-gradient-to-br from-white/30 via-slate-400/15 to-transparent shadow-[0_20px_45px_rgba(0,0,0,0.85),inset_0_2px_5px_rgba(255,255,255,0.6)] backdrop-blur-md animate-chrome-pulse pointer-events-none",
+            style: { animationDuration: "8s" }
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          "div",
+          {
+            className: "absolute bottom-[22%] left-[8%] w-28 h-28 rounded-full border border-white/25 bg-gradient-to-br from-white/20 via-zinc-400/10 to-transparent shadow-[0_25px_50px_rgba(0,0,0,0.9),inset_0_2px_6px_rgba(255,255,255,0.4)] backdrop-blur-md animate-float-slow pointer-events-none",
+            style: { animationDuration: "11s" }
+          }
+        ),
         /* @__PURE__ */ jsx(
           "div",
           {
@@ -273,29 +289,8 @@ function AntigravityBackground() {
         /* @__PURE__ */ jsx(
           "div",
           {
-            className: "absolute top-[42%] right-[7%] w-48 h-48 rounded-full border border-white/[0.06] bg-white/[0.01] backdrop-blur-[8px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] animate-float-reverse",
+            className: "absolute top-[42%] right-[7%] w-44 h-44 rounded-full border border-white/[0.06] bg-white/[0.01] backdrop-blur-[8px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] animate-float-reverse",
             style: { animationDuration: "16s" }
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          "div",
-          {
-            className: "absolute top-[75%] left-[12%] w-24 h-24 rounded-full border border-white/[0.07] bg-white/[0.015] backdrop-blur-[5px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)] animate-float-medium",
-            style: { animationDuration: "11s" }
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          "div",
-          {
-            className: "absolute top-[20%] right-[22%] w-72 h-72 rounded-full border border-white/[0.04] animate-float-slow pointer-events-none",
-            style: { animationDuration: "20s" }
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          "div",
-          {
-            className: "absolute top-[60%] left-[25%] w-96 h-96 rounded-full border border-white/[0.03] animate-float-reverse pointer-events-none",
-            style: { animationDuration: "24s" }
           }
         ),
         /* @__PURE__ */ jsx(
@@ -311,365 +306,568 @@ function AntigravityBackground() {
     }
   );
 }
+function SpatialCard({
+  children,
+  className = "",
+  baseTransform = "",
+  isMobile = false
+}) {
+  const cardRef = useRef(null);
+  const [rotate, setRotate] = useState({ x: 0, y: 0 });
+  const [spotlight, setSpotlight] = useState({ x: 50, y: 50, opacity: 0 });
+  const handleMouseMove = (e) => {
+    if (isMobile || !cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = (y - centerY) / centerY * -7;
+    const rotateY = (x - centerX) / centerX * 7;
+    setRotate({ x: rotateX, y: rotateY });
+    setSpotlight({
+      x: x / rect.width * 100,
+      y: y / rect.height * 100,
+      opacity: 0.18
+    });
+  };
+  const handleMouseLeave = () => {
+    setRotate({ x: 0, y: 0 });
+    setSpotlight((prev) => ({ ...prev, opacity: 0 }));
+  };
+  return /* @__PURE__ */ jsxs(
+    "div",
+    {
+      ref: cardRef,
+      onMouseMove: handleMouseMove,
+      onMouseLeave: handleMouseLeave,
+      className: `relative transition-transform duration-200 ease-out will-change-transform ${className}`,
+      style: isMobile ? void 0 : {
+        transform: `${baseTransform} rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
+        transformStyle: "preserve-3d"
+      },
+      children: [
+        !isMobile && /* @__PURE__ */ jsx(
+          "div",
+          {
+            className: "pointer-events-none absolute -inset-px rounded-[inherit] transition-opacity duration-300 z-30",
+            style: {
+              opacity: spotlight.opacity,
+              background: `radial-gradient(circle 320px at ${spotlight.x}% ${spotlight.y}%, rgba(255, 255, 255, 0.35), transparent 70%)`
+            }
+          }
+        ),
+        children
+      ]
+    }
+  );
+}
 function DeconstructingTerminal() {
   const [activeTab, setActiveTab] = useState("profile");
   const [copied, setCopied] = useState(false);
   const [isDeconstructed, setIsDeconstructed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [apiSimulating, setApiSimulating] = useState(false);
+  const [apiResponse, setApiResponse] = useState(null);
   const containerRef = useRef(null);
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 1024);
     };
     checkMobile();
     window.addEventListener("resize", checkMobile, { passive: true });
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      const start = windowHeight * 0.85;
-      const end = windowHeight * 0.25;
-      const progress = Math.min(Math.max((start - rect.top) / (start - end), 0), 1);
-      if (progress > 0.45 && !isDeconstructed) {
-        setIsDeconstructed(true);
-      } else if (progress < 0.2 && isDeconstructed) {
-        setIsDeconstructed(false);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (!containerRef.current) return;
+          const rect = containerRef.current.getBoundingClientRect();
+          const windowHeight = window.innerHeight;
+          if (rect.top < windowHeight * 0.45 && rect.bottom > windowHeight * 0.25) {
+            setIsDeconstructed(true);
+          } else if (rect.top > windowHeight * 0.75) {
+            setIsDeconstructed(false);
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isDeconstructed]);
+  }, []);
   const copySnippet = () => {
     setCopied(true);
-    navigator.clipboard?.writeText("git clone https://github.com/Walterinho07/walter-portfolio");
+    navigator.clipboard?.writeText("git clone https://github.com/walterinho07/portfolio-source");
     setTimeout(() => setCopied(false), 2e3);
   };
-  return /* @__PURE__ */ jsxs("div", { ref: containerRef, className: "relative w-full py-8 sm:py-12 transition-all duration-700", children: [
-    /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center justify-between gap-3 max-w-xl mx-auto mb-6 px-4", children: [
-      /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 text-xs font-mono text-zinc-400", children: [
-        /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" }),
-        /* @__PURE__ */ jsx("span", { children: "Architettura Software" }),
-        /* @__PURE__ */ jsx("span", { className: "text-zinc-600", children: "·" }),
-        /* @__PURE__ */ jsx("span", { className: "text-zinc-500", children: isDeconstructed ? "Vista Decomposta (Exploded)" : "Terminale Compatto" })
-      ] }),
-      /* @__PURE__ */ jsx(
-        "button",
-        {
-          type: "button",
-          onClick: () => setIsDeconstructed(!isDeconstructed),
-          className: "inline-flex items-center gap-1.5 text-xs font-mono px-3.5 py-1.5 rounded-full apple-glass text-zinc-300 hover:text-white hover:border-white/25 transition-all cursor-pointer shadow-sm active:scale-95",
-          children: isDeconstructed ? /* @__PURE__ */ jsxs(Fragment, { children: [
-            /* @__PURE__ */ jsx(Minimize2, { className: "w-3.5 h-3.5 text-sky-400" }),
-            /* @__PURE__ */ jsx("span", { children: "Compatta Terminale" })
-          ] }) : /* @__PURE__ */ jsxs(Fragment, { children: [
-            /* @__PURE__ */ jsx(Maximize2, { className: "w-3.5 h-3.5 text-sky-400" }),
-            /* @__PURE__ */ jsx("span", { children: "Decomponi Vista 3D" })
-          ] })
-        }
-      )
-    ] }),
-    /* @__PURE__ */ jsx("div", { className: "md:perspective-1400 w-full max-w-5xl mx-auto", children: !isDeconstructed ? (
-      /* ==============================================================
-         STATE A: COMPACT MONOLITHIC APPLE TERMINAL
-         ============================================================== */
-      /* @__PURE__ */ jsxs("div", { className: "relative max-w-2xl mx-auto group px-2 sm:px-0", children: [
-        /* @__PURE__ */ jsx("div", { className: "absolute -inset-1 rounded-3xl bg-gradient-to-b from-white/10 to-transparent blur-2xl opacity-40 group-hover:opacity-60 transition duration-700" }),
-        /* @__PURE__ */ jsxs("div", { className: "hidden sm:flex absolute -top-4 -right-3 z-20 items-center gap-2 px-3 py-1 rounded-full apple-glass border border-white/10 text-[11px] font-mono text-zinc-300 shadow-xl animate-float-slow", children: [
-          /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" }),
-          /* @__PURE__ */ jsx("span", { children: "Core Engine Active" })
+  const simulateApiTest = () => {
+    setApiSimulating(true);
+    setApiResponse(null);
+    setTimeout(() => {
+      setApiSimulating(false);
+      setApiResponse("200 OK · 14ms · PostgreSQL Pool: 8/10 active connections");
+    }, 600);
+  };
+  return /* @__PURE__ */ jsxs(
+    "div",
+    {
+      ref: containerRef,
+      className: "relative w-full py-16 sm:py-24 transition-all duration-700 overflow-visible",
+      children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row items-center justify-between gap-4 max-w-5xl mx-auto mb-10 px-4", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-sky-400 shadow-inner", children: /* @__PURE__ */ jsx(Cpu, { className: "w-4 h-4 animate-pulse" }) }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-xs font-mono text-zinc-300", children: [
+                /* @__PURE__ */ jsx("span", { className: "font-semibold text-white", children: "Architettura Software" }),
+                /* @__PURE__ */ jsx("span", { className: "text-zinc-600", children: "/" }),
+                /* @__PURE__ */ jsx("span", { className: "text-sky-400", children: isDeconstructed ? "Vista Decomposta 3D Spaziale" : "Terminale Monolitico" })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-[11px] font-mono text-zinc-500", children: isDeconstructed ? "Moduli distribuiti in 3D: Backend, Frontend & Desktop Nativo" : "Scorri in basso o usa il toggle per decomporre l'architettura" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "flex items-center gap-2", children: /* @__PURE__ */ jsx(
+            "button",
+            {
+              type: "button",
+              onClick: () => setIsDeconstructed(!isDeconstructed),
+              className: "inline-flex items-center gap-2 text-xs font-mono px-4 py-2 rounded-full apple-glass text-zinc-200 hover:text-white hover:border-white/30 transition-all cursor-pointer shadow-lg active:scale-95 border border-white/15",
+              children: isDeconstructed ? /* @__PURE__ */ jsxs(Fragment, { children: [
+                /* @__PURE__ */ jsx(Minimize2, { className: "w-3.5 h-3.5 text-sky-400" }),
+                /* @__PURE__ */ jsx("span", { children: "Compatta Terminale" })
+              ] }) : /* @__PURE__ */ jsxs(Fragment, { children: [
+                /* @__PURE__ */ jsx(Maximize2, { className: "w-3.5 h-3.5 text-sky-400" }),
+                /* @__PURE__ */ jsx("span", { children: "Decomponi Vista 3D Spaziale" })
+              ] })
+            }
+          ) })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "relative rounded-2xl apple-card overflow-hidden shadow-2xl transition-transform duration-500 hover:scale-[1.01]", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between px-3 sm:px-4 py-3 bg-zinc-950/60 border-b border-white/10 select-none", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 shrink-0", children: [
-              /* @__PURE__ */ jsx("span", { className: "w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#ff5f56]/90 border border-[#ff5f56]/30 inline-block" }),
-              /* @__PURE__ */ jsx("span", { className: "w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#ffbd2e]/90 border border-[#ffbd2e]/30 inline-block" }),
-              /* @__PURE__ */ jsx("span", { className: "w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#27c93f]/90 border border-[#27c93f]/30 inline-block" }),
-              /* @__PURE__ */ jsx("span", { className: "ml-1.5 font-mono text-[11px] text-zinc-400 hidden md:inline", children: "walter@developer-studio: ~" })
+        /* @__PURE__ */ jsx("div", { className: "w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 perspective-stage-1200", children: !isDeconstructed ? (
+          /* ==============================================================
+             STATE A: COMPACT MONOLITHIC 3D TERMINAL (Xcode / macOS Style)
+             ============================================================== */
+          /* @__PURE__ */ jsxs("div", { className: "relative max-w-3xl mx-auto transition-all duration-700 ease-out", children: [
+            /* @__PURE__ */ jsx("div", { className: "absolute -inset-2 rounded-3xl bg-gradient-to-b from-sky-500/10 via-white/5 to-transparent blur-3xl opacity-60" }),
+            /* @__PURE__ */ jsxs("div", { className: "hidden sm:flex absolute -top-4 -right-4 z-20 items-center gap-2 px-3.5 py-1.5 rounded-full apple-glass border border-white/15 text-xs font-mono text-zinc-200 shadow-2xl animate-float-slow", children: [
+              /* @__PURE__ */ jsx("span", { className: "w-2 h-2 rounded-full bg-emerald-400 animate-pulse" }),
+              /* @__PURE__ */ jsx("span", { children: "Full-Stack Runtime Operational" })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1 font-mono text-xs overflow-x-auto py-0.5", children: [
-              /* @__PURE__ */ jsxs(
-                "button",
+            /* @__PURE__ */ jsxs(
+              SpatialCard,
+              {
+                isMobile,
+                baseTransform: "perspective(1200px) rotateX(2deg) translateY(0px)",
+                className: "relative rounded-3xl apple-card border border-white/15 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] overflow-hidden",
+                children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between px-5 py-3.5 bg-zinc-950/70 border-b border-white/10 select-none", children: [
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+                      /* @__PURE__ */ jsx("span", { className: "w-3 h-3 rounded-full bg-[#ff5f56] inline-block shadow-sm" }),
+                      /* @__PURE__ */ jsx("span", { className: "w-3 h-3 rounded-full bg-[#ffbd2e] inline-block shadow-sm" }),
+                      /* @__PURE__ */ jsx("span", { className: "w-3 h-3 rounded-full bg-[#27c93f] inline-block shadow-sm" }),
+                      /* @__PURE__ */ jsx("span", { className: "ml-2 font-mono text-xs text-zinc-400 hidden sm:inline", children: "walter@developer-studio: ~ (v21.0.4)" })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1.5 font-mono text-xs", children: [
+                      /* @__PURE__ */ jsxs(
+                        "button",
+                        {
+                          type: "button",
+                          onClick: () => setActiveTab("profile"),
+                          className: `flex items-center gap-1.5 px-3 py-1 rounded-xl transition cursor-pointer ${activeTab === "profile" ? "bg-white/15 text-white font-medium border border-white/10" : "text-zinc-400 hover:text-white"}`,
+                          children: [
+                            /* @__PURE__ */ jsx(FileCode2, { className: "w-3.5 h-3.5 text-sky-400" }),
+                            "developer.ts"
+                          ]
+                        }
+                      ),
+                      /* @__PURE__ */ jsxs(
+                        "button",
+                        {
+                          type: "button",
+                          onClick: () => setActiveTab("stack"),
+                          className: `flex items-center gap-1.5 px-3 py-1 rounded-xl transition cursor-pointer ${activeTab === "stack" ? "bg-white/15 text-white font-medium border border-white/10" : "text-zinc-400 hover:text-white"}`,
+                          children: [
+                            /* @__PURE__ */ jsx(Layers, { className: "w-3.5 h-3.5 text-indigo-400" }),
+                            "stack.json"
+                          ]
+                        }
+                      ),
+                      /* @__PURE__ */ jsxs(
+                        "button",
+                        {
+                          type: "button",
+                          onClick: () => setActiveTab("cli"),
+                          className: `flex items-center gap-1.5 px-3 py-1 rounded-xl transition cursor-pointer ${activeTab === "cli" ? "bg-white/15 text-white font-medium border border-white/10" : "text-zinc-400 hover:text-white"}`,
+                          children: [
+                            /* @__PURE__ */ jsx(Terminal, { className: "w-3.5 h-3.5 text-emerald-400" }),
+                            "bash"
+                          ]
+                        }
+                      )
+                    ] }),
+                    /* @__PURE__ */ jsx(
+                      "button",
+                      {
+                        type: "button",
+                        onClick: copySnippet,
+                        title: "Copia comando git",
+                        className: "p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-white/10 transition cursor-pointer",
+                        children: copied ? /* @__PURE__ */ jsx(Check, { className: "w-4 h-4 text-emerald-400" }) : /* @__PURE__ */ jsx(Copy, { className: "w-4 h-4" })
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "p-6 sm:p-8 font-mono text-xs sm:text-sm bg-black/60 min-h-[290px] leading-relaxed", children: [
+                    activeTab === "profile" && /* @__PURE__ */ jsxs("div", { className: "space-y-2 text-zinc-300", children: [
+                      /* @__PURE__ */ jsx("p", { children: /* @__PURE__ */ jsx("span", { className: "text-zinc-500", children: "// Walter Fida - Developer Identity" }) }),
+                      /* @__PURE__ */ jsxs("p", { children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-sky-400 font-semibold", children: "export const" }),
+                        " ",
+                        /* @__PURE__ */ jsx("span", { className: "text-white font-semibold", children: "developer" }),
+                        " = {"
+                      ] }),
+                      /* @__PURE__ */ jsxs("p", { className: "pl-4", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: "fullName" }),
+                        ":",
+                        " ",
+                        /* @__PURE__ */ jsx("span", { className: "text-emerald-300", children: '"Walter Fida"' }),
+                        ","
+                      ] }),
+                      /* @__PURE__ */ jsxs("p", { className: "pl-4", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: "specialization" }),
+                        ":",
+                        " ",
+                        /* @__PURE__ */ jsx("span", { className: "text-emerald-300", children: '"Full-Stack Web & Desktop Java Applications"' }),
+                        ","
+                      ] }),
+                      /* @__PURE__ */ jsxs("p", { className: "pl-4", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: "coreTechnologies" }),
+                        ": [",
+                        /* @__PURE__ */ jsx("span", { className: "text-sky-300", children: '"Java"' }),
+                        ",",
+                        " ",
+                        /* @__PURE__ */ jsx("span", { className: "text-sky-300", children: '"Spring Boot 3"' }),
+                        ",",
+                        " ",
+                        /* @__PURE__ */ jsx("span", { className: "text-indigo-300", children: '"Angular"' }),
+                        ",",
+                        " ",
+                        /* @__PURE__ */ jsx("span", { className: "text-emerald-300", children: '"JavaFX"' }),
+                        "],"
+                      ] }),
+                      /* @__PURE__ */ jsxs("p", { className: "pl-4", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: "location" }),
+                        ":",
+                        " ",
+                        /* @__PURE__ */ jsx("span", { className: "text-zinc-200", children: '"Calabria, IT · Remote Available"' }),
+                        ","
+                      ] }),
+                      /* @__PURE__ */ jsxs("p", { className: "pl-4", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: "approach" }),
+                        ":",
+                        " ",
+                        /* @__PURE__ */ jsx("span", { className: "text-sky-300", children: '"Clean Architecture, Modular & Robust Code"' }),
+                        ","
+                      ] }),
+                      /* @__PURE__ */ jsx("p", { children: "};" })
+                    ] }),
+                    activeTab === "stack" && /* @__PURE__ */ jsxs("div", { className: "space-y-1.5 text-zinc-300", children: [
+                      /* @__PURE__ */ jsx("p", { children: "{" }),
+                      /* @__PURE__ */ jsxs("p", { className: "pl-4", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-sky-400", children: '"backendModule"' }),
+                        ": {"
+                      ] }),
+                      /* @__PURE__ */ jsxs("p", { className: "pl-8", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: '"runtime"' }),
+                        ":",
+                        " ",
+                        /* @__PURE__ */ jsx("span", { className: "text-zinc-200", children: '"Java 21 LTS"' }),
+                        ","
+                      ] }),
+                      /* @__PURE__ */ jsxs("p", { className: "pl-8", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: '"framework"' }),
+                        ":",
+                        " ",
+                        /* @__PURE__ */ jsx("span", { className: "text-zinc-200", children: '"Spring Boot 3 + Spring Security"' }),
+                        ","
+                      ] }),
+                      /* @__PURE__ */ jsxs("p", { className: "pl-8", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: '"storage"' }),
+                        ":",
+                        " ",
+                        /* @__PURE__ */ jsx("span", { className: "text-zinc-200", children: '"PostgreSQL / Hibernate ORM"' })
+                      ] }),
+                      /* @__PURE__ */ jsx("p", { className: "pl-4", children: "}," }),
+                      /* @__PURE__ */ jsxs("p", { className: "pl-4", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-indigo-400", children: '"frontendModule"' }),
+                        ": {"
+                      ] }),
+                      /* @__PURE__ */ jsxs("p", { className: "pl-8", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: '"ecosystem"' }),
+                        ": [",
+                        /* @__PURE__ */ jsx("span", { className: "text-zinc-200", children: '"Angular"' }),
+                        ",",
+                        " ",
+                        /* @__PURE__ */ jsx("span", { className: "text-zinc-200", children: '"TypeScript"' }),
+                        ",",
+                        " ",
+                        /* @__PURE__ */ jsx("span", { className: "text-zinc-200", children: '"React"' }),
+                        "],"
+                      ] }),
+                      /* @__PURE__ */ jsxs("p", { className: "pl-8", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: '"performance"' }),
+                        ":",
+                        " ",
+                        /* @__PURE__ */ jsx("span", { className: "text-emerald-300", children: '"60 FPS Butter-Smooth"' })
+                      ] }),
+                      /* @__PURE__ */ jsx("p", { className: "pl-4", children: "}," }),
+                      /* @__PURE__ */ jsxs("p", { className: "pl-4", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-emerald-400", children: '"desktopPlatform"' }),
+                        ": {"
+                      ] }),
+                      /* @__PURE__ */ jsxs("p", { className: "pl-8", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: '"gui"' }),
+                        ":",
+                        " ",
+                        /* @__PURE__ */ jsx("span", { className: "text-zinc-200", children: '"JavaFX Desktop Native"' }),
+                        ","
+                      ] }),
+                      /* @__PURE__ */ jsxs("p", { className: "pl-8", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: '"specialization"' }),
+                        ":",
+                        " ",
+                        /* @__PURE__ */ jsx("span", { className: "text-zinc-200", children: '"GeoShield OSINT Intelligence"' })
+                      ] }),
+                      /* @__PURE__ */ jsx("p", { className: "pl-4", children: "}" }),
+                      /* @__PURE__ */ jsx("p", { children: "}" })
+                    ] }),
+                    activeTab === "cli" && /* @__PURE__ */ jsxs("div", { className: "space-y-2 text-zinc-300", children: [
+                      /* @__PURE__ */ jsxs("div", { children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-sky-400 font-semibold", children: "$" }),
+                        " studio run --verify-architecture"
+                      ] }),
+                      /* @__PURE__ */ jsxs("div", { className: "text-zinc-400 pl-3", children: [
+                        "✓ Spring Boot 3 microservices online [port 8080]",
+                        /* @__PURE__ */ jsx("br", {}),
+                        "✓ TypeScript client strict compilation: 0 errors",
+                        /* @__PURE__ */ jsx("br", {}),
+                        "✓ JavaFX native engine initialized (GeoShield OSINT ready)"
+                      ] }),
+                      /* @__PURE__ */ jsxs("div", { className: "pt-2 text-emerald-400 pl-3 flex items-center gap-2", children: [
+                        /* @__PURE__ */ jsx("span", { className: "w-2 h-2 rounded-full bg-emerald-400 animate-ping" }),
+                        "> Architettura software attiva e collaudata."
+                      ] })
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "px-5 py-3 bg-zinc-950/80 border-t border-white/10 flex items-center justify-between text-xs font-mono text-zinc-400", children: [
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                      /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1.5 text-emerald-400", children: [
+                        /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" }),
+                        "Clean Architecture"
+                      ] }),
+                      /* @__PURE__ */ jsx("span", { className: "hidden sm:inline text-zinc-600", children: "·" }),
+                      /* @__PURE__ */ jsx("span", { className: "hidden sm:inline text-zinc-400", children: "TypeScript / Java 21" })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-sky-400", children: [
+                      /* @__PURE__ */ jsx("span", { children: "Scorri verso il basso per espandere in 3D" }),
+                      /* @__PURE__ */ jsx(ArrowRight, { className: "w-3.5 h-3.5 animate-pulse" })
+                    ] })
+                  ] })
+                ]
+              }
+            )
+          ] })
+        ) : (
+          /* ==============================================================
+             STATE B: FULL-WIDTH CINEMATIC 3D EXPLODED ARCHITECTURE
+             Spans across the entire screen (max-w-7xl) with 3D perspective,
+             dynamic mouse tilt, holographic data connectors and live tests.
+             ============================================================== */
+          /* @__PURE__ */ jsxs("div", { className: "relative transition-all duration-700 ease-out", children: [
+            /* @__PURE__ */ jsxs("div", { className: "hidden lg:block absolute top-1/2 left-[12%] right-[12%] -translate-y-1/2 h-[2px] bg-gradient-to-r from-sky-500/40 via-indigo-500/60 to-emerald-500/40 pointer-events-none z-0", children: [
+              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-white/20 blur-[2px] animate-pulse" }),
+              /* @__PURE__ */ jsx(
+                "div",
                 {
-                  onClick: () => setActiveTab("profile"),
-                  className: `flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-lg text-xs whitespace-nowrap transition ${activeTab === "profile" ? "bg-white/10 text-white font-medium" : "text-zinc-400 hover:text-white"}`,
-                  children: [
-                    /* @__PURE__ */ jsx(FileCode2, { className: "w-3.5 h-3.5 text-sky-400" }),
-                    "developer.ts"
-                  ]
+                  className: "absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-sky-400 blur-[2px] shadow-[0_0_15px_#38bdf8] animate-float-slow",
+                  style: { left: "25%" }
                 }
               ),
-              /* @__PURE__ */ jsxs(
-                "button",
+              /* @__PURE__ */ jsx(
+                "div",
                 {
-                  onClick: () => setActiveTab("stack"),
-                  className: `flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-lg text-xs whitespace-nowrap transition ${activeTab === "stack" ? "bg-white/10 text-white font-medium" : "text-zinc-400 hover:text-white"}`,
-                  children: [
-                    /* @__PURE__ */ jsx(Layers, { className: "w-3.5 h-3.5 text-zinc-300" }),
-                    "stack.json"
-                  ]
-                }
-              ),
-              /* @__PURE__ */ jsxs(
-                "button",
-                {
-                  onClick: () => setActiveTab("cli"),
-                  className: `flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-lg text-xs whitespace-nowrap transition ${activeTab === "cli" ? "bg-white/10 text-white font-medium" : "text-zinc-400 hover:text-white"}`,
-                  children: [
-                    /* @__PURE__ */ jsx(Terminal, { className: "w-3.5 h-3.5 text-emerald-400" }),
-                    "status.sh"
-                  ]
+                  className: "absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-emerald-400 blur-[2px] shadow-[0_0_15px_#34d399] animate-float-reverse",
+                  style: { right: "25%" }
                 }
               )
             ] }),
-            /* @__PURE__ */ jsx(
-              "button",
-              {
-                onClick: copySnippet,
-                title: "Copia negli appunti",
-                className: "text-zinc-400 hover:text-white transition p-1 shrink-0 ml-1",
-                children: copied ? /* @__PURE__ */ jsx(Check, { className: "w-3.5 h-3.5 text-emerald-400" }) : /* @__PURE__ */ jsx(Copy, { className: "w-3.5 h-3.5" })
-              }
-            )
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "p-4 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto min-h-[260px] sm:min-h-[290px] bg-black/40", children: [
-            activeTab === "profile" && /* @__PURE__ */ jsxs("div", { className: "space-y-1.5 text-zinc-300", children: [
-              /* @__PURE__ */ jsx("p", { children: /* @__PURE__ */ jsx("span", { className: "text-zinc-500", children: "// Walter Fida — Software Architecture" }) }),
-              /* @__PURE__ */ jsxs("p", { children: [
-                /* @__PURE__ */ jsx("span", { className: "text-sky-400 font-semibold", children: "export const" }),
-                " ",
-                /* @__PURE__ */ jsx("span", { className: "text-white font-semibold", children: "developer" }),
-                " = {"
-              ] }),
-              /* @__PURE__ */ jsxs("p", { className: "pl-4", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: "fullName" }),
-                ":",
-                " ",
-                /* @__PURE__ */ jsx("span", { className: "text-zinc-200", children: '"Walter Fida"' }),
-                ","
-              ] }),
-              /* @__PURE__ */ jsxs("p", { className: "pl-4", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: "focus" }),
-                ":",
-                " ",
-                /* @__PURE__ */ jsx("span", { className: "text-zinc-200", children: '"Full-Stack & Desktop Applications"' }),
-                ","
-              ] }),
-              /* @__PURE__ */ jsxs("p", { className: "pl-4", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: "coreTechnologies" }),
-                ": [",
-                /* @__PURE__ */ jsx("span", { className: "text-sky-300", children: '"Java"' }),
-                ",",
-                " ",
-                /* @__PURE__ */ jsx("span", { className: "text-sky-300", children: '"Spring Boot"' }),
-                ",",
-                " ",
-                /* @__PURE__ */ jsx("span", { className: "text-zinc-300", children: '"Angular"' }),
-                ",",
-                " ",
-                /* @__PURE__ */ jsx("span", { className: "text-zinc-300", children: '"JavaFX"' }),
-                "],"
-              ] }),
-              /* @__PURE__ */ jsxs("p", { className: "pl-4", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: "degree" }),
-                ":",
-                " ",
-                /* @__PURE__ */ jsx("span", { className: "text-zinc-200", children: '"Computer Science (3rd Year)"' }),
-                ","
-              ] }),
-              /* @__PURE__ */ jsxs("p", { className: "pl-4", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: "approach" }),
-                ":",
-                " ",
-                /* @__PURE__ */ jsx("span", { className: "text-emerald-300", children: '"Modular, robust, production-ready"' }),
-                ","
-              ] }),
-              /* @__PURE__ */ jsx("p", { children: "};" })
-            ] }),
-            activeTab === "stack" && /* @__PURE__ */ jsxs("div", { className: "space-y-1.5 text-zinc-300", children: [
-              /* @__PURE__ */ jsx("p", { children: "{" }),
-              /* @__PURE__ */ jsxs("p", { className: "pl-4", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-sky-400", children: '"backendEngine"' }),
-                ": {"
-              ] }),
-              /* @__PURE__ */ jsxs("p", { className: "pl-8", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: '"framework"' }),
-                ":",
-                " ",
-                /* @__PURE__ */ jsx("span", { className: "text-zinc-200", children: '"Spring Boot 3"' }),
-                ","
-              ] }),
-              /* @__PURE__ */ jsxs("p", { className: "pl-8", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: '"languages"' }),
-                ": [",
-                /* @__PURE__ */ jsx("span", { className: "text-zinc-200", children: '"Java"' }),
-                ",",
-                " ",
-                /* @__PURE__ */ jsx("span", { className: "text-zinc-200", children: '"SQL"' }),
-                "],"
-              ] }),
-              /* @__PURE__ */ jsxs("p", { className: "pl-8", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: '"features"' }),
-                ":",
-                " ",
-                /* @__PURE__ */ jsx("span", { className: "text-zinc-200", children: '"REST APIs, Security, ORM"' })
-              ] }),
-              /* @__PURE__ */ jsx("p", { className: "pl-4", children: "}," }),
-              /* @__PURE__ */ jsxs("p", { className: "pl-4", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-sky-400", children: '"frontendSystems"' }),
-                ": [",
-                /* @__PURE__ */ jsx("span", { className: "text-zinc-200", children: '"Angular"' }),
-                ",",
-                " ",
-                /* @__PURE__ */ jsx("span", { className: "text-zinc-200", children: '"TypeScript"' }),
-                ",",
-                " ",
-                /* @__PURE__ */ jsx("span", { className: "text-zinc-200", children: '"React"' }),
-                "],"
-              ] }),
-              /* @__PURE__ */ jsxs("p", { className: "pl-4", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-sky-400", children: '"desktopPlatform"' }),
-                ":",
-                " ",
-                /* @__PURE__ */ jsx("span", { className: "text-zinc-200", children: '"JavaFX Native Solutions"' })
-              ] }),
-              /* @__PURE__ */ jsx("p", { children: "}" })
-            ] }),
-            activeTab === "cli" && /* @__PURE__ */ jsxs("div", { className: "space-y-2 text-zinc-300", children: [
-              /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("span", { className: "text-sky-400 font-semibold", children: "$" }),
-                " studio run --verify-architecture"
-              ] }),
-              /* @__PURE__ */ jsxs("div", { className: "text-zinc-400 pl-3", children: [
-                "✓ Spring Boot services healthy",
-                /* @__PURE__ */ jsx("br", {}),
-                "✓ Angular & TypeScript client assets bundle-optimized",
-                /* @__PURE__ */ jsx("br", {}),
-                "✓ JavaFX runtime validated (GeoShield OSINT engine ready)"
-              ] }),
-              /* @__PURE__ */ jsx("div", { className: "pt-2 text-emerald-400 pl-3", children: "> All software modules operational." })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "px-3 sm:px-4 py-2.5 bg-zinc-950/80 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-zinc-400", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 sm:gap-3", children: [
-              /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1 text-emerald-400", children: [
-                /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" }),
-                "Clean Architecture"
-              ] }),
-              /* @__PURE__ */ jsx("span", { className: "hidden sm:inline", children: "TypeScript · UTF-8" })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1.5 text-zinc-400", children: [
-              /* @__PURE__ */ jsx("span", { className: "hidden sm:inline", children: "Scorri verso il basso per decomporre" }),
-              /* @__PURE__ */ jsx("span", { className: "sm:hidden", children: "Scorri ↓" }),
-              /* @__PURE__ */ jsx(ArrowDown, { className: "w-3 h-3 animate-bounce" })
+            /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch relative z-10", children: [
+              /* @__PURE__ */ jsxs(
+                SpatialCard,
+                {
+                  isMobile,
+                  baseTransform: "perspective(1200px) rotateY(6deg) rotateX(2deg) translateZ(20px)",
+                  className: "rounded-3xl apple-card p-7 sm:p-8 border border-white/15 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85)] flex flex-col justify-between hover:border-sky-400/40 transition-colors",
+                  children: [
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-5", children: [
+                        /* @__PURE__ */ jsx("div", { className: "w-12 h-12 rounded-2xl bg-sky-500/10 border border-sky-400/30 flex items-center justify-center text-sky-400 shadow-inner", children: /* @__PURE__ */ jsx(Server, { className: "w-6 h-6" }) }),
+                        /* @__PURE__ */ jsx("span", { className: "font-mono text-[11px] uppercase tracking-wider text-sky-400 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20", children: "MOD-01 // BACKEND" })
+                      ] }),
+                      /* @__PURE__ */ jsx("h3", { className: "text-xl sm:text-2xl font-bold text-white mb-2 tracking-tight", children: "Java & Spring Boot Core" }),
+                      /* @__PURE__ */ jsx("p", { className: "text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6", children: "Backend robusto per gestire logica di business complessa, transazioni ACID, sicurezza JWT e persistenza SQL scalabile senza fragilità." }),
+                      /* @__PURE__ */ jsxs("div", { className: "p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2.5 font-mono text-xs mb-6", children: [
+                        /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between text-zinc-300", children: [
+                          /* @__PURE__ */ jsxs("span", { className: "text-zinc-500 flex items-center gap-1.5", children: [
+                            /* @__PURE__ */ jsx(Database, { className: "w-3.5 h-3.5 text-sky-400" }),
+                            " Database"
+                          ] }),
+                          /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "PostgreSQL / SQL" })
+                        ] }),
+                        /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between text-zinc-300", children: [
+                          /* @__PURE__ */ jsxs("span", { className: "text-zinc-500 flex items-center gap-1.5", children: [
+                            /* @__PURE__ */ jsx(Radio, { className: "w-3.5 h-3.5 text-emerald-400" }),
+                            " Endpoint"
+                          ] }),
+                          /* @__PURE__ */ jsx("span", { className: "text-sky-300 font-medium", children: "RESTful JSON APIs" })
+                        ] }),
+                        /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between text-zinc-300", children: [
+                          /* @__PURE__ */ jsxs("span", { className: "text-zinc-500 flex items-center gap-1.5", children: [
+                            /* @__PURE__ */ jsx(Shield, { className: "w-3.5 h-3.5 text-indigo-400" }),
+                            " Autenticazione"
+                          ] }),
+                          /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Spring Security 6" })
+                        ] })
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "pt-4 border-t border-white/10", children: [
+                      /* @__PURE__ */ jsxs(
+                        "button",
+                        {
+                          type: "button",
+                          onClick: simulateApiTest,
+                          disabled: apiSimulating,
+                          className: "w-full py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-zinc-200 hover:text-white flex items-center justify-center gap-2 transition cursor-pointer active:scale-95",
+                          children: [
+                            /* @__PURE__ */ jsx(
+                              Play,
+                              {
+                                className: `w-3.5 h-3.5 text-sky-400 ${apiSimulating ? "animate-spin" : ""}`
+                              }
+                            ),
+                            /* @__PURE__ */ jsx("span", { children: apiSimulating ? "Esecuzione test..." : "Testa API Ping / Health" })
+                          ]
+                        }
+                      ),
+                      apiResponse && /* @__PURE__ */ jsx("p", { className: "mt-2 text-[11px] font-mono text-emerald-400 text-center animate-fade-in", children: apiResponse })
+                    ] })
+                  ]
+                }
+              ),
+              /* @__PURE__ */ jsxs(
+                SpatialCard,
+                {
+                  isMobile,
+                  baseTransform: "perspective(1200px) translateZ(60px) scale(1.02)",
+                  className: "rounded-3xl apple-card p-7 sm:p-8 border border-white/25 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.95)] flex flex-col justify-between hover:border-white/40 transition-colors",
+                  children: [
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-5", children: [
+                        /* @__PURE__ */ jsx("div", { className: "w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-400/30 flex items-center justify-center text-white shadow-inner", children: /* @__PURE__ */ jsx(Layers, { className: "w-6 h-6 text-indigo-300" }) }),
+                        /* @__PURE__ */ jsx("span", { className: "font-mono text-[11px] uppercase tracking-wider text-indigo-300 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20", children: "MOD-02 // FRONTEND STUDIO" })
+                      ] }),
+                      /* @__PURE__ */ jsx("h3", { className: "text-xl sm:text-2xl font-bold text-white mb-2 tracking-tight", children: "Angular & React Frontends" }),
+                      /* @__PURE__ */ jsx("p", { className: "text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6", children: "Interfacce web dinamiche, reattive e tipizzate. Architettura a componenti, gestione avanzata dello stato e fluidità a 60 FPS senza compromessi." }),
+                      /* @__PURE__ */ jsxs("div", { className: "p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2.5 font-mono text-xs mb-6", children: [
+                        /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between text-zinc-300", children: [
+                          /* @__PURE__ */ jsxs("span", { className: "text-zinc-500 flex items-center gap-1.5", children: [
+                            /* @__PURE__ */ jsx(Globe, { className: "w-3.5 h-3.5 text-indigo-400" }),
+                            " Frameworks"
+                          ] }),
+                          /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Angular 18 & React 19" })
+                        ] }),
+                        /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between text-zinc-300", children: [
+                          /* @__PURE__ */ jsxs("span", { className: "text-zinc-500 flex items-center gap-1.5", children: [
+                            /* @__PURE__ */ jsx(FileCode2, { className: "w-3.5 h-3.5 text-sky-400" }),
+                            " Tipizzazione"
+                          ] }),
+                          /* @__PURE__ */ jsx("span", { className: "text-sky-300 font-medium", children: "TypeScript Strict Mode" })
+                        ] }),
+                        /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between text-zinc-300", children: [
+                          /* @__PURE__ */ jsxs("span", { className: "text-zinc-500 flex items-center gap-1.5", children: [
+                            /* @__PURE__ */ jsx(Radio, { className: "w-3.5 h-3.5 text-emerald-400" }),
+                            " UI / Styling"
+                          ] }),
+                          /* @__PURE__ */ jsx("span", { className: "text-emerald-300 font-medium", children: "Tailwind CSS + Glass 3D" })
+                        ] })
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-zinc-400", children: [
+                      /* @__PURE__ */ jsxs("span", { className: "text-emerald-400 flex items-center gap-1.5", children: [
+                        /* @__PURE__ */ jsx("span", { className: "w-2 h-2 rounded-full bg-emerald-400" }),
+                        "Reactive Store Synced"
+                      ] }),
+                      /* @__PURE__ */ jsx("span", { children: "SSR Ready" })
+                    ] })
+                  ]
+                }
+              ),
+              /* @__PURE__ */ jsxs(
+                SpatialCard,
+                {
+                  isMobile,
+                  baseTransform: "perspective(1200px) rotateY(-6deg) rotateX(2deg) translateZ(20px)",
+                  className: "rounded-3xl apple-card p-7 sm:p-8 border border-white/15 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85)] flex flex-col justify-between hover:border-emerald-400/40 transition-colors",
+                  children: [
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-5", children: [
+                        /* @__PURE__ */ jsx("div", { className: "w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shadow-inner", children: /* @__PURE__ */ jsx(Shield, { className: "w-6 h-6" }) }),
+                        /* @__PURE__ */ jsx("span", { className: "font-mono text-[11px] uppercase tracking-wider text-emerald-400 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20", children: "MOD-03 // DESKTOP NATIVE" })
+                      ] }),
+                      /* @__PURE__ */ jsx("h3", { className: "text-xl sm:text-2xl font-bold text-white mb-2 tracking-tight", children: "JavaFX & OSINT Systems" }),
+                      /* @__PURE__ */ jsx("p", { className: "text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6", children: "Software applicativo nativo ad alte prestazioni: GeoShield OSINT, applicativi di intelligence geospaziale e gestionali locali a bassissimo consumo." }),
+                      /* @__PURE__ */ jsxs("div", { className: "p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2.5 font-mono text-xs mb-6", children: [
+                        /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between text-zinc-300", children: [
+                          /* @__PURE__ */ jsxs("span", { className: "text-zinc-500 flex items-center gap-1.5", children: [
+                            /* @__PURE__ */ jsx(Cpu, { className: "w-3.5 h-3.5 text-emerald-400" }),
+                            " Ambiente"
+                          ] }),
+                          /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "JavaFX Desktop Platform" })
+                        ] }),
+                        /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between text-zinc-300", children: [
+                          /* @__PURE__ */ jsxs("span", { className: "text-zinc-500 flex items-center gap-1.5", children: [
+                            /* @__PURE__ */ jsx(Shield, { className: "w-3.5 h-3.5 text-sky-400" }),
+                            " Focus"
+                          ] }),
+                          /* @__PURE__ */ jsx("span", { className: "text-emerald-300 font-medium", children: "GeoShield OSINT Tool" })
+                        ] }),
+                        /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between text-zinc-300", children: [
+                          /* @__PURE__ */ jsxs("span", { className: "text-zinc-500 flex items-center gap-1.5", children: [
+                            /* @__PURE__ */ jsx(Radio, { className: "w-3.5 h-3.5 text-indigo-400" }),
+                            " Esecuzione"
+                          ] }),
+                          /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Offline Native Speed" })
+                        ] })
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-zinc-400", children: [
+                      /* @__PURE__ */ jsxs("span", { className: "text-sky-400 flex items-center gap-1.5", children: [
+                        /* @__PURE__ */ jsx("span", { className: "w-2 h-2 rounded-full bg-sky-400" }),
+                        "Hardware Acceleration"
+                      ] }),
+                      /* @__PURE__ */ jsx("span", { children: "Zero Web Overhead" })
+                    ] })
+                  ]
+                }
+              )
             ] })
           ] })
-        ] })
-      ] })
-    ) : (
-      /* ==============================================================
-         STATE B: DECONSTRUCTED / EXPLODED 3D VIEW (Mobile-Optimized)
-         ============================================================== */
-      /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 transition-all duration-700 px-2 sm:px-0", children: [
-        /* @__PURE__ */ jsxs(
-          "div",
-          {
-            className: "relative rounded-2xl apple-card p-6 border border-white/10 shadow-2xl transition-all duration-500 hover:border-sky-400/40 hover:-translate-y-1.5",
-            style: isMobile ? void 0 : {
-              transform: "perspective(1000px) rotateY(-4deg) rotateX(2deg) translateZ(30px)"
-            },
-            children: [
-              /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-4", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-sky-400", children: /* @__PURE__ */ jsx(Server, { className: "w-5 h-5" }) }),
-                /* @__PURE__ */ jsx("span", { className: "font-mono text-[10px] uppercase tracking-widest text-zinc-400 px-2.5 py-1 rounded-full bg-white/5 border border-white/10", children: "MOD-01 // BACKEND" })
-              ] }),
-              /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "Java & Spring Boot Core" }),
-              /* @__PURE__ */ jsx("p", { className: "text-xs text-zinc-400 leading-relaxed mb-5", children: "Architettura a microservizi e monolite modulare. Gestione delle transazioni dati, sicurezza JWT e persistenza SQL scalabile per piattaforme affidabili." }),
-              /* @__PURE__ */ jsxs("div", { className: "pt-4 border-t border-white/10 space-y-1.5 text-xs font-mono text-zinc-300", children: [
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
-                  /* @__PURE__ */ jsx("span", { className: "text-zinc-500", children: "Framework" }),
-                  /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Spring Boot 3" })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
-                  /* @__PURE__ */ jsx("span", { className: "text-zinc-500", children: "Lingua Base" }),
-                  /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Java 21 LTS" })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
-                  /* @__PURE__ */ jsx("span", { className: "text-zinc-500", children: "Integrazione" }),
-                  /* @__PURE__ */ jsx("span", { className: "text-sky-400 font-medium", children: "RESTful APIs" })
-                ] })
-              ] })
-            ]
-          }
-        ),
-        /* @__PURE__ */ jsxs(
-          "div",
-          {
-            className: "relative rounded-2xl apple-card p-6 border border-white/15 shadow-2xl transition-all duration-500 hover:border-white/30 hover:-translate-y-1.5",
-            style: isMobile ? void 0 : {
-              transform: "perspective(1000px) translateZ(60px) scale(1.02)"
-            },
-            children: [
-              /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-4", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-white", children: /* @__PURE__ */ jsx(Layers, { className: "w-5 h-5" }) }),
-                /* @__PURE__ */ jsx("span", { className: "font-mono text-[10px] uppercase tracking-widest text-zinc-300 px-2.5 py-1 rounded-full bg-white/10 border border-white/15", children: "MOD-02 // FRONTEND" })
-              ] }),
-              /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "Angular & TypeScript Studio" }),
-              /* @__PURE__ */ jsx("p", { className: "text-xs text-zinc-400 leading-relaxed mb-5", children: "Interfacce utente tipizzate, reattive e fluide. Stato applicativo pulito, design ad alta usabilità e componenti riutilizzabili per web app enterprise." }),
-              /* @__PURE__ */ jsxs("div", { className: "pt-4 border-t border-white/10 space-y-1.5 text-xs font-mono text-zinc-300", children: [
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
-                  /* @__PURE__ */ jsx("span", { className: "text-zinc-500", children: "UI Stack" }),
-                  /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Angular & React" })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
-                  /* @__PURE__ */ jsx("span", { className: "text-zinc-500", children: "Tipizzazione" }),
-                  /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "TypeScript Strict" })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
-                  /* @__PURE__ */ jsx("span", { className: "text-zinc-500", children: "Esperienza" }),
-                  /* @__PURE__ */ jsx("span", { className: "text-emerald-400 font-medium", children: "60 FPS Smooth" })
-                ] })
-              ] })
-            ]
-          }
-        ),
-        /* @__PURE__ */ jsxs(
-          "div",
-          {
-            className: "relative rounded-2xl apple-card p-6 border border-white/10 shadow-2xl transition-all duration-500 hover:border-emerald-400/40 hover:-translate-y-1.5",
-            style: isMobile ? void 0 : {
-              transform: "perspective(1000px) rotateY(4deg) rotateX(2deg) translateZ(30px)"
-            },
-            children: [
-              /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-4", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400", children: /* @__PURE__ */ jsx(Shield, { className: "w-5 h-5" }) }),
-                /* @__PURE__ */ jsx("span", { className: "font-mono text-[10px] uppercase tracking-widest text-zinc-400 px-2.5 py-1 rounded-full bg-white/5 border border-white/10", children: "MOD-03 // NATIVE" })
-              ] }),
-              /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "JavaFX Desktop Systems" }),
-              /* @__PURE__ */ jsx("p", { className: "text-xs text-zinc-400 leading-relaxed mb-5", children: "Software nativo per analisi geospaziale OSINT e gestionali locali. Esecuzione diretta senza overhead del browser con accesso efficiente alle risorse di sistema." }),
-              /* @__PURE__ */ jsxs("div", { className: "pt-4 border-t border-white/10 space-y-1.5 text-xs font-mono text-zinc-300", children: [
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
-                  /* @__PURE__ */ jsx("span", { className: "text-zinc-500", children: "GUI Tooling" }),
-                  /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "JavaFX Platform" })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
-                  /* @__PURE__ */ jsx("span", { className: "text-zinc-500", children: "Specializzazione" }),
-                  /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "OSINT Tool GeoShield" })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
-                  /* @__PURE__ */ jsx("span", { className: "text-zinc-500", children: "Esecuzione" }),
-                  /* @__PURE__ */ jsx("span", { className: "text-emerald-400 font-medium", children: "Offline Native" })
-                ] })
-              ] })
-            ]
-          }
-        )
-      ] })
-    ) })
-  ] });
+        ) })
+      ]
+    }
+  );
 }
 const stackList = [
   "Java",
@@ -683,6 +881,63 @@ const stackList = [
   "REST APIs",
   "Git & GitHub"
 ];
+function SpatialBentoTile({
+  children,
+  className = "",
+  delay = "0ms",
+  isVisible = false
+}) {
+  const cardRef = useRef(null);
+  const [rotate, setRotate] = useState({ x: 0, y: 0 });
+  const [spotlight, setSpotlight] = useState({ x: 50, y: 50, opacity: 0 });
+  const handleMouseMove = (e) => {
+    if (!cardRef.current || window.innerWidth < 1024) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = (y - centerY) / centerY * -5;
+    const rotateY = (x - centerX) / centerX * 5;
+    setRotate({ x: rotateX, y: rotateY });
+    setSpotlight({
+      x: x / rect.width * 100,
+      y: y / rect.height * 100,
+      opacity: 0.16
+    });
+  };
+  const handleMouseLeave = () => {
+    setRotate({ x: 0, y: 0 });
+    setSpotlight((prev) => ({ ...prev, opacity: 0 }));
+  };
+  return /* @__PURE__ */ jsxs(
+    "div",
+    {
+      ref: cardRef,
+      onMouseMove: handleMouseMove,
+      onMouseLeave: handleMouseLeave,
+      style: {
+        transform: `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
+        transformStyle: "preserve-3d",
+        transitionDelay: delay
+      },
+      className: `relative rounded-3xl apple-card overflow-hidden group hover:border-white/35 transition-all duration-700 ease-out shadow-2xl ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"} ${className}`,
+      children: [
+        /* @__PURE__ */ jsx(
+          "div",
+          {
+            className: "pointer-events-none absolute -inset-px rounded-3xl transition-opacity duration-300 z-30 hidden lg:block",
+            style: {
+              opacity: spotlight.opacity,
+              background: `radial-gradient(circle 300px at ${spotlight.x}% ${spotlight.y}%, rgba(255, 255, 255, 0.25), transparent 70%)`
+            }
+          }
+        ),
+        children
+      ]
+    }
+  );
+}
 function BentoAbout() {
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -728,10 +983,11 @@ function BentoAbout() {
         ),
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5", children: [
           /* @__PURE__ */ jsxs(
-            "div",
+            SpatialBentoTile,
             {
-              className: `md:col-span-2 lg:col-span-2 rounded-3xl apple-card p-7 sm:p-8 relative overflow-hidden group hover:border-white/25 transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`,
-              style: { transitionDelay: "100ms" },
+              className: "md:col-span-2 lg:col-span-2 p-7 sm:p-8",
+              delay: "100ms",
+              isVisible,
               children: [
                 /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-80 h-80 bg-white/[0.03] rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-700" }),
                 /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-4 mb-6", children: [
@@ -778,45 +1034,32 @@ function BentoAbout() {
               ]
             }
           ),
+          /* @__PURE__ */ jsxs(SpatialBentoTile, { className: "p-7", delay: "200ms", isVisible, children: [
+            /* @__PURE__ */ jsx("div", { className: "w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-zinc-200 mb-5 group-hover:scale-105 group-hover:border-sky-400/30 transition-all", children: /* @__PURE__ */ jsx(Server, { className: "w-5 h-5 text-sky-400" }) }),
+            /* @__PURE__ */ jsx("span", { className: "text-xs font-mono text-zinc-500 uppercase tracking-wider block", children: "Backend Platform" }),
+            /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mt-1 mb-2", children: "Java & Spring Boot" }),
+            /* @__PURE__ */ jsx("p", { className: "text-xs sm:text-sm text-zinc-400 leading-relaxed mb-4", children: "Architetture robuste, logica di business transazionale, gestione sicura delle sessioni e database relazionali SQL." }),
+            /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-1.5 text-[11px] font-mono text-sky-400", children: [
+              /* @__PURE__ */ jsx(Activity, { className: "w-3 h-3" }),
+              /* @__PURE__ */ jsx("span", { children: "High Throughput" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs(SpatialBentoTile, { className: "p-7", delay: "300ms", isVisible, children: [
+            /* @__PURE__ */ jsx("div", { className: "w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-zinc-200 mb-5 group-hover:scale-105 group-hover:border-emerald-400/30 transition-all", children: /* @__PURE__ */ jsx(Monitor, { className: "w-5 h-5 text-emerald-400" }) }),
+            /* @__PURE__ */ jsx("span", { className: "text-xs font-mono text-zinc-500 uppercase tracking-wider block", children: "Desktop & OSINT" }),
+            /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mt-1 mb-2", children: "JavaFX & Tools" }),
+            /* @__PURE__ */ jsx("p", { className: "text-xs sm:text-sm text-zinc-400 leading-relaxed mb-4", children: "Applicativi desktop nativi ad alte prestazioni per analisi geospaziale da fonti aperte e software gestionali locali." }),
+            /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-1.5 text-[11px] font-mono text-emerald-400", children: [
+              /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" }),
+              /* @__PURE__ */ jsx("span", { children: "Native Execution" })
+            ] })
+          ] }),
           /* @__PURE__ */ jsxs(
-            "div",
+            SpatialBentoTile,
             {
-              className: `rounded-3xl apple-card p-7 relative overflow-hidden group hover:border-white/25 transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`,
-              style: { transitionDelay: "200ms" },
-              children: [
-                /* @__PURE__ */ jsx("div", { className: "w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-zinc-200 mb-5 group-hover:scale-105 group-hover:border-sky-400/30 transition-all", children: /* @__PURE__ */ jsx(Server, { className: "w-5 h-5 text-sky-400" }) }),
-                /* @__PURE__ */ jsx("span", { className: "text-xs font-mono text-zinc-500 uppercase tracking-wider block", children: "Backend Platform" }),
-                /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mt-1 mb-2", children: "Java & Spring Boot" }),
-                /* @__PURE__ */ jsx("p", { className: "text-xs sm:text-sm text-zinc-400 leading-relaxed mb-4", children: "Architetture robuste, logica di business transazionale, gestione sicura delle sessioni e database relazionali SQL." }),
-                /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-1.5 text-[11px] font-mono text-sky-400", children: [
-                  /* @__PURE__ */ jsx(Activity, { className: "w-3 h-3" }),
-                  /* @__PURE__ */ jsx("span", { children: "High Throughput" })
-                ] })
-              ]
-            }
-          ),
-          /* @__PURE__ */ jsxs(
-            "div",
-            {
-              className: `rounded-3xl apple-card p-7 relative overflow-hidden group hover:border-white/25 transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`,
-              style: { transitionDelay: "300ms" },
-              children: [
-                /* @__PURE__ */ jsx("div", { className: "w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-zinc-200 mb-5 group-hover:scale-105 group-hover:border-emerald-400/30 transition-all", children: /* @__PURE__ */ jsx(Monitor, { className: "w-5 h-5 text-emerald-400" }) }),
-                /* @__PURE__ */ jsx("span", { className: "text-xs font-mono text-zinc-500 uppercase tracking-wider block", children: "Desktop & OSINT" }),
-                /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mt-1 mb-2", children: "JavaFX & Tools" }),
-                /* @__PURE__ */ jsx("p", { className: "text-xs sm:text-sm text-zinc-400 leading-relaxed mb-4", children: "Applicativi desktop nativi ad alte prestazioni per analisi geospaziale da fonti aperte e software gestionali locali." }),
-                /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-1.5 text-[11px] font-mono text-emerald-400", children: [
-                  /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" }),
-                  /* @__PURE__ */ jsx("span", { children: "Native Execution" })
-                ] })
-              ]
-            }
-          ),
-          /* @__PURE__ */ jsxs(
-            "div",
-            {
-              className: `md:col-span-2 lg:col-span-2 rounded-3xl apple-card p-7 relative overflow-hidden group hover:border-white/25 transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`,
-              style: { transitionDelay: "400ms" },
+              className: "md:col-span-2 lg:col-span-2 p-7",
+              delay: "400ms",
+              isVisible,
               children: [
                 /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3.5 mb-4", children: [
                   /* @__PURE__ */ jsx("div", { className: "w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-zinc-200 group-hover:scale-105 transition-all", children: /* @__PURE__ */ jsx(Layers, { className: "w-5 h-5 text-zinc-100" }) }),
@@ -838,10 +1081,11 @@ function BentoAbout() {
             }
           ),
           /* @__PURE__ */ jsxs(
-            "div",
+            SpatialBentoTile,
             {
-              className: `md:col-span-2 lg:col-span-2 rounded-3xl apple-card p-7 relative overflow-hidden group hover:border-white/25 transition-all duration-700 ease-out flex flex-col justify-between ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`,
-              style: { transitionDelay: "500ms" },
+              className: "md:col-span-2 lg:col-span-2 p-7 flex flex-col justify-between",
+              delay: "500ms",
+              isVisible,
               children: [
                 /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between gap-4", children: [
                   /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3.5", children: [
@@ -1104,7 +1348,11 @@ const services = [
     icon: Monitor,
     title: "Software Desktop in Java & JavaFX",
     desc: "Applicativi gestionali nativi, tool di monitoraggio o strumenti specialistici (es. tool OSINT) progettati per girare in locale con massime performance.",
-    highlights: ["Interfacce JavaFX fluide", "Accesso hardware locale", "Zero overhead del browser"]
+    highlights: [
+      "Interfacce JavaFX fluide",
+      "Accesso hardware locale",
+      "Zero overhead del browser"
+    ]
   },
   {
     icon: Wrench,
@@ -1119,33 +1367,66 @@ const services = [
     highlights: ["Analisi di fattibilità", "Stack tecnologico ottimale", "Efficienza nei costi"]
   }
 ];
+const navLinks = [
+  { href: "#architecture", label: "Architettura" },
+  { href: "#about", label: "About" },
+  { href: "#projects", label: "Progetti" },
+  { href: "#services", label: "Servizi" },
+  { href: "#faq", label: "FAQ" },
+  { href: "#contact", label: "Contatti" }
+];
 function Nav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [activeSection, setActiveSection] = useState("Home");
   useEffect(() => {
     const handleScroll = () => {
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
       if (totalHeight > 0) {
         setScrollProgress(window.scrollY / totalHeight * 100);
       }
+      const sections = ["contact", "faq", "services", "projects", "about", "architecture", "top"];
+      for (const id of sections) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 160) {
+            const found = navLinks.find((l) => l.href === `#${id}`);
+            setActiveSection(found ? found.label : "Home");
+            break;
+          }
+        }
+      }
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  const links = [
-    { href: "#architecture", label: "Architettura" },
-    { href: "#about", label: "About" },
-    { href: "#projects", label: "Progetti" },
-    { href: "#services", label: "Servizi" },
-    { href: "#faq", label: "FAQ" },
-    { href: "#contact", label: "Contatti" }
-  ];
-  return /* @__PURE__ */ jsxs("header", { className: "sticky top-0 inset-x-0 z-50 w-full bg-[#0a0a0c]/90 backdrop-blur-3xl border-b border-white/10 shadow-2xl transition-all", children: [
+  const handleTrackClick = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const percentage = clickX / rect.width;
+    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+    window.scrollTo({
+      top: percentage * totalHeight,
+      behavior: "smooth"
+    });
+  };
+  return /* @__PURE__ */ jsxs("header", { className: "sticky top-0 inset-x-0 z-50 w-full bg-[#0a0a0c]/90 backdrop-blur-3xl border-b border-white/10 shadow-2xl transition-all select-none", children: [
     /* @__PURE__ */ jsx(
       "div",
       {
-        className: "absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-sky-400 via-indigo-400 to-emerald-400 transition-all duration-150 ease-out z-10",
-        style: { width: `${scrollProgress}%` }
+        onClick: handleTrackClick,
+        title: "Clicca per scorrere rapidamente",
+        className: "absolute bottom-0 inset-x-0 h-[3px] bg-white/[0.04] cursor-pointer group/track",
+        children: /* @__PURE__ */ jsx(
+          "div",
+          {
+            className: "relative h-full bg-gradient-to-r from-sky-400 via-indigo-400 to-emerald-400 transition-all duration-150 ease-out group-hover/track:brightness-125",
+            style: { width: `${scrollProgress}%` },
+            children: /* @__PURE__ */ jsx("div", { className: "absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-3.5 h-3.5 rounded-full bg-white animate-progress-orb shadow-[0_0_12px_#38bdf8,0_0_24px_#818cf8]" })
+          }
+        )
       }
     ),
     /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-6xl px-6 h-16 sm:h-20 flex items-center justify-between", children: [
@@ -1157,14 +1438,28 @@ function Nav() {
         /* @__PURE__ */ jsx("span", { className: "font-bold text-white tracking-wide group-hover:text-zinc-300 transition", children: "Walter Fida" }),
         /* @__PURE__ */ jsx("span", { className: "text-zinc-500 font-mono text-xs hidden sm:inline", children: "<dev/>" })
       ] }),
-      /* @__PURE__ */ jsx("nav", { className: "hidden md:flex items-center gap-8 text-xs lg:text-sm font-medium text-zinc-400", children: links.map((link) => /* @__PURE__ */ jsxs(
+      /* @__PURE__ */ jsxs("div", { className: "hidden lg:flex items-center gap-2 px-3 py-1 rounded-full apple-glass border border-white/10 text-xs font-mono text-zinc-300", children: [
+        /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" }),
+        /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: activeSection }),
+        /* @__PURE__ */ jsx("span", { className: "text-zinc-600", children: "·" }),
+        /* @__PURE__ */ jsxs("span", { className: "text-sky-300 font-semibold", children: [
+          Math.round(scrollProgress),
+          "%"
+        ] })
+      ] }),
+      /* @__PURE__ */ jsx("nav", { className: "hidden md:flex items-center gap-8 text-xs lg:text-sm font-medium text-zinc-400", children: navLinks.map((link) => /* @__PURE__ */ jsxs(
         "a",
         {
           href: link.href,
-          className: "hover:text-white transition-colors py-1 relative group",
+          className: `hover:text-white transition-colors py-1 relative group ${activeSection === link.label ? "text-white font-semibold" : ""}`,
           children: [
             link.label,
-            /* @__PURE__ */ jsx("span", { className: "absolute bottom-0 left-0 w-0 h-[1.5px] bg-white group-hover:w-full transition-all duration-300" })
+            /* @__PURE__ */ jsx(
+              "span",
+              {
+                className: `absolute bottom-0 left-0 h-[1.5px] bg-white transition-all duration-300 ${activeSection === link.label ? "w-full bg-sky-400" : "w-0 group-hover:w-full"}`
+              }
+            )
           ]
         },
         link.href
@@ -1190,16 +1485,28 @@ function Nav() {
         )
       ] })
     ] }),
-    mobileMenuOpen && /* @__PURE__ */ jsx("div", { className: "md:hidden border-t border-white/10 bg-[#0c0c10]/95 backdrop-blur-3xl px-6 py-4 shadow-2xl", children: /* @__PURE__ */ jsx("nav", { className: "flex flex-col gap-2 font-medium text-sm", children: links.map((link) => /* @__PURE__ */ jsx(
-      "a",
-      {
-        href: link.href,
-        onClick: () => setMobileMenuOpen(false),
-        className: "px-3.5 py-2.5 rounded-xl hover:bg-white/10 text-zinc-300 hover:text-white transition",
-        children: link.label
-      },
-      link.href
-    )) }) })
+    mobileMenuOpen && /* @__PURE__ */ jsxs("div", { className: "md:hidden border-t border-white/10 bg-[#0c0c10]/95 backdrop-blur-3xl px-6 py-4 shadow-2xl", children: [
+      /* @__PURE__ */ jsxs("div", { className: "pb-3 mb-3 border-b border-white/10 flex items-center justify-between text-xs font-mono text-zinc-400", children: [
+        /* @__PURE__ */ jsxs("span", { children: [
+          "Sezione: ",
+          activeSection
+        ] }),
+        /* @__PURE__ */ jsxs("span", { className: "text-sky-400 font-bold", children: [
+          Math.round(scrollProgress),
+          "%"
+        ] })
+      ] }),
+      /* @__PURE__ */ jsx("nav", { className: "flex flex-col gap-2 font-medium text-sm", children: navLinks.map((link) => /* @__PURE__ */ jsx(
+        "a",
+        {
+          href: link.href,
+          onClick: () => setMobileMenuOpen(false),
+          className: `px-3.5 py-2.5 rounded-xl transition ${activeSection === link.label ? "bg-white/15 text-white font-semibold" : "hover:bg-white/10 text-zinc-300 hover:text-white"}`,
+          children: link.label
+        },
+        link.href
+      )) })
+    ] })
   ] });
 }
 function Hero() {
@@ -1266,7 +1573,14 @@ function Hero() {
   ] }) });
 }
 function ArchitectureSection() {
-  return /* @__PURE__ */ jsx("section", { id: "architecture", className: "relative px-6 py-12 border-t border-white/5 scroll-mt-28", children: /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-6xl", children: /* @__PURE__ */ jsx(DeconstructingTerminal, {}) }) });
+  return /* @__PURE__ */ jsx(
+    "section",
+    {
+      id: "architecture",
+      className: "relative px-4 sm:px-6 py-20 sm:py-28 border-t border-white/5 scroll-mt-28 overflow-visible",
+      children: /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-7xl w-full", children: /* @__PURE__ */ jsx(DeconstructingTerminal, {}) })
+    }
+  );
 }
 function ScrollProjectCard({
   project,
@@ -1276,6 +1590,8 @@ function ScrollProjectCard({
 }) {
   const cardRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [rotate, setRotate] = useState({ x: 0, y: 0 });
+  const [spotlight, setSpotlight] = useState({ x: 50, y: 50, opacity: 0 });
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -1294,12 +1610,48 @@ function ScrollProjectCard({
     }
     return () => observer.disconnect();
   }, []);
+  const handleMouseMove = (e) => {
+    if (!cardRef.current || window.innerWidth < 1024) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = (y - centerY) / centerY * -6;
+    const rotateY = (x - centerX) / centerX * 6;
+    setRotate({ x: rotateX, y: rotateY });
+    setSpotlight({
+      x: x / rect.width * 100,
+      y: y / rect.height * 100,
+      opacity: 0.18
+    });
+  };
+  const handleMouseLeave = () => {
+    setRotate({ x: 0, y: 0 });
+    setSpotlight((prev) => ({ ...prev, opacity: 0 }));
+  };
   return /* @__PURE__ */ jsxs(
     "article",
     {
       ref: cardRef,
-      className: `group relative rounded-3xl apple-card p-7 sm:p-8 transition-all duration-1000 cubic-bezier(0.16, 1, 0.3, 1) flex flex-col justify-between hover:border-white/35 hover:-translate-y-2 shadow-2xl ${isVisible ? "opacity-100 translate-y-0 scale-100 blur-none" : "opacity-0 translate-y-24 scale-[0.93] blur-sm"}`,
+      onMouseMove: handleMouseMove,
+      onMouseLeave: handleMouseLeave,
+      style: {
+        transform: `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
+        transformStyle: "preserve-3d"
+      },
+      className: `group relative rounded-3xl apple-card p-7 sm:p-8 transition-all duration-700 ease-out flex flex-col justify-between hover:border-white/40 shadow-2xl ${isVisible ? "opacity-100 translate-y-0 scale-100 blur-none" : "opacity-0 translate-y-24 scale-[0.93] blur-sm"}`,
       children: [
+        /* @__PURE__ */ jsx(
+          "div",
+          {
+            className: "pointer-events-none absolute -inset-px rounded-3xl transition-opacity duration-300 z-30 hidden lg:block",
+            style: {
+              opacity: spotlight.opacity,
+              background: `radial-gradient(circle 350px at ${spotlight.x}% ${spotlight.y}%, rgba(255, 255, 255, 0.3), transparent 70%)`
+            }
+          }
+        ),
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between gap-4 mb-4", children: [
             /* @__PURE__ */ jsxs("div", { children: [
@@ -1332,7 +1684,7 @@ function ScrollProjectCard({
             "div",
             {
               onClick: () => onOpen(project),
-              className: "cursor-pointer mb-6 rounded-2xl overflow-hidden border border-white/10 bg-black/60 relative group/img aspect-video",
+              className: "cursor-pointer mb-6 rounded-2xl overflow-hidden border border-white/10 bg-black/60 relative group/img aspect-video shadow-xl transition-all duration-300 group-hover:border-white/30",
               children: [
                 /* @__PURE__ */ jsx(
                   "img",
@@ -1431,73 +1783,110 @@ function Projects() {
           if (!val) setSelected(null);
           setOpen(val);
         },
-        children: /* @__PURE__ */ jsxs(DialogContent, { className: "max-w-3xl apple-card border border-white/15 bg-zinc-950/95 backdrop-blur-2xl text-white rounded-3xl p-6 sm:p-8", children: [
-          /* @__PURE__ */ jsxs(DialogHeader, { children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between gap-4", children: [
-              /* @__PURE__ */ jsx("span", { className: "font-mono text-xs uppercase tracking-wider text-zinc-400", children: selected?.type }),
-              /* @__PURE__ */ jsx("span", { className: "text-xs font-mono px-2.5 py-0.5 rounded-full border border-white/15 bg-white/5 text-zinc-300", children: selected?.status })
+        children: /* @__PURE__ */ jsxs(DialogContent, { className: "max-w-4xl w-[95vw] sm:w-[90vw] max-h-[88vh] overflow-hidden flex flex-col liquid-metal-modal text-white rounded-3xl p-0 border border-white/20 shadow-[0_30px_90px_rgba(0,0,0,0.95)]", children: [
+          /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 pointer-events-none -z-10 overflow-hidden select-none", children: [
+            /* @__PURE__ */ jsx(
+              "div",
+              {
+                className: "absolute -top-[15%] -left-[15%] w-[450px] h-[450px] rounded-full blur-[90px] animate-mercury-blob",
+                style: {
+                  background: "radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(148,163,184,0.08) 50%, transparent 80%)",
+                  animationDuration: "10s"
+                }
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              "div",
+              {
+                className: "absolute -bottom-[20%] -right-[15%] w-[500px] h-[500px] rounded-full blur-[100px] animate-mercury-blob",
+                style: {
+                  background: "radial-gradient(circle, rgba(226,232,240,0.16) 0%, rgba(56,189,248,0.08) 40%, transparent 75%)",
+                  animationDuration: "14s",
+                  animationDelay: "-3s"
+                }
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              "div",
+              {
+                className: "absolute inset-0 opacity-[0.05] animate-liquid-flow",
+                style: {
+                  backgroundImage: "linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.8) 25%, transparent 50%, rgba(255,255,255,0.6) 75%, transparent 100%)"
+                }
+              }
+            ),
+            /* @__PURE__ */ jsx("div", { className: "absolute top-12 right-20 w-12 h-12 rounded-full border border-white/30 bg-gradient-to-br from-white/25 via-zinc-400/10 to-transparent shadow-[0_10px_25px_rgba(0,0,0,0.6),inset_0_2px_4px_rgba(255,255,255,0.5)] backdrop-blur-md animate-float-slow pointer-events-none" })
+          ] }),
+          /* @__PURE__ */ jsx(
+            "button",
+            {
+              type: "button",
+              onClick: () => setOpen(false),
+              className: "absolute top-4 right-4 sm:top-5 sm:right-5 z-50 flex items-center justify-center w-9 h-9 rounded-full bg-white/15 hover:bg-white/30 border border-white/30 text-white backdrop-blur-2xl shadow-xl transition-all duration-200 active:scale-90 cursor-pointer focus:outline-none",
+              "aria-label": "Chiudi modale",
+              children: /* @__PURE__ */ jsx(X, { className: "w-4 h-4 text-white" })
+            }
+          ),
+          /* @__PURE__ */ jsxs("div", { className: "relative p-6 sm:p-8 md:p-10 overflow-y-auto custom-scrollbar flex-1 space-y-6", children: [
+            /* @__PURE__ */ jsxs(DialogHeader, { className: "text-left space-y-2 pr-10", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "font-mono text-xs uppercase tracking-wider text-sky-400 font-semibold px-2.5 py-0.5 rounded-full bg-sky-500/10 border border-sky-500/20", children: selected?.type }),
+                /* @__PURE__ */ jsx("span", { className: "text-xs font-mono px-2.5 py-0.5 rounded-full border border-white/15 bg-white/5 text-zinc-300", children: selected?.status })
+              ] }),
+              /* @__PURE__ */ jsx(DialogTitle, { className: "text-2xl sm:text-4xl font-bold tracking-tight text-white", children: selected?.name }),
+              /* @__PURE__ */ jsx(DialogDescription, { className: "text-zinc-300 text-sm sm:text-base leading-relaxed mt-2", children: selected?.longDescription || selected?.description })
             ] }),
-            /* @__PURE__ */ jsx(DialogTitle, { className: "text-2xl sm:text-3xl font-bold mt-2", children: selected?.name })
-          ] }),
-          /* @__PURE__ */ jsx(DialogDescription, { className: "text-zinc-400 text-sm sm:text-base leading-relaxed mt-2", children: selected?.longDescription || selected?.description }),
-          selected?.images && selected.images.length > 0 && /* @__PURE__ */ jsxs("div", { className: "mt-6 space-y-3", children: [
-            /* @__PURE__ */ jsx("div", { className: "overflow-hidden rounded-2xl border border-white/10 bg-black/60", children: /* @__PURE__ */ jsx(
-              "img",
-              {
-                src: selected.images[activeImageIndex],
-                alt: `${selected.name} preview`,
-                className: "w-full h-auto max-h-[380px] object-contain mx-auto"
-              }
-            ) }),
-            selected.images.length > 1 && /* @__PURE__ */ jsx("div", { className: "flex gap-2.5 overflow-x-auto pb-1", children: selected.images.map((src, idx) => /* @__PURE__ */ jsx(
-              "button",
-              {
-                type: "button",
-                onClick: () => setActiveImageIndex(idx),
-                className: `rounded-xl overflow-hidden border p-0 w-24 h-16 shrink-0 transition ${idx === activeImageIndex ? "border-white ring-2 ring-white/20" : "border-white/10 opacity-50 hover:opacity-100"}`,
-                children: /* @__PURE__ */ jsx(
-                  "img",
-                  {
-                    src,
-                    alt: "thumbnail",
-                    className: "w-full h-full object-cover"
-                  }
-                )
-              },
-              idx
-            )) })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "mt-6 pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-4", children: [
-            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-1.5", children: selected?.stack.map((s) => /* @__PURE__ */ jsx(
-              "span",
-              {
-                className: "font-mono text-xs px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-zinc-300",
-                children: s
-              },
-              s
-            )) }),
-            selected?.github && /* @__PURE__ */ jsx(
-              Button,
-              {
-                asChild: true,
-                size: "sm",
-                variant: "outline",
-                className: "rounded-xl apple-glass border-white/15 hover:bg-white/10",
-                children: /* @__PURE__ */ jsxs(
-                  "a",
-                  {
-                    href: selected.github,
-                    target: "_blank",
-                    rel: "noreferrer",
-                    className: "inline-flex items-center gap-2 text-xs font-mono",
-                    children: [
-                      /* @__PURE__ */ jsx(Github, { className: "h-4 w-4" }),
-                      " Repository GitHub"
-                    ]
-                  }
-                )
-              }
-            )
+            selected?.images && selected.images.length > 0 && /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
+              /* @__PURE__ */ jsx("div", { className: "overflow-hidden rounded-2xl border border-white/15 bg-black/70 shadow-2xl relative aspect-video max-h-[380px] flex items-center justify-center", children: /* @__PURE__ */ jsx(
+                "img",
+                {
+                  src: selected.images[activeImageIndex],
+                  alt: `${selected.name} preview`,
+                  className: "w-full h-full object-contain mx-auto transition-all duration-500"
+                }
+              ) }),
+              selected.images.length > 1 && /* @__PURE__ */ jsx("div", { className: "flex gap-2.5 overflow-x-auto pb-1 custom-scrollbar", children: selected.images.map((src, idx) => /* @__PURE__ */ jsx(
+                "button",
+                {
+                  type: "button",
+                  onClick: () => setActiveImageIndex(idx),
+                  className: `rounded-xl overflow-hidden border p-0 w-24 h-16 shrink-0 transition cursor-pointer ${idx === activeImageIndex ? "border-sky-400 ring-2 ring-sky-400/30 scale-105" : "border-white/10 opacity-60 hover:opacity-100"}`,
+                  children: /* @__PURE__ */ jsx("img", { src, alt: "thumbnail", className: "w-full h-full object-cover" })
+                },
+                idx
+              )) })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4", children: [
+              /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2", children: selected?.stack.map((s) => /* @__PURE__ */ jsx(
+                "span",
+                {
+                  className: "font-mono text-xs px-3 py-1 rounded-lg bg-white/5 border border-white/15 text-zinc-200",
+                  children: s
+                },
+                s
+              )) }),
+              selected?.github && /* @__PURE__ */ jsx(
+                Button,
+                {
+                  asChild: true,
+                  size: "sm",
+                  className: "rounded-full bg-white text-zinc-950 hover:bg-zinc-200 font-medium text-xs px-5 h-9 shadow-lg transition active:scale-95 cursor-pointer",
+                  children: /* @__PURE__ */ jsxs(
+                    "a",
+                    {
+                      href: selected.github,
+                      target: "_blank",
+                      rel: "noreferrer",
+                      className: "inline-flex items-center gap-2",
+                      children: [
+                        /* @__PURE__ */ jsx(Github, { className: "h-4 w-4" }),
+                        " Vedi Codice GitHub"
+                      ]
+                    }
+                  )
+                }
+              )
+            ] })
           ] })
         ] })
       }
@@ -1556,17 +1945,10 @@ function Services() {
                 /* @__PURE__ */ jsx("h3", { className: "font-bold text-lg mb-2.5 text-white", children: s.title }),
                 /* @__PURE__ */ jsx("p", { className: "text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6", children: s.desc })
               ] }),
-              /* @__PURE__ */ jsx("div", { className: "pt-4 border-t border-white/5 space-y-1.5", children: s.highlights.map((h) => /* @__PURE__ */ jsxs(
-                "div",
-                {
-                  className: "flex items-center gap-2 text-xs font-mono text-zinc-300",
-                  children: [
-                    /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-white/40" }),
-                    /* @__PURE__ */ jsx("span", { children: h })
-                  ]
-                },
-                h
-              )) })
+              /* @__PURE__ */ jsx("div", { className: "pt-4 border-t border-white/5 space-y-1.5", children: s.highlights.map((h) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-xs font-mono text-zinc-300", children: [
+                /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-white/40" }),
+                /* @__PURE__ */ jsx("span", { children: h })
+              ] }, h)) })
             ]
           },
           s.title

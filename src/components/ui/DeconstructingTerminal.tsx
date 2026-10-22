@@ -9,123 +9,247 @@ import {
   Check,
   Maximize2,
   Minimize2,
-  ArrowDown,
+  Cpu,
+  Database,
+  Globe,
+  Radio,
+  Play,
+  ArrowRight,
 } from "lucide-react";
 
+/* -------------------------------------------------------------------------
+   Interactive 3D Spatial Tilt Card Component
+   Tracks cursor relative to card center and applies real-time rotateX/rotateY
+   and dynamic specular spotlight reflection
+   ------------------------------------------------------------------------- */
+function SpatialCard({
+  children,
+  className = "",
+  baseTransform = "",
+  isMobile = false,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  baseTransform?: string;
+  isMobile?: boolean;
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [rotate, setRotate] = useState({ x: 0, y: 0 });
+  const [spotlight, setSpotlight] = useState({ x: 50, y: 50, opacity: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isMobile || !cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = ((y - centerY) / centerY) * -7; // max 7 deg tilt
+    const rotateY = ((x - centerX) / centerX) * 7;
+
+    setRotate({ x: rotateX, y: rotateY });
+    setSpotlight({
+      x: (x / rect.width) * 100,
+      y: (y / rect.height) * 100,
+      opacity: 0.18,
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setRotate({ x: 0, y: 0 });
+    setSpotlight((prev) => ({ ...prev, opacity: 0 }));
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={`relative transition-transform duration-200 ease-out will-change-transform ${className}`}
+      style={
+        isMobile
+          ? undefined
+          : {
+              transform: `${baseTransform} rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
+              transformStyle: "preserve-3d",
+            }
+      }
+    >
+      {/* Dynamic Specular Spotlight Sheen */}
+      {!isMobile && (
+        <div
+          className="pointer-events-none absolute -inset-px rounded-[inherit] transition-opacity duration-300 z-30"
+          style={{
+            opacity: spotlight.opacity,
+            background: `radial-gradient(circle 320px at ${spotlight.x}% ${spotlight.y}%, rgba(255, 255, 255, 0.35), transparent 70%)`,
+          }}
+        />
+      )}
+      {children}
+    </div>
+  );
+}
+
+/* =========================================================================
+   MAIN DECONSTRUCTING TERMINAL WORKSTATION
+   ========================================================================= */
 export function DeconstructingTerminal() {
   const [activeTab, setActiveTab] = useState<"profile" | "stack" | "cli">("profile");
   const [copied, setCopied] = useState(false);
   const [isDeconstructed, setIsDeconstructed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [apiSimulating, setApiSimulating] = useState(false);
+  const [apiResponse, setApiResponse] = useState<string | null>(null);
+
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Detect mobile view to disable heavy 3D transforms on mobile
+  // Detect mobile view to adjust 3D rotations for smaller viewports
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 1024);
     };
     checkMobile();
     window.addEventListener("resize", checkMobile, { passive: true });
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Track scroll position of the section to trigger smooth decomposition
+  // Smooth scroll tracking with generous hysteresis to prevent layout jumping
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (!containerRef.current) return;
+          const rect = containerRef.current.getBoundingClientRect();
+          const windowHeight = window.innerHeight;
 
-      // Calculate progress between when section enters and reaches center
-      const start = windowHeight * 0.85;
-      const end = windowHeight * 0.25;
-      const progress = Math.min(Math.max((start - rect.top) / (start - end), 0), 1);
-
-      if (progress > 0.45 && !isDeconstructed) {
-        setIsDeconstructed(true);
-      } else if (progress < 0.2 && isDeconstructed) {
-        setIsDeconstructed(false);
+          // When top of section reaches middle of viewport, smooth deconstruct
+          if (rect.top < windowHeight * 0.45 && rect.bottom > windowHeight * 0.25) {
+            setIsDeconstructed(true);
+          } else if (rect.top > windowHeight * 0.75) {
+            setIsDeconstructed(false);
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isDeconstructed]);
+  }, []);
 
   const copySnippet = () => {
     setCopied(true);
-    navigator.clipboard?.writeText("git clone https://github.com/Walterinho07/walter-portfolio");
+    navigator.clipboard?.writeText("git clone https://github.com/walterinho07/portfolio-source");
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const simulateApiTest = () => {
+    setApiSimulating(true);
+    setApiResponse(null);
+    setTimeout(() => {
+      setApiSimulating(false);
+      setApiResponse("200 OK · 14ms · PostgreSQL Pool: 8/10 active connections");
+    }, 600);
+  };
+
   return (
-    <div ref={containerRef} className="relative w-full py-8 sm:py-12 transition-all duration-700">
-      {/* Interactive Control Pill (Apple Minimal Dynamic Island Style) */}
-      <div className="flex flex-wrap items-center justify-between gap-3 max-w-xl mx-auto mb-6 px-4">
-        <div className="inline-flex items-center gap-2 text-xs font-mono text-zinc-400">
-          <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
-          <span>Architettura Software</span>
-          <span className="text-zinc-600">·</span>
-          <span className="text-zinc-500">
-            {isDeconstructed ? "Vista Decomposta (Exploded)" : "Terminale Compatto"}
-          </span>
+    <div
+      ref={containerRef}
+      className="relative w-full py-16 sm:py-24 transition-all duration-700 overflow-visible"
+    >
+      {/* =========================================================================
+          TOP CONTROL BAR & DYNAMIC TELEMETRY CAPSULE
+          ========================================================================= */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 max-w-5xl mx-auto mb-10 px-4">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-sky-400 shadow-inner">
+            <Cpu className="w-4 h-4 animate-pulse" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2 text-xs font-mono text-zinc-300">
+              <span className="font-semibold text-white">Architettura Software</span>
+              <span className="text-zinc-600">/</span>
+              <span className="text-sky-400">
+                {isDeconstructed ? "Vista Decomposta 3D Spaziale" : "Terminale Monolitico"}
+              </span>
+            </div>
+            <p className="text-[11px] font-mono text-zinc-500">
+              {isDeconstructed
+                ? "Moduli distribuiti in 3D: Backend, Frontend & Desktop Nativo"
+                : "Scorri in basso o usa il toggle per decomporre l'architettura"}
+            </p>
+          </div>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setIsDeconstructed(!isDeconstructed)}
-          className="inline-flex items-center gap-1.5 text-xs font-mono px-3.5 py-1.5 rounded-full apple-glass text-zinc-300 hover:text-white hover:border-white/25 transition-all cursor-pointer shadow-sm active:scale-95"
-        >
-          {isDeconstructed ? (
-            <>
-              <Minimize2 className="w-3.5 h-3.5 text-sky-400" />
-              <span>Compatta Terminale</span>
-            </>
-          ) : (
-            <>
-              <Maximize2 className="w-3.5 h-3.5 text-sky-400" />
-              <span>Decomponi Vista 3D</span>
-            </>
-          )}
-        </button>
+        {/* Interactive Mode Toggle Button */}
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setIsDeconstructed(!isDeconstructed)}
+            className="inline-flex items-center gap-2 text-xs font-mono px-4 py-2 rounded-full apple-glass text-zinc-200 hover:text-white hover:border-white/30 transition-all cursor-pointer shadow-lg active:scale-95 border border-white/15"
+          >
+            {isDeconstructed ? (
+              <>
+                <Minimize2 className="w-3.5 h-3.5 text-sky-400" />
+                <span>Compatta Terminale</span>
+              </>
+            ) : (
+              <>
+                <Maximize2 className="w-3.5 h-3.5 text-sky-400" />
+                <span>Decomponi Vista 3D Spaziale</span>
+              </>
+            )}
+          </button>
+        </div>
       </div>
 
-      {/* Main Perspective Container */}
-      <div className="md:perspective-1400 w-full max-w-5xl mx-auto">
+      {/* =========================================================================
+          PERSPECTIVE STAGE (Full-Width Cinematic Canvas)
+          ========================================================================= */}
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 perspective-stage-1200">
         {!isDeconstructed ? (
           /* ==============================================================
-             STATE A: COMPACT MONOLITHIC APPLE TERMINAL
+             STATE A: COMPACT MONOLITHIC 3D TERMINAL (Xcode / macOS Style)
              ============================================================== */
-          <div className="relative max-w-2xl mx-auto group px-2 sm:px-0">
-            {/* Soft Titanium Reflected Glow */}
-            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-b from-white/10 to-transparent blur-2xl opacity-40 group-hover:opacity-60 transition duration-700" />
+          <div className="relative max-w-3xl mx-auto transition-all duration-700 ease-out">
+            {/* Ambient 3D Volumetric Glow */}
+            <div className="absolute -inset-2 rounded-3xl bg-gradient-to-b from-sky-500/10 via-white/5 to-transparent blur-3xl opacity-60" />
 
-            {/* Apple Floating Satellite Pods */}
-            <div className="hidden sm:flex absolute -top-4 -right-3 z-20 items-center gap-2 px-3 py-1 rounded-full apple-glass border border-white/10 text-[11px] font-mono text-zinc-300 shadow-xl animate-float-slow">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Core Engine Active</span>
+            {/* Floating 3D Satellite Badge */}
+            <div className="hidden sm:flex absolute -top-4 -right-4 z-20 items-center gap-2 px-3.5 py-1.5 rounded-full apple-glass border border-white/15 text-xs font-mono text-zinc-200 shadow-2xl animate-float-slow">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Full-Stack Runtime Operational</span>
             </div>
 
-            <div className="relative rounded-2xl apple-card overflow-hidden shadow-2xl transition-transform duration-500 hover:scale-[1.01]">
-              {/* macOS Window Title Bar */}
-              <div className="flex items-center justify-between px-3 sm:px-4 py-3 bg-zinc-950/60 border-b border-white/10 select-none">
-                <div className="flex items-center gap-2 shrink-0">
-                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#ff5f56]/90 border border-[#ff5f56]/30 inline-block" />
-                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#ffbd2e]/90 border border-[#ffbd2e]/30 inline-block" />
-                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#27c93f]/90 border border-[#27c93f]/30 inline-block" />
-                  <span className="ml-1.5 font-mono text-[11px] text-zinc-400 hidden md:inline">
-                    walter@developer-studio: ~
+            <SpatialCard
+              isMobile={isMobile}
+              baseTransform="perspective(1200px) rotateX(2deg) translateY(0px)"
+              className="relative rounded-3xl apple-card border border-white/15 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] overflow-hidden"
+            >
+              {/* Window Header */}
+              <div className="flex items-center justify-between px-5 py-3.5 bg-zinc-950/70 border-b border-white/10 select-none">
+                <div className="flex items-center gap-2">
+                  <span className="w-3 h-3 rounded-full bg-[#ff5f56] inline-block shadow-sm" />
+                  <span className="w-3 h-3 rounded-full bg-[#ffbd2e] inline-block shadow-sm" />
+                  <span className="w-3 h-3 rounded-full bg-[#27c93f] inline-block shadow-sm" />
+                  <span className="ml-2 font-mono text-xs text-zinc-400 hidden sm:inline">
+                    walter@developer-studio: ~ (v21.0.4)
                   </span>
                 </div>
 
-                {/* Tabs */}
-                <div className="flex items-center gap-1 font-mono text-xs overflow-x-auto py-0.5">
+                {/* Interactive Tabs */}
+                <div className="flex items-center gap-1.5 font-mono text-xs">
                   <button
+                    type="button"
                     onClick={() => setActiveTab("profile")}
-                    className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-lg text-xs whitespace-nowrap transition ${
+                    className={`flex items-center gap-1.5 px-3 py-1 rounded-xl transition cursor-pointer ${
                       activeTab === "profile"
-                        ? "bg-white/10 text-white font-medium"
+                        ? "bg-white/15 text-white font-medium border border-white/10"
                         : "text-zinc-400 hover:text-white"
                     }`}
                   >
@@ -133,48 +257,52 @@ export function DeconstructingTerminal() {
                     developer.ts
                   </button>
                   <button
+                    type="button"
                     onClick={() => setActiveTab("stack")}
-                    className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-lg text-xs whitespace-nowrap transition ${
+                    className={`flex items-center gap-1.5 px-3 py-1 rounded-xl transition cursor-pointer ${
                       activeTab === "stack"
-                        ? "bg-white/10 text-white font-medium"
+                        ? "bg-white/15 text-white font-medium border border-white/10"
                         : "text-zinc-400 hover:text-white"
                     }`}
                   >
-                    <Layers className="w-3.5 h-3.5 text-zinc-300" />
+                    <Layers className="w-3.5 h-3.5 text-indigo-400" />
                     stack.json
                   </button>
                   <button
+                    type="button"
                     onClick={() => setActiveTab("cli")}
-                    className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-lg text-xs whitespace-nowrap transition ${
+                    className={`flex items-center gap-1.5 px-3 py-1 rounded-xl transition cursor-pointer ${
                       activeTab === "cli"
-                        ? "bg-white/10 text-white font-medium"
+                        ? "bg-white/15 text-white font-medium border border-white/10"
                         : "text-zinc-400 hover:text-white"
                     }`}
                   >
                     <Terminal className="w-3.5 h-3.5 text-emerald-400" />
-                    status.sh
+                    bash
                   </button>
                 </div>
 
+                {/* Copy button */}
                 <button
+                  type="button"
                   onClick={copySnippet}
-                  title="Copia negli appunti"
-                  className="text-zinc-400 hover:text-white transition p-1 shrink-0 ml-1"
+                  title="Copia comando git"
+                  className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-white/10 transition cursor-pointer"
                 >
                   {copied ? (
-                    <Check className="w-3.5 h-3.5 text-emerald-400" />
+                    <Check className="w-4 h-4 text-emerald-400" />
                   ) : (
-                    <Copy className="w-3.5 h-3.5" />
+                    <Copy className="w-4 h-4" />
                   )}
                 </button>
               </div>
 
-              {/* Code Surface */}
-              <div className="p-4 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto min-h-[260px] sm:min-h-[290px] bg-black/40">
+              {/* Code Canvas Area */}
+              <div className="p-6 sm:p-8 font-mono text-xs sm:text-sm bg-black/60 min-h-[290px] leading-relaxed">
                 {activeTab === "profile" && (
-                  <div className="space-y-1.5 text-zinc-300">
+                  <div className="space-y-2 text-zinc-300">
                     <p>
-                      <span className="text-zinc-500">// Walter Fida — Software Architecture</span>
+                      <span className="text-zinc-500">// Walter Fida - Developer Identity</span>
                     </p>
                     <p>
                       <span className="text-sky-400 font-semibold">export const</span>{" "}
@@ -182,26 +310,32 @@ export function DeconstructingTerminal() {
                     </p>
                     <p className="pl-4">
                       <span className="text-zinc-400">fullName</span>:{" "}
-                      <span className="text-zinc-200">"Walter Fida"</span>,
+                      <span className="text-emerald-300">"Walter Fida"</span>,
                     </p>
                     <p className="pl-4">
-                      <span className="text-zinc-400">focus</span>:{" "}
-                      <span className="text-zinc-200">"Full-Stack & Desktop Applications"</span>,
+                      <span className="text-zinc-400">specialization</span>:{" "}
+                      <span className="text-emerald-300">
+                        "Full-Stack Web & Desktop Java Applications"
+                      </span>
+                      ,
                     </p>
                     <p className="pl-4">
                       <span className="text-zinc-400">coreTechnologies</span>: [
                       <span className="text-sky-300">"Java"</span>,{" "}
-                      <span className="text-sky-300">"Spring Boot"</span>,{" "}
-                      <span className="text-zinc-300">"Angular"</span>,{" "}
-                      <span className="text-zinc-300">"JavaFX"</span>],
+                      <span className="text-sky-300">"Spring Boot 3"</span>,{" "}
+                      <span className="text-indigo-300">"Angular"</span>,{" "}
+                      <span className="text-emerald-300">"JavaFX"</span>],
                     </p>
                     <p className="pl-4">
-                      <span className="text-zinc-400">degree</span>:{" "}
-                      <span className="text-zinc-200">"Computer Science (3rd Year)"</span>,
+                      <span className="text-zinc-400">location</span>:{" "}
+                      <span className="text-zinc-200">"Calabria, IT · Remote Available"</span>,
                     </p>
                     <p className="pl-4">
                       <span className="text-zinc-400">approach</span>:{" "}
-                      <span className="text-emerald-300">"Modular, robust, production-ready"</span>,
+                      <span className="text-sky-300">
+                        "Clean Architecture, Modular & Robust Code"
+                      </span>
+                      ,
                     </p>
                     <p>&#125;;</p>
                   </div>
@@ -211,32 +345,47 @@ export function DeconstructingTerminal() {
                   <div className="space-y-1.5 text-zinc-300">
                     <p>&#123;</p>
                     <p className="pl-4">
-                      <span className="text-sky-400">"backendEngine"</span>: &#123;
+                      <span className="text-sky-400">"backendModule"</span>: &#123;
+                    </p>
+                    <p className="pl-8">
+                      <span className="text-zinc-400">"runtime"</span>:{" "}
+                      <span className="text-zinc-200">"Java 21 LTS"</span>,
                     </p>
                     <p className="pl-8">
                       <span className="text-zinc-400">"framework"</span>:{" "}
-                      <span className="text-zinc-200">"Spring Boot 3"</span>,
+                      <span className="text-zinc-200">"Spring Boot 3 + Spring Security"</span>,
                     </p>
                     <p className="pl-8">
-                      <span className="text-zinc-400">"languages"</span>: [
-                      <span className="text-zinc-200">"Java"</span>,{" "}
-                      <span className="text-zinc-200">"SQL"</span>],
-                    </p>
-                    <p className="pl-8">
-                      <span className="text-zinc-400">"features"</span>:{" "}
-                      <span className="text-zinc-200">"REST APIs, Security, ORM"</span>
+                      <span className="text-zinc-400">"storage"</span>:{" "}
+                      <span className="text-zinc-200">"PostgreSQL / Hibernate ORM"</span>
                     </p>
                     <p className="pl-4">&#125;,</p>
                     <p className="pl-4">
-                      <span className="text-sky-400">"frontendSystems"</span>: [
+                      <span className="text-indigo-400">"frontendModule"</span>: &#123;
+                    </p>
+                    <p className="pl-8">
+                      <span className="text-zinc-400">"ecosystem"</span>: [
                       <span className="text-zinc-200">"Angular"</span>,{" "}
                       <span className="text-zinc-200">"TypeScript"</span>,{" "}
                       <span className="text-zinc-200">"React"</span>],
                     </p>
-                    <p className="pl-4">
-                      <span className="text-sky-400">"desktopPlatform"</span>:{" "}
-                      <span className="text-zinc-200">"JavaFX Native Solutions"</span>
+                    <p className="pl-8">
+                      <span className="text-zinc-400">"performance"</span>:{" "}
+                      <span className="text-emerald-300">"60 FPS Butter-Smooth"</span>
                     </p>
+                    <p className="pl-4">&#125;,</p>
+                    <p className="pl-4">
+                      <span className="text-emerald-400">"desktopPlatform"</span>: &#123;
+                    </p>
+                    <p className="pl-8">
+                      <span className="text-zinc-400">"gui"</span>:{" "}
+                      <span className="text-zinc-200">"JavaFX Desktop Native"</span>,
+                    </p>
+                    <p className="pl-8">
+                      <span className="text-zinc-400">"specialization"</span>:{" "}
+                      <span className="text-zinc-200">"GeoShield OSINT Intelligence"</span>
+                    </p>
+                    <p className="pl-4">&#125;</p>
                     <p>&#125;</p>
                   </div>
                 )}
@@ -248,159 +397,241 @@ export function DeconstructingTerminal() {
                       --verify-architecture
                     </div>
                     <div className="text-zinc-400 pl-3">
-                      ✓ Spring Boot services healthy
+                      ✓ Spring Boot 3 microservices online [port 8080]
                       <br />
-                      ✓ Angular & TypeScript client assets bundle-optimized
-                      <br />✓ JavaFX runtime validated (GeoShield OSINT engine ready)
+                      ✓ TypeScript client strict compilation: 0 errors
+                      <br />✓ JavaFX native engine initialized (GeoShield OSINT ready)
                     </div>
-                    <div className="pt-2 text-emerald-400 pl-3">
-                      &gt; All software modules operational.
+                    <div className="pt-2 text-emerald-400 pl-3 flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                      &gt; Architettura software attiva e collaudata.
                     </div>
                   </div>
                 )}
               </div>
 
-              {/* Status bar */}
-              <div className="px-3 sm:px-4 py-2.5 bg-zinc-950/80 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-zinc-400">
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <span className="flex items-center gap-1 text-emerald-400">
+              {/* Status Bar */}
+              <div className="px-5 py-3 bg-zinc-950/80 border-t border-white/10 flex items-center justify-between text-xs font-mono text-zinc-400">
+                <div className="flex items-center gap-3">
+                  <span className="flex items-center gap-1.5 text-emerald-400">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
                     Clean Architecture
                   </span>
-                  <span className="hidden sm:inline">TypeScript · UTF-8</span>
+                  <span className="hidden sm:inline text-zinc-600">·</span>
+                  <span className="hidden sm:inline text-zinc-400">TypeScript / Java 21</span>
                 </div>
-                <div className="flex items-center gap-1.5 text-zinc-400">
-                  <span className="hidden sm:inline">Scorri verso il basso per decomporre</span>
-                  <span className="sm:hidden">Scorri ↓</span>
-                  <ArrowDown className="w-3 h-3 animate-bounce" />
+                <div className="flex items-center gap-2 text-sky-400">
+                  <span>Scorri verso il basso per espandere in 3D</span>
+                  <ArrowRight className="w-3.5 h-3.5 animate-pulse" />
                 </div>
               </div>
-            </div>
+            </SpatialCard>
           </div>
         ) : (
           /* ==============================================================
-             STATE B: DECONSTRUCTED / EXPLODED 3D VIEW (Mobile-Optimized)
+             STATE B: FULL-WIDTH CINEMATIC 3D EXPLODED ARCHITECTURE
+             Spans across the entire screen (max-w-7xl) with 3D perspective,
+             dynamic mouse tilt, holographic data connectors and live tests.
              ============================================================== */
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 transition-all duration-700 px-2 sm:px-0">
-            {/* Card 1: Backend Core Module */}
-            <div
-              className="relative rounded-2xl apple-card p-6 border border-white/10 shadow-2xl transition-all duration-500 hover:border-sky-400/40 hover:-translate-y-1.5"
-              style={
-                isMobile
-                  ? undefined
-                  : {
-                      transform:
-                        "perspective(1000px) rotateY(-4deg) rotateX(2deg) translateZ(30px)",
-                    }
-              }
-            >
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-sky-400">
-                  <Server className="w-5 h-5" />
-                </div>
-                <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 px-2.5 py-1 rounded-full bg-white/5 border border-white/10">
-                  MOD-01 // BACKEND
-                </span>
-              </div>
-              <h3 className="text-lg font-bold text-white mb-2">Java & Spring Boot Core</h3>
-              <p className="text-xs text-zinc-400 leading-relaxed mb-5">
-                Architettura a microservizi e monolite modulare. Gestione delle transazioni dati,
-                sicurezza JWT e persistenza SQL scalabile per piattaforme affidabili.
-              </p>
-              <div className="pt-4 border-t border-white/10 space-y-1.5 text-xs font-mono text-zinc-300">
-                <div className="flex items-center justify-between">
-                  <span className="text-zinc-500">Framework</span>
-                  <span className="text-white font-medium">Spring Boot 3</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-zinc-500">Lingua Base</span>
-                  <span className="text-white font-medium">Java 21 LTS</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-zinc-500">Integrazione</span>
-                  <span className="text-sky-400 font-medium">RESTful APIs</span>
-                </div>
-              </div>
+          <div className="relative transition-all duration-700 ease-out">
+            {/* Holographic Laser Data-Bus Line (Connecting the 3 modules across desktop) */}
+            <div className="hidden lg:block absolute top-1/2 left-[12%] right-[12%] -translate-y-1/2 h-[2px] bg-gradient-to-r from-sky-500/40 via-indigo-500/60 to-emerald-500/40 pointer-events-none z-0">
+              <div className="absolute inset-0 bg-white/20 blur-[2px] animate-pulse" />
+              {/* Animated Data Packets Traveling */}
+              <div
+                className="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-sky-400 blur-[2px] shadow-[0_0_15px_#38bdf8] animate-float-slow"
+                style={{ left: "25%" }}
+              />
+              <div
+                className="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-emerald-400 blur-[2px] shadow-[0_0_15px_#34d399] animate-float-reverse"
+                style={{ right: "25%" }}
+              />
             </div>
 
-            {/* Card 2: Interface Studio Module (Centerpiece) */}
-            <div
-              className="relative rounded-2xl apple-card p-6 border border-white/15 shadow-2xl transition-all duration-500 hover:border-white/30 hover:-translate-y-1.5"
-              style={
-                isMobile
-                  ? undefined
-                  : {
-                      transform: "perspective(1000px) translateZ(60px) scale(1.02)",
-                    }
-              }
-            >
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-white">
-                  <Layers className="w-5 h-5" />
-                </div>
-                <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-300 px-2.5 py-1 rounded-full bg-white/10 border border-white/15">
-                  MOD-02 // FRONTEND
-                </span>
-              </div>
-              <h3 className="text-lg font-bold text-white mb-2">Angular & TypeScript Studio</h3>
-              <p className="text-xs text-zinc-400 leading-relaxed mb-5">
-                Interfacce utente tipizzate, reattive e fluide. Stato applicativo pulito, design ad
-                alta usabilità e componenti riutilizzabili per web app enterprise.
-              </p>
-              <div className="pt-4 border-t border-white/10 space-y-1.5 text-xs font-mono text-zinc-300">
-                <div className="flex items-center justify-between">
-                  <span className="text-zinc-500">UI Stack</span>
-                  <span className="text-white font-medium">Angular & React</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-zinc-500">Tipizzazione</span>
-                  <span className="text-white font-medium">TypeScript Strict</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-zinc-500">Esperienza</span>
-                  <span className="text-emerald-400 font-medium">60 FPS Smooth</span>
-                </div>
-              </div>
-            </div>
+            {/* The 3 Deconstructed Spatial Modules */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch relative z-10">
+              {/* --------------------------------------------------------
+                  MODULE 01: BACKEND CORE (Isometric Left Tilt)
+                  -------------------------------------------------------- */}
+              <SpatialCard
+                isMobile={isMobile}
+                baseTransform="perspective(1200px) rotateY(6deg) rotateX(2deg) translateZ(20px)"
+                className="rounded-3xl apple-card p-7 sm:p-8 border border-white/15 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85)] flex flex-col justify-between hover:border-sky-400/40 transition-colors"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="w-12 h-12 rounded-2xl bg-sky-500/10 border border-sky-400/30 flex items-center justify-center text-sky-400 shadow-inner">
+                      <Server className="w-6 h-6" />
+                    </div>
+                    <span className="font-mono text-[11px] uppercase tracking-wider text-sky-400 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20">
+                      MOD-01 // BACKEND
+                    </span>
+                  </div>
 
-            {/* Card 3: Desktop & Intelligence Module */}
-            <div
-              className="relative rounded-2xl apple-card p-6 border border-white/10 shadow-2xl transition-all duration-500 hover:border-emerald-400/40 hover:-translate-y-1.5"
-              style={
-                isMobile
-                  ? undefined
-                  : {
-                      transform: "perspective(1000px) rotateY(4deg) rotateX(2deg) translateZ(30px)",
-                    }
-              }
-            >
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400">
-                  <Shield className="w-5 h-5" />
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 tracking-tight">
+                    Java & Spring Boot Core
+                  </h3>
+                  <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6">
+                    Backend robusto per gestire logica di business complessa, transazioni ACID,
+                    sicurezza JWT e persistenza SQL scalabile senza fragilità.
+                  </p>
+
+                  <div className="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2.5 font-mono text-xs mb-6">
+                    <div className="flex items-center justify-between text-zinc-300">
+                      <span className="text-zinc-500 flex items-center gap-1.5">
+                        <Database className="w-3.5 h-3.5 text-sky-400" /> Database
+                      </span>
+                      <span className="text-white font-medium">PostgreSQL / SQL</span>
+                    </div>
+                    <div className="flex items-center justify-between text-zinc-300">
+                      <span className="text-zinc-500 flex items-center gap-1.5">
+                        <Radio className="w-3.5 h-3.5 text-emerald-400" /> Endpoint
+                      </span>
+                      <span className="text-sky-300 font-medium">RESTful JSON APIs</span>
+                    </div>
+                    <div className="flex items-center justify-between text-zinc-300">
+                      <span className="text-zinc-500 flex items-center gap-1.5">
+                        <Shield className="w-3.5 h-3.5 text-indigo-400" /> Autenticazione
+                      </span>
+                      <span className="text-white font-medium">Spring Security 6</span>
+                    </div>
+                  </div>
                 </div>
-                <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 px-2.5 py-1 rounded-full bg-white/5 border border-white/10">
-                  MOD-03 // NATIVE
-                </span>
-              </div>
-              <h3 className="text-lg font-bold text-white mb-2">JavaFX Desktop Systems</h3>
-              <p className="text-xs text-zinc-400 leading-relaxed mb-5">
-                Software nativo per analisi geospaziale OSINT e gestionali locali. Esecuzione
-                diretta senza overhead del browser con accesso efficiente alle risorse di sistema.
-              </p>
-              <div className="pt-4 border-t border-white/10 space-y-1.5 text-xs font-mono text-zinc-300">
-                <div className="flex items-center justify-between">
-                  <span className="text-zinc-500">GUI Tooling</span>
-                  <span className="text-white font-medium">JavaFX Platform</span>
+
+                {/* Interactive API Tester */}
+                <div className="pt-4 border-t border-white/10">
+                  <button
+                    type="button"
+                    onClick={simulateApiTest}
+                    disabled={apiSimulating}
+                    className="w-full py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-zinc-200 hover:text-white flex items-center justify-center gap-2 transition cursor-pointer active:scale-95"
+                  >
+                    <Play
+                      className={`w-3.5 h-3.5 text-sky-400 ${apiSimulating ? "animate-spin" : ""}`}
+                    />
+                    <span>{apiSimulating ? "Esecuzione test..." : "Testa API Ping / Health"}</span>
+                  </button>
+                  {apiResponse && (
+                    <p className="mt-2 text-[11px] font-mono text-emerald-400 text-center animate-fade-in">
+                      {apiResponse}
+                    </p>
+                  )}
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-zinc-500">Specializzazione</span>
-                  <span className="text-white font-medium">OSINT Tool GeoShield</span>
+              </SpatialCard>
+
+              {/* --------------------------------------------------------
+                  MODULE 02: INTERFACE STUDIO (Center Foreground Elevation)
+                  -------------------------------------------------------- */}
+              <SpatialCard
+                isMobile={isMobile}
+                baseTransform="perspective(1200px) translateZ(60px) scale(1.02)"
+                className="rounded-3xl apple-card p-7 sm:p-8 border border-white/25 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.95)] flex flex-col justify-between hover:border-white/40 transition-colors"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-400/30 flex items-center justify-center text-white shadow-inner">
+                      <Layers className="w-6 h-6 text-indigo-300" />
+                    </div>
+                    <span className="font-mono text-[11px] uppercase tracking-wider text-indigo-300 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20">
+                      MOD-02 // FRONTEND STUDIO
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 tracking-tight">
+                    Angular & React Frontends
+                  </h3>
+                  <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6">
+                    Interfacce web dinamiche, reattive e tipizzate. Architettura a componenti,
+                    gestione avanzata dello stato e fluidità a 60 FPS senza compromessi.
+                  </p>
+
+                  <div className="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2.5 font-mono text-xs mb-6">
+                    <div className="flex items-center justify-between text-zinc-300">
+                      <span className="text-zinc-500 flex items-center gap-1.5">
+                        <Globe className="w-3.5 h-3.5 text-indigo-400" /> Frameworks
+                      </span>
+                      <span className="text-white font-medium">Angular 18 & React 19</span>
+                    </div>
+                    <div className="flex items-center justify-between text-zinc-300">
+                      <span className="text-zinc-500 flex items-center gap-1.5">
+                        <FileCode2 className="w-3.5 h-3.5 text-sky-400" /> Tipizzazione
+                      </span>
+                      <span className="text-sky-300 font-medium">TypeScript Strict Mode</span>
+                    </div>
+                    <div className="flex items-center justify-between text-zinc-300">
+                      <span className="text-zinc-500 flex items-center gap-1.5">
+                        <Radio className="w-3.5 h-3.5 text-emerald-400" /> UI / Styling
+                      </span>
+                      <span className="text-emerald-300 font-medium">Tailwind CSS + Glass 3D</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-zinc-500">Esecuzione</span>
-                  <span className="text-emerald-400 font-medium">Offline Native</span>
+
+                <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-zinc-400">
+                  <span className="text-emerald-400 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                    Reactive Store Synced
+                  </span>
+                  <span>SSR Ready</span>
                 </div>
-              </div>
+              </SpatialCard>
+
+              {/* --------------------------------------------------------
+                  MODULE 03: NATIVE INTELLIGENCE (Isometric Right Tilt)
+                  -------------------------------------------------------- */}
+              <SpatialCard
+                isMobile={isMobile}
+                baseTransform="perspective(1200px) rotateY(-6deg) rotateX(2deg) translateZ(20px)"
+                className="rounded-3xl apple-card p-7 sm:p-8 border border-white/15 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85)] flex flex-col justify-between hover:border-emerald-400/40 transition-colors"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shadow-inner">
+                      <Shield className="w-6 h-6" />
+                    </div>
+                    <span className="font-mono text-[11px] uppercase tracking-wider text-emerald-400 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+                      MOD-03 // DESKTOP NATIVE
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 tracking-tight">
+                    JavaFX & OSINT Systems
+                  </h3>
+                  <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6">
+                    Software applicativo nativo ad alte prestazioni: GeoShield OSINT, applicativi di
+                    intelligence geospaziale e gestionali locali a bassissimo consumo.
+                  </p>
+
+                  <div className="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2.5 font-mono text-xs mb-6">
+                    <div className="flex items-center justify-between text-zinc-300">
+                      <span className="text-zinc-500 flex items-center gap-1.5">
+                        <Cpu className="w-3.5 h-3.5 text-emerald-400" /> Ambiente
+                      </span>
+                      <span className="text-white font-medium">JavaFX Desktop Platform</span>
+                    </div>
+                    <div className="flex items-center justify-between text-zinc-300">
+                      <span className="text-zinc-500 flex items-center gap-1.5">
+                        <Shield className="w-3.5 h-3.5 text-sky-400" /> Focus
+                      </span>
+                      <span className="text-emerald-300 font-medium">GeoShield OSINT Tool</span>
+                    </div>
+                    <div className="flex items-center justify-between text-zinc-300">
+                      <span className="text-zinc-500 flex items-center gap-1.5">
+                        <Radio className="w-3.5 h-3.5 text-indigo-400" /> Esecuzione
+                      </span>
+                      <span className="text-white font-medium">Offline Native Speed</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-zinc-400">
+                  <span className="text-sky-400 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-sky-400" />
+                    Hardware Acceleration
+                  </span>
+                  <span>Zero Web Overhead</span>
+                </div>
+              </SpatialCard>
             </div>
           </div>
         )}

@@ -173,9 +173,19 @@ const services = [
 /* =========================================================================
    1. NAVIGATION BAR (Full-Width Sticky Header with Reading Progress Bar)
    ========================================================================= */
+const navLinks = [
+  { href: "#architecture", label: "Architettura" },
+  { href: "#about", label: "About" },
+  { href: "#projects", label: "Progetti" },
+  { href: "#services", label: "Servizi" },
+  { href: "#faq", label: "FAQ" },
+  { href: "#contact", label: "Contatti" },
+];
+
 function Nav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [activeSection, setActiveSection] = useState("Home");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -183,28 +193,54 @@ function Nav() {
       if (totalHeight > 0) {
         setScrollProgress((window.scrollY / totalHeight) * 100);
       }
+
+      // Detect active section
+      const sections = ["contact", "faq", "services", "projects", "about", "architecture", "top"];
+      for (const id of sections) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 160) {
+            const found = navLinks.find((l) => l.href === `#${id}`);
+            setActiveSection(found ? found.label : "Home");
+            break;
+          }
+        }
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const links = [
-    { href: "#architecture", label: "Architettura" },
-    { href: "#about", label: "About" },
-    { href: "#projects", label: "Progetti" },
-    { href: "#services", label: "Servizi" },
-    { href: "#faq", label: "FAQ" },
-    { href: "#contact", label: "Contatti" },
-  ];
+  const handleTrackClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const percentage = clickX / rect.width;
+    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+    window.scrollTo({
+      top: percentage * totalHeight,
+      behavior: "smooth",
+    });
+  };
 
   return (
-    <header className="sticky top-0 inset-x-0 z-50 w-full bg-[#0a0a0c]/90 backdrop-blur-3xl border-b border-white/10 shadow-2xl transition-all">
-      {/* Scroll Reading Progress Bar along the bottom edge */}
+    <header className="sticky top-0 inset-x-0 z-50 w-full bg-[#0a0a0c]/90 backdrop-blur-3xl border-b border-white/10 shadow-2xl transition-all select-none">
+      {/* Interactive Scroll Reading Progress Bar with Glowing Mercury Orb Head */}
       <div
-        className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-sky-400 via-indigo-400 to-emerald-400 transition-all duration-150 ease-out z-10"
-        style={{ width: `${scrollProgress}%` }}
-      />
+        onClick={handleTrackClick}
+        title="Clicca per scorrere rapidamente"
+        className="absolute bottom-0 inset-x-0 h-[3px] bg-white/[0.04] cursor-pointer group/track"
+      >
+        <div
+          className="relative h-full bg-gradient-to-r from-sky-400 via-indigo-400 to-emerald-400 transition-all duration-150 ease-out group-hover/track:brightness-125"
+          style={{ width: `${scrollProgress}%` }}
+        >
+          {/* Glowing Mercury Orb Head */}
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-3.5 h-3.5 rounded-full bg-white animate-progress-orb shadow-[0_0_12px_#38bdf8,0_0_24px_#818cf8]" />
+        </div>
+      </div>
 
       <div className="mx-auto max-w-6xl px-6 h-16 sm:h-20 flex items-center justify-between">
         <a href="#top" className="flex items-center gap-2.5 font-mono text-sm tracking-tight group">
@@ -218,16 +254,30 @@ function Nav() {
           <span className="text-zinc-500 font-mono text-xs hidden sm:inline">&lt;dev/&gt;</span>
         </a>
 
+        {/* Dynamic Telemetry Status Capsule (Showing Current Section & Percentage) */}
+        <div className="hidden lg:flex items-center gap-2 px-3 py-1 rounded-full apple-glass border border-white/10 text-xs font-mono text-zinc-300">
+          <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
+          <span className="text-white font-medium">{activeSection}</span>
+          <span className="text-zinc-600">·</span>
+          <span className="text-sky-300 font-semibold">{Math.round(scrollProgress)}%</span>
+        </div>
+
         {/* Desktop Navigation Links */}
         <nav className="hidden md:flex items-center gap-8 text-xs lg:text-sm font-medium text-zinc-400">
-          {links.map((link) => (
+          {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="hover:text-white transition-colors py-1 relative group"
+              className={`hover:text-white transition-colors py-1 relative group ${
+                activeSection === link.label ? "text-white font-semibold" : ""
+              }`}
             >
               {link.label}
-              <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-white group-hover:w-full transition-all duration-300" />
+              <span
+                className={`absolute bottom-0 left-0 h-[1.5px] bg-white transition-all duration-300 ${
+                  activeSection === link.label ? "w-full bg-sky-400" : "w-0 group-hover:w-full"
+                }`}
+              />
             </a>
           ))}
         </nav>
@@ -255,13 +305,21 @@ function Nav() {
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-white/10 bg-[#0c0c10]/95 backdrop-blur-3xl px-6 py-4 shadow-2xl">
+          <div className="pb-3 mb-3 border-b border-white/10 flex items-center justify-between text-xs font-mono text-zinc-400">
+            <span>Sezione: {activeSection}</span>
+            <span className="text-sky-400 font-bold">{Math.round(scrollProgress)}%</span>
+          </div>
           <nav className="flex flex-col gap-2 font-medium text-sm">
-            {links.map((link) => (
+            {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3.5 py-2.5 rounded-xl hover:bg-white/10 text-zinc-300 hover:text-white transition"
+                className={`px-3.5 py-2.5 rounded-xl transition ${
+                  activeSection === link.label
+                    ? "bg-white/15 text-white font-semibold"
+                    : "hover:bg-white/10 text-zinc-300 hover:text-white"
+                }`}
               >
                 {link.label}
               </a>
@@ -350,8 +408,11 @@ function Hero() {
    ========================================================================= */
 function ArchitectureSection() {
   return (
-    <section id="architecture" className="relative px-6 py-12 border-t border-white/5 scroll-mt-28">
-      <div className="mx-auto max-w-6xl">
+    <section
+      id="architecture"
+      className="relative px-4 sm:px-6 py-20 sm:py-28 border-t border-white/5 scroll-mt-28 overflow-visible"
+    >
+      <div className="mx-auto max-w-7xl w-full">
         <DeconstructingTerminal />
       </div>
     </section>
@@ -359,7 +420,7 @@ function ArchitectureSection() {
 }
 
 /* =========================================================================
-   4. INDIVIDUAL SCROLL-REVEALED PROJECT CARD
+   4. INDIVIDUAL SCROLL-REVEALED 3D PROJECT CARD
    ========================================================================= */
 function ScrollProjectCard({
   project,
@@ -374,6 +435,8 @@ function ScrollProjectCard({
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [rotate, setRotate] = useState({ x: 0, y: 0 });
+  const [spotlight, setSpotlight] = useState({ x: 50, y: 50, opacity: 0 });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -394,15 +457,54 @@ function ScrollProjectCard({
     return () => observer.disconnect();
   }, []);
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current || window.innerWidth < 1024) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = ((y - centerY) / centerY) * -6;
+    const rotateY = ((x - centerX) / centerX) * 6;
+
+    setRotate({ x: rotateX, y: rotateY });
+    setSpotlight({
+      x: (x / rect.width) * 100,
+      y: (y / rect.height) * 100,
+      opacity: 0.18,
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setRotate({ x: 0, y: 0 });
+    setSpotlight((prev) => ({ ...prev, opacity: 0 }));
+  };
+
   return (
     <article
       ref={cardRef}
-      className={`group relative rounded-3xl apple-card p-7 sm:p-8 transition-all duration-1000 cubic-bezier(0.16, 1, 0.3, 1) flex flex-col justify-between hover:border-white/35 hover:-translate-y-2 shadow-2xl ${
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transform: `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
+        transformStyle: "preserve-3d",
+      }}
+      className={`group relative rounded-3xl apple-card p-7 sm:p-8 transition-all duration-700 ease-out flex flex-col justify-between hover:border-white/40 shadow-2xl ${
         isVisible
           ? "opacity-100 translate-y-0 scale-100 blur-none"
           : "opacity-0 translate-y-24 scale-[0.93] blur-sm"
       }`}
     >
+      {/* Specular Spotlight Follow */}
+      <div
+        className="pointer-events-none absolute -inset-px rounded-3xl transition-opacity duration-300 z-30 hidden lg:block"
+        style={{
+          opacity: spotlight.opacity,
+          background: `radial-gradient(circle 350px at ${spotlight.x}% ${spotlight.y}%, rgba(255, 255, 255, 0.3), transparent 70%)`,
+        }}
+      />
+
       <div>
         <div className="flex items-start justify-between gap-4 mb-4">
           <div>
@@ -441,11 +543,11 @@ function ScrollProjectCard({
           {project.description}
         </p>
 
-        {/* Screenshot Frame with Micro-Zoom */}
+        {/* Screenshot Frame with Micro-Zoom and 3D Elevation */}
         {project.images && project.images.length > 0 && (
           <div
             onClick={() => onOpen(project)}
-            className="cursor-pointer mb-6 rounded-2xl overflow-hidden border border-white/10 bg-black/60 relative group/img aspect-video"
+            className="cursor-pointer mb-6 rounded-2xl overflow-hidden border border-white/10 bg-black/60 relative group/img aspect-video shadow-xl transition-all duration-300 group-hover:border-white/30"
           >
             <img
               src={project.images[0]}
@@ -548,7 +650,7 @@ function Projects() {
           ))}
         </div>
 
-        {/* Modal Gallery Dialog */}
+        {/* Modal Gallery Dialog with Liquid Metal 3D Background */}
         <Dialog
           open={open}
           onOpenChange={(val) => {
@@ -556,87 +658,128 @@ function Projects() {
             setOpen(val);
           }}
         >
-          <DialogContent className="max-w-3xl apple-card border border-white/15 bg-zinc-950/95 backdrop-blur-2xl text-white rounded-3xl p-6 sm:p-8">
-            <DialogHeader>
-              <div className="flex items-center justify-between gap-4">
-                <span className="font-mono text-xs uppercase tracking-wider text-zinc-400">
-                  {selected?.type}
-                </span>
-                <span className="text-xs font-mono px-2.5 py-0.5 rounded-full border border-white/15 bg-white/5 text-zinc-300">
-                  {selected?.status}
-                </span>
-              </div>
-              <DialogTitle className="text-2xl sm:text-3xl font-bold mt-2">
-                {selected?.name}
-              </DialogTitle>
-            </DialogHeader>
+          <DialogContent className="max-w-4xl w-[95vw] sm:w-[90vw] max-h-[88vh] overflow-hidden flex flex-col liquid-metal-modal text-white rounded-3xl p-0 border border-white/20 shadow-[0_30px_90px_rgba(0,0,0,0.95)]">
+            {/* 3D Liquid Metal Ambient Background Layers */}
+            <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden select-none">
+              <div
+                className="absolute -top-[15%] -left-[15%] w-[450px] h-[450px] rounded-full blur-[90px] animate-mercury-blob"
+                style={{
+                  background:
+                    "radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(148,163,184,0.08) 50%, transparent 80%)",
+                  animationDuration: "10s",
+                }}
+              />
+              <div
+                className="absolute -bottom-[20%] -right-[15%] w-[500px] h-[500px] rounded-full blur-[100px] animate-mercury-blob"
+                style={{
+                  background:
+                    "radial-gradient(circle, rgba(226,232,240,0.16) 0%, rgba(56,189,248,0.08) 40%, transparent 75%)",
+                  animationDuration: "14s",
+                  animationDelay: "-3s",
+                }}
+              />
+              <div
+                className="absolute inset-0 opacity-[0.05] animate-liquid-flow"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.8) 25%, transparent 50%, rgba(255,255,255,0.6) 75%, transparent 100%)",
+                }}
+              />
+              {/* Floating 3D Specular Chrome Droplet */}
+              <div className="absolute top-12 right-20 w-12 h-12 rounded-full border border-white/30 bg-gradient-to-br from-white/25 via-zinc-400/10 to-transparent shadow-[0_10px_25px_rgba(0,0,0,0.6),inset_0_2px_4px_rgba(255,255,255,0.5)] backdrop-blur-md animate-float-slow pointer-events-none" />
+            </div>
 
-            <DialogDescription className="text-zinc-400 text-sm sm:text-base leading-relaxed mt-2">
-              {selected?.longDescription || selected?.description}
-            </DialogDescription>
+            {/* Custom Floating Visible Liquid Metal Close Button */}
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="absolute top-4 right-4 sm:top-5 sm:right-5 z-50 flex items-center justify-center w-9 h-9 rounded-full bg-white/15 hover:bg-white/30 border border-white/30 text-white backdrop-blur-2xl shadow-xl transition-all duration-200 active:scale-90 cursor-pointer focus:outline-none"
+              aria-label="Chiudi modale"
+            >
+              <X className="w-4 h-4 text-white" />
+            </button>
 
-            {/* Screenshots */}
-            {selected?.images && selected.images.length > 0 && (
-              <div className="mt-6 space-y-3">
-                <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/60">
-                  <img
-                    src={selected.images[activeImageIndex]}
-                    alt={`${selected.name} preview`}
-                    className="w-full h-auto max-h-[380px] object-contain mx-auto"
-                  />
+            {/* Scrollable Modal Content */}
+            <div className="relative p-6 sm:p-8 md:p-10 overflow-y-auto custom-scrollbar flex-1 space-y-6">
+              <DialogHeader className="text-left space-y-2 pr-10">
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-xs uppercase tracking-wider text-sky-400 font-semibold px-2.5 py-0.5 rounded-full bg-sky-500/10 border border-sky-500/20">
+                    {selected?.type}
+                  </span>
+                  <span className="text-xs font-mono px-2.5 py-0.5 rounded-full border border-white/15 bg-white/5 text-zinc-300">
+                    {selected?.status}
+                  </span>
+                </div>
+                <DialogTitle className="text-2xl sm:text-4xl font-bold tracking-tight text-white">
+                  {selected?.name}
+                </DialogTitle>
+                <DialogDescription className="text-zinc-300 text-sm sm:text-base leading-relaxed mt-2">
+                  {selected?.longDescription || selected?.description}
+                </DialogDescription>
+              </DialogHeader>
+
+              {/* Screenshots Gallery */}
+              {selected?.images && selected.images.length > 0 && (
+                <div className="space-y-3">
+                  <div className="overflow-hidden rounded-2xl border border-white/15 bg-black/70 shadow-2xl relative aspect-video max-h-[380px] flex items-center justify-center">
+                    <img
+                      src={selected.images[activeImageIndex]}
+                      alt={`${selected.name} preview`}
+                      className="w-full h-full object-contain mx-auto transition-all duration-500"
+                    />
+                  </div>
+
+                  {selected.images.length > 1 && (
+                    <div className="flex gap-2.5 overflow-x-auto pb-1 custom-scrollbar">
+                      {selected.images.map((src, idx) => (
+                        <button
+                          key={idx}
+                          type="button"
+                          onClick={() => setActiveImageIndex(idx)}
+                          className={`rounded-xl overflow-hidden border p-0 w-24 h-16 shrink-0 transition cursor-pointer ${
+                            idx === activeImageIndex
+                              ? "border-sky-400 ring-2 ring-sky-400/30 scale-105"
+                              : "border-white/10 opacity-60 hover:opacity-100"
+                          }`}
+                        >
+                          <img src={src} alt="thumbnail" className="w-full h-full object-cover" />
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Tech Stack Pills & Actions */}
+              <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex flex-wrap gap-2">
+                  {selected?.stack.map((s) => (
+                    <span
+                      key={s}
+                      className="font-mono text-xs px-3 py-1 rounded-lg bg-white/5 border border-white/15 text-zinc-200"
+                    >
+                      {s}
+                    </span>
+                  ))}
                 </div>
 
-                {selected.images.length > 1 && (
-                  <div className="flex gap-2.5 overflow-x-auto pb-1">
-                    {selected.images.map((src, idx) => (
-                      <button
-                        key={idx}
-                        type="button"
-                        onClick={() => setActiveImageIndex(idx)}
-                        className={`rounded-xl overflow-hidden border p-0 w-24 h-16 shrink-0 transition ${
-                          idx === activeImageIndex
-                            ? "border-white ring-2 ring-white/20"
-                            : "border-white/10 opacity-50 hover:opacity-100"
-                        }`}
-                      >
-                        <img src={src} alt="thumbnail" className="w-full h-full object-cover" />
-                      </button>
-                    ))}
-                  </div>
+                {selected?.github && (
+                  <Button
+                    asChild
+                    size="sm"
+                    className="rounded-full bg-white text-zinc-950 hover:bg-zinc-200 font-medium text-xs px-5 h-9 shadow-lg transition active:scale-95 cursor-pointer"
+                  >
+                    <a
+                      href={selected.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2"
+                    >
+                      <Github className="h-4 w-4" /> Vedi Codice GitHub
+                    </a>
+                  </Button>
                 )}
               </div>
-            )}
-
-            {/* Modal Bottom Footer */}
-            <div className="mt-6 pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
-              <div className="flex flex-wrap gap-1.5">
-                {selected?.stack.map((s) => (
-                  <span
-                    key={s}
-                    className="font-mono text-xs px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-zinc-300"
-                  >
-                    {s}
-                  </span>
-                ))}
-              </div>
-
-              {selected?.github && (
-                <Button
-                  asChild
-                  size="sm"
-                  variant="outline"
-                  className="rounded-xl apple-glass border-white/15 hover:bg-white/10"
-                >
-                  <a
-                    href={selected.github}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 text-xs font-mono"
-                  >
-                    <Github className="h-4 w-4" /> Repository GitHub
-                  </a>
-                </Button>
-              )}
             </div>
           </DialogContent>
         </Dialog>
