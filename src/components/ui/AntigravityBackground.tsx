@@ -25,14 +25,6 @@ export function AntigravityBackground() {
         className="absolute top-[42%] right-[7%] w-44 h-44 rounded-full border border-white/[0.06] bg-white/[0.01] backdrop-blur-[8px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] animate-float-reverse"
         style={{ animationDuration: "16s" }}
       />
-
-      {/* Subtle Specular Horizon Gradient Mask */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: "radial-gradient(ellipse 90% 70% at 50% 15%, transparent 20%, #0a0a0c 90%)",
-        }}
-      />
     </div>
   );
 }

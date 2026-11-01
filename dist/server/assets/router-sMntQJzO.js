@@ -4,14 +4,14 @@ import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { Toaster as Toaster$1, toast } from "sonner";
 import * as React from "react";
 import { useRef, useEffect, useState } from "react";
-import { X, Cpu, Minimize2, Maximize2, FileCode2, Layers, Terminal, Check, Copy, ArrowRight, Server, Database, Radio, Shield, Play, Globe, TerminalSquare, Code2, Sparkles, CheckCircle, Activity, Monitor, MapPin, Zap, ShieldCheck, HelpCircle, ChevronDown, Menu, Github, Calendar, Wrench, Briefcase, Mail, MessageCircle, Linkedin, Loader2, CheckCircle2, ExternalLink, ChevronRight } from "lucide-react";
+import { X, Cpu, Minimize2, Maximize2, FileCode2, Layers, Terminal, Check, Copy, ArrowRight, Server, Database, Radio, Shield, Play, Globe, TerminalSquare, Code2, Sparkles, CheckCircle, Activity, Monitor, MapPin, RefreshCw, Rotate3d, Box, Eye, Zap, ShieldCheck, HelpCircle, ChevronDown, Menu, Github, Calendar, Wrench, Briefcase, Mail, MessageCircle, Linkedin, Loader2, CheckCircle2, ExternalLink, ChevronRight } from "lucide-react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import * as THREE from "three";
-const appCss = "/assets/styles-Sip4mBOV.css";
+const appCss = "/assets/styles-BLHf8v90.css";
 const Toaster = ({ ...props }) => {
   return /* @__PURE__ */ jsx(
     Toaster$1,
@@ -502,15 +502,6 @@ function AntigravityBackground() {
           {
             className: "absolute top-[42%] right-[7%] w-44 h-44 rounded-full border border-white/[0.06] bg-white/[0.01] backdrop-blur-[8px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] animate-float-reverse",
             style: { animationDuration: "16s" }
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          "div",
-          {
-            className: "absolute inset-0",
-            style: {
-              background: "radial-gradient(ellipse 90% 70% at 50% 15%, transparent 20%, #0a0a0c 90%)"
-            }
           }
         )
       ]
@@ -1320,6 +1311,362 @@ function BentoAbout() {
     }
   );
 }
+function Interactive3DHeroCore() {
+  const mountRef = useRef(null);
+  const canvasRef = useRef(null);
+  const [mode, setMode] = useState("metal");
+  const [shape, setShape] = useState("knot");
+  const [isInteracting, setIsInteracting] = useState(false);
+  const stateRef = useRef({
+    mode: "metal",
+    shape: "knot",
+    isDragging: false,
+    prevMousePos: { x: 0, y: 0 },
+    rotationVelocity: { x: 0, y: 0 },
+    targetRotation: { x: 0.2, y: 0.4 },
+    currentRotation: { x: 0.2, y: 0.4 }
+  });
+  useEffect(() => {
+    stateRef.current.mode = mode;
+    stateRef.current.shape = shape;
+  }, [mode, shape]);
+  useEffect(() => {
+    if (typeof window === "undefined" || !canvasRef.current || !mountRef.current) {
+      return;
+    }
+    const mount = mountRef.current;
+    const canvas = canvasRef.current;
+    let animId;
+    let isComponentVisible = true;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+      45,
+      mount.clientWidth / mount.clientHeight,
+      0.1,
+      100
+    );
+    camera.position.set(0, 0, 7.5);
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true,
+      powerPreference: "high-performance"
+    });
+    renderer.setSize(mount.clientWidth, mount.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.4;
+    const knotGeo = new THREE.TorusKnotGeometry(1.4, 0.45, 120, 24, 2, 3);
+    const sphereGeo = new THREE.IcosahedronGeometry(1.65, 8);
+    const torusGeo = new THREE.TorusGeometry(1.6, 0.5, 32, 100);
+    const metalMat = new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(14410730),
+      metalness: 0.95,
+      roughness: 0.1,
+      clearcoat: 1,
+      clearcoatRoughness: 0.08,
+      reflectivity: 1,
+      wireframe: false
+    });
+    const emeraldMat = new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(3462041),
+      metalness: 0.85,
+      roughness: 0.15,
+      clearcoat: 1,
+      clearcoatRoughness: 0.1,
+      reflectivity: 0.9,
+      emissive: new THREE.Color(413243),
+      emissiveIntensity: 0.2,
+      wireframe: false
+    });
+    const wireMat = new THREE.MeshStandardMaterial({
+      color: 3718648,
+      wireframe: true,
+      emissive: 165063,
+      emissiveIntensity: 0.6
+    });
+    const mainMesh = new THREE.Mesh(knotGeo, metalMat);
+    scene.add(mainMesh);
+    const ring1Geo = new THREE.TorusGeometry(2.4, 0.025, 16, 90);
+    const ring1Mat = new THREE.MeshStandardMaterial({
+      color: 3718648,
+      emissive: 165063,
+      emissiveIntensity: 0.4,
+      metalness: 0.9,
+      roughness: 0.2
+    });
+    const ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
+    ring1.rotation.x = Math.PI / 3;
+    scene.add(ring1);
+    const ring2Geo = new THREE.TorusGeometry(2.8, 0.02, 16, 90);
+    const ring2Mat = new THREE.MeshStandardMaterial({
+      color: 8490232,
+      emissive: 5195493,
+      emissiveIntensity: 0.35,
+      metalness: 0.9,
+      roughness: 0.2
+    });
+    const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
+    ring2.rotation.y = Math.PI / 4;
+    scene.add(ring2);
+    const beaconGeo = new THREE.SphereGeometry(0.1, 16, 16);
+    const beaconMat1 = new THREE.MeshBasicMaterial({ color: 3718648 });
+    const beacon1 = new THREE.Mesh(beaconGeo, beaconMat1);
+    scene.add(beacon1);
+    const beaconMat2 = new THREE.MeshBasicMaterial({ color: 3462041 });
+    const beacon2 = new THREE.Mesh(beaconGeo, beaconMat2);
+    scene.add(beacon2);
+    const ambientLight = new THREE.AmbientLight(988970, 1.4);
+    scene.add(ambientLight);
+    const light1 = new THREE.PointLight(3718648, 4.5, 20);
+    light1.position.set(4, 4, 5);
+    scene.add(light1);
+    const light2 = new THREE.PointLight(8490232, 4, 20);
+    light2.position.set(-4, -4, 4);
+    scene.add(light2);
+    const light3 = new THREE.PointLight(3462041, 3, 18);
+    light3.position.set(0, 5, -3);
+    scene.add(light3);
+    const dirLight = new THREE.DirectionalLight(16777215, 1.2);
+    dirLight.position.set(2, 6, 6);
+    scene.add(dirLight);
+    const onPointerDown = (e) => {
+      stateRef.current.isDragging = true;
+      setIsInteracting(true);
+      const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+      const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
+      stateRef.current.prevMousePos = { x: clientX, y: clientY };
+    };
+    const onPointerMove = (e) => {
+      if (!stateRef.current.isDragging) return;
+      const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+      const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
+      const deltaX = clientX - stateRef.current.prevMousePos.x;
+      const deltaY = clientY - stateRef.current.prevMousePos.y;
+      stateRef.current.targetRotation.y += deltaX * 8e-3;
+      stateRef.current.targetRotation.x += deltaY * 8e-3;
+      stateRef.current.prevMousePos = { x: clientX, y: clientY };
+    };
+    const onPointerUp = () => {
+      stateRef.current.isDragging = false;
+      setTimeout(() => setIsInteracting(false), 800);
+    };
+    const mountEl = mount;
+    mountEl.addEventListener("mousedown", onPointerDown);
+    window.addEventListener("mousemove", onPointerMove);
+    window.addEventListener("mouseup", onPointerUp);
+    mountEl.addEventListener("touchstart", onPointerDown, { passive: true });
+    window.addEventListener("touchmove", onPointerMove, { passive: true });
+    window.addEventListener("touchend", onPointerUp);
+    const handleResize = () => {
+      if (!mount || !renderer || !camera) return;
+      const width = mount.clientWidth;
+      const height = mount.clientHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    };
+    window.addEventListener("resize", handleResize);
+    const handleVisibility = () => {
+      isComponentVisible = !document.hidden;
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+    const clock = new THREE.Clock();
+    const animate = () => {
+      animId = requestAnimationFrame(animate);
+      if (!isComponentVisible) return;
+      const time = clock.getElapsedTime();
+      const state = stateRef.current;
+      if (state.shape === "knot" && mainMesh.geometry !== knotGeo) {
+        mainMesh.geometry = knotGeo;
+      } else if (state.shape === "sphere" && mainMesh.geometry !== sphereGeo) {
+        mainMesh.geometry = sphereGeo;
+      } else if (state.shape === "torus" && mainMesh.geometry !== torusGeo) {
+        mainMesh.geometry = torusGeo;
+      }
+      if (state.mode === "metal" && mainMesh.material !== metalMat) {
+        mainMesh.material = metalMat;
+      } else if (state.mode === "emerald" && mainMesh.material !== emeraldMat) {
+        mainMesh.material = emeraldMat;
+      } else if (state.mode === "wireframe" && mainMesh.material !== wireMat) {
+        mainMesh.material = wireMat;
+      }
+      if (!state.isDragging) {
+        state.targetRotation.y += 6e-3;
+        state.targetRotation.x = 0.2 + Math.sin(time * 0.5) * 0.15;
+      }
+      state.currentRotation.x += (state.targetRotation.x - state.currentRotation.x) * 0.08;
+      state.currentRotation.y += (state.targetRotation.y - state.currentRotation.y) * 0.08;
+      mainMesh.rotation.x = state.currentRotation.x;
+      mainMesh.rotation.y = state.currentRotation.y;
+      ring1.rotation.x = Math.PI / 3 + time * 0.25;
+      ring1.rotation.y = time * 0.18;
+      ring2.rotation.y = Math.PI / 4 - time * 0.22;
+      ring2.rotation.z = time * 0.15;
+      beacon1.position.set(
+        Math.sin(time * 1.5) * 2.4,
+        Math.cos(time * 1.5) * 2.4,
+        Math.sin(time * 2) * 0.5
+      );
+      beacon2.position.set(
+        Math.cos(time * 1.2) * 2.8,
+        Math.sin(time * 0.8) * 0.8,
+        Math.sin(time * 1.2) * 2.8
+      );
+      light1.position.x = Math.sin(time * 0.8) * 5;
+      light1.position.y = Math.cos(time * 0.6) * 5;
+      light2.position.x = Math.cos(time * 0.7) * 5;
+      light2.position.y = Math.sin(time * 0.9) * 5;
+      renderer.render(scene, camera);
+    };
+    animate();
+    return () => {
+      cancelAnimationFrame(animId);
+      mountEl.removeEventListener("mousedown", onPointerDown);
+      window.removeEventListener("mousemove", onPointerMove);
+      window.removeEventListener("mouseup", onPointerUp);
+      mountEl.removeEventListener("touchstart", onPointerDown);
+      window.removeEventListener("touchmove", onPointerMove);
+      window.removeEventListener("touchend", onPointerUp);
+      window.removeEventListener("resize", handleResize);
+      document.removeEventListener("visibilitychange", handleVisibility);
+      knotGeo.dispose();
+      sphereGeo.dispose();
+      torusGeo.dispose();
+      metalMat.dispose();
+      emeraldMat.dispose();
+      wireMat.dispose();
+      ring1Geo.dispose();
+      ring1Mat.dispose();
+      ring2Geo.dispose();
+      ring2Mat.dispose();
+      beaconGeo.dispose();
+      beaconMat1.dispose();
+      beaconMat2.dispose();
+      renderer.dispose();
+    };
+  }, []);
+  const resetRotation = () => {
+    stateRef.current.targetRotation = { x: 0.2, y: 0.4 };
+  };
+  return /* @__PURE__ */ jsxs("div", { className: "relative w-full max-w-lg mx-auto rounded-3xl apple-card border border-white/20 p-4 sm:p-6 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] overflow-hidden group", children: [
+    /* @__PURE__ */ jsx("div", { className: "absolute -inset-1 rounded-3xl bg-gradient-to-tr from-sky-500/20 via-indigo-500/10 to-emerald-500/15 blur-2xl opacity-60 pointer-events-none" }),
+    /* @__PURE__ */ jsxs("div", { className: "relative z-10 flex items-center justify-between gap-2 pb-3 mb-2 border-b border-white/10 text-xs font-mono select-none", children: [
+      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+        /* @__PURE__ */ jsxs("span", { className: "relative flex h-2 w-2", children: [
+          /* @__PURE__ */ jsx("span", { className: "animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" }),
+          /* @__PURE__ */ jsx("span", { className: "relative inline-flex rounded-full h-2 w-2 bg-sky-400" })
+        ] }),
+        /* @__PURE__ */ jsx("span", { className: "text-white font-semibold", children: "WebGL 3D Core" }),
+        /* @__PURE__ */ jsx("span", { className: "text-zinc-600", children: "·" }),
+        /* @__PURE__ */ jsx("span", { className: "text-sky-300 hidden sm:inline", children: "Three.js Engine" })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1.5 text-[11px] text-zinc-400", children: [
+        /* @__PURE__ */ jsx(
+          "span",
+          {
+            className: `px-2 py-0.5 rounded-full border transition-all ${isInteracting ? "bg-sky-500/20 text-sky-300 border-sky-400/40" : "bg-white/5 border-white/10 text-zinc-400"}`,
+            children: isInteracting ? "Interazione 3D" : "Trascina per ruotare"
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          "button",
+          {
+            type: "button",
+            onClick: resetRotation,
+            title: "Ripristina rotazione",
+            className: "p-1 rounded-md hover:bg-white/10 text-zinc-400 hover:text-white transition cursor-pointer",
+            children: /* @__PURE__ */ jsx(RefreshCw, { className: "w-3.5 h-3.5" })
+          }
+        )
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxs(
+      "div",
+      {
+        ref: mountRef,
+        className: "relative w-full aspect-square max-h-[340px] sm:max-h-[380px] cursor-grab active:cursor-grabbing select-none flex items-center justify-center overflow-hidden",
+        children: [
+          /* @__PURE__ */ jsx("canvas", { ref: canvasRef, className: "w-full h-full block" }),
+          /* @__PURE__ */ jsx("div", { className: "absolute bottom-2 left-3 pointer-events-none text-[10px] font-mono text-zinc-600", children: "3D Specular Canvas · Realtime 60FPS" })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxs("div", { className: "relative z-10 pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs font-mono", children: [
+      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1 bg-white/5 p-1 rounded-xl border border-white/10", children: [
+        /* @__PURE__ */ jsxs(
+          "button",
+          {
+            type: "button",
+            onClick: () => setShape("knot"),
+            className: `px-2.5 py-1 rounded-lg transition cursor-pointer flex items-center gap-1.5 ${shape === "knot" ? "bg-white/20 text-white font-medium shadow-sm" : "text-zinc-400 hover:text-white"}`,
+            children: [
+              /* @__PURE__ */ jsx(Rotate3d, { className: "w-3 h-3 text-sky-400" }),
+              /* @__PURE__ */ jsx("span", { children: "Knot" })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxs(
+          "button",
+          {
+            type: "button",
+            onClick: () => setShape("sphere"),
+            className: `px-2.5 py-1 rounded-lg transition cursor-pointer flex items-center gap-1.5 ${shape === "sphere" ? "bg-white/20 text-white font-medium shadow-sm" : "text-zinc-400 hover:text-white"}`,
+            children: [
+              /* @__PURE__ */ jsx(Sparkles, { className: "w-3 h-3 text-emerald-400" }),
+              /* @__PURE__ */ jsx("span", { children: "Sfera" })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxs(
+          "button",
+          {
+            type: "button",
+            onClick: () => setShape("torus"),
+            className: `px-2.5 py-1 rounded-lg transition cursor-pointer flex items-center gap-1.5 ${shape === "torus" ? "bg-white/20 text-white font-medium shadow-sm" : "text-zinc-400 hover:text-white"}`,
+            children: [
+              /* @__PURE__ */ jsx(Box, { className: "w-3 h-3 text-indigo-400" }),
+              /* @__PURE__ */ jsx("span", { children: "Torus" })
+            ]
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1 bg-white/5 p-1 rounded-xl border border-white/10", children: [
+        /* @__PURE__ */ jsx(
+          "button",
+          {
+            type: "button",
+            onClick: () => setMode("metal"),
+            className: `px-2.5 py-1 rounded-lg transition cursor-pointer ${mode === "metal" ? "bg-white/20 text-white font-medium shadow-sm" : "text-zinc-400 hover:text-white"}`,
+            children: "Titanio"
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          "button",
+          {
+            type: "button",
+            onClick: () => setMode("emerald"),
+            className: `px-2.5 py-1 rounded-lg transition cursor-pointer ${mode === "emerald" ? "bg-emerald-500/30 text-emerald-300 font-medium shadow-sm" : "text-zinc-400 hover:text-white"}`,
+            children: "Smeraldo"
+          }
+        ),
+        /* @__PURE__ */ jsxs(
+          "button",
+          {
+            type: "button",
+            onClick: () => setMode("wireframe"),
+            className: `px-2.5 py-1 rounded-lg transition cursor-pointer flex items-center gap-1 ${mode === "wireframe" ? "bg-sky-500/30 text-sky-300 font-medium shadow-sm" : "text-zinc-400 hover:text-white"}`,
+            children: [
+              /* @__PURE__ */ jsx(Eye, { className: "w-3 h-3" }),
+              /* @__PURE__ */ jsx("span", { children: "Mesh" })
+            ]
+          }
+        )
+      ] })
+    ] })
+  ] });
+}
 const faqItems = [
   {
     tag: "Architettura & Stack",
@@ -1721,72 +2068,84 @@ function Nav() {
   ] });
 }
 function Hero() {
-  return /* @__PURE__ */ jsx("section", { id: "top", className: "relative pt-16 sm:pt-24 pb-20 px-6 overflow-hidden scroll-mt-28", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-4xl text-center flex flex-col items-center", children: [
-    /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full apple-glass text-xs font-mono text-zinc-300 mb-8 border border-white/10 shadow-xl animate-float-slow", children: [
-      /* @__PURE__ */ jsx("span", { className: "w-2 h-2 rounded-full bg-emerald-400 animate-pulse" }),
-      /* @__PURE__ */ jsx("span", { children: "Software & Full-Stack Developer" }),
-      /* @__PURE__ */ jsx("span", { className: "text-zinc-600", children: "·" }),
-      /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: "Calabria, IT" })
-    ] }),
-    /* @__PURE__ */ jsxs("h1", { className: "text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.08] max-w-3xl", children: [
-      "Codice essenziale. ",
-      /* @__PURE__ */ jsx("br", {}),
-      /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "Software che funziona." })
-    ] }),
-    /* @__PURE__ */ jsxs("p", { className: "mt-6 text-base sm:text-xl text-zinc-400 max-w-2xl leading-relaxed", children: [
-      "Sviluppo web app ad alte prestazioni, backend robusti in",
-      " ",
-      /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Java & Spring Boot" }),
-      " e applicativi desktop nativi in ",
-      /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "JavaFX" }),
-      "."
-    ] }),
-    /* @__PURE__ */ jsxs("div", { className: "mt-8 flex flex-wrap gap-3.5 justify-center", children: [
-      /* @__PURE__ */ jsx(
-        Button,
-        {
-          asChild: true,
-          size: "lg",
-          className: "rounded-full bg-white text-zinc-950 hover:bg-zinc-200 font-medium text-sm px-7 h-11 transition shadow-lg active:scale-95",
-          children: /* @__PURE__ */ jsxs("a", { href: "#projects", className: "flex items-center gap-2", children: [
-            "Esplora i progetti ",
-            /* @__PURE__ */ jsx(ArrowRight, { className: "h-4 w-4" })
+  return /* @__PURE__ */ jsx(
+    "section",
+    {
+      id: "top",
+      className: "relative pt-12 sm:pt-20 pb-20 px-4 sm:px-6 overflow-hidden scroll-mt-28",
+      children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-7xl", children: [
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center", children: [
+          /* @__PURE__ */ jsxs("div", { className: "lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left", children: [
+            /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full apple-glass text-xs font-mono text-zinc-300 mb-6 border border-white/10 shadow-xl animate-float-slow", children: [
+              /* @__PURE__ */ jsx("span", { className: "w-2 h-2 rounded-full bg-emerald-400 animate-pulse" }),
+              /* @__PURE__ */ jsx("span", { children: "Software & Full-Stack Developer" }),
+              /* @__PURE__ */ jsx("span", { className: "text-zinc-600", children: "·" }),
+              /* @__PURE__ */ jsx("span", { className: "text-zinc-400", children: "Calabria, IT" })
+            ] }),
+            /* @__PURE__ */ jsxs("h1", { className: "text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.08] max-w-3xl", children: [
+              "Codice essenziale. ",
+              /* @__PURE__ */ jsx("br", {}),
+              /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "Software che funziona." })
+            ] }),
+            /* @__PURE__ */ jsxs("p", { className: "mt-6 text-base sm:text-xl text-zinc-400 max-w-2xl leading-relaxed", children: [
+              "Sviluppo web app ad alte prestazioni, backend robusti in",
+              " ",
+              /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Java & Spring Boot" }),
+              " e applicativi desktop nativi in ",
+              /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "JavaFX" }),
+              "."
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "mt-8 flex flex-wrap gap-3.5 justify-center lg:justify-start", children: [
+              /* @__PURE__ */ jsx(
+                Button,
+                {
+                  asChild: true,
+                  size: "lg",
+                  className: "rounded-full bg-white text-zinc-950 hover:bg-zinc-200 font-medium text-sm px-7 h-11 transition shadow-lg active:scale-95",
+                  children: /* @__PURE__ */ jsxs("a", { href: "#projects", className: "flex items-center gap-2", children: [
+                    "Esplora i progetti ",
+                    /* @__PURE__ */ jsx(ArrowRight, { className: "h-4 w-4" })
+                  ] })
+                }
+              ),
+              /* @__PURE__ */ jsx(
+                Button,
+                {
+                  asChild: true,
+                  size: "lg",
+                  variant: "outline",
+                  className: "rounded-full apple-glass border-white/10 hover:bg-white/10 text-white font-medium text-sm px-7 h-11 transition active:scale-95",
+                  children: /* @__PURE__ */ jsx("a", { href: "#contact", children: "Parliamo del tuo progetto" })
+                }
+              )
+            ] })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "lg:col-span-5 w-full flex justify-center", children: /* @__PURE__ */ jsx(Interactive3DHeroCore, {}) })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "mt-14 pt-8 border-t border-white/5 flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-zinc-400", children: [
+          /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2", children: [
+            /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-white/40" }),
+            "100% Architettura Pulita"
+          ] }),
+          /* @__PURE__ */ jsx("span", { className: "text-zinc-700", children: "|" }),
+          /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2", children: [
+            /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-sky-400" }),
+            "Full-Stack + Desktop Native"
+          ] }),
+          /* @__PURE__ */ jsx("span", { className: "text-zinc-700", children: "|" }),
+          /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2", children: [
+            /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" }),
+            "WebGL 3D Core Interattivo"
+          ] }),
+          /* @__PURE__ */ jsx("span", { className: "text-zinc-700", children: "|" }),
+          /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2", children: [
+            /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400" }),
+            "Disponibilità Immediata"
           ] })
-        }
-      ),
-      /* @__PURE__ */ jsx(
-        Button,
-        {
-          asChild: true,
-          size: "lg",
-          variant: "outline",
-          className: "rounded-full apple-glass border-white/10 hover:bg-white/10 text-white font-medium text-sm px-7 h-11 transition active:scale-95",
-          children: /* @__PURE__ */ jsx("a", { href: "#contact", children: "Parliamo del tuo progetto" })
-        }
-      )
-    ] }),
-    /* @__PURE__ */ jsxs("div", { className: "mt-14 pt-8 border-t border-white/5 flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-zinc-400", children: [
-      /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2", children: [
-        /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-white/40" }),
-        "100% Architettura Pulita"
-      ] }),
-      /* @__PURE__ */ jsx("span", { className: "text-zinc-700", children: "|" }),
-      /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2", children: [
-        /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-sky-400" }),
-        "Full-Stack + Desktop Native"
-      ] }),
-      /* @__PURE__ */ jsx("span", { className: "text-zinc-700", children: "|" }),
-      /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2", children: [
-        /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" }),
-        "WebGL 3D Engine"
-      ] }),
-      /* @__PURE__ */ jsx("span", { className: "text-zinc-700", children: "|" }),
-      /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2", children: [
-        /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400" }),
-        "Disponibilità Immediata"
+        ] })
       ] })
-    ] })
-  ] }) });
+    }
+  );
 }
 function ArchitectureSection() {
   return /* @__PURE__ */ jsx(

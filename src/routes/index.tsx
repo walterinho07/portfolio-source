@@ -37,6 +37,7 @@ import { toast } from "sonner";
 import { AntigravityBackground } from "@/components/ui/AntigravityBackground";
 import { DeconstructingTerminal } from "@/components/ui/DeconstructingTerminal";
 import { BentoAbout } from "@/components/ui/BentoAbout";
+import { Interactive3DHeroCore } from "@/components/ui/Interactive3DHeroCore";
 import Faq from "@/components/ui/Faq";
 
 export const Route = createFileRoute("/")({
@@ -336,49 +337,62 @@ function Nav() {
    ========================================================================= */
 function Hero() {
   return (
-    <section id="top" className="relative pt-16 sm:pt-24 pb-20 px-6 overflow-hidden scroll-mt-28">
-      <div className="mx-auto max-w-4xl text-center flex flex-col items-center">
-        {/* Apple Precision Status Capsule */}
-        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full apple-glass text-xs font-mono text-zinc-300 mb-8 border border-white/10 shadow-xl animate-float-slow">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span>Software & Full-Stack Developer</span>
-          <span className="text-zinc-600">·</span>
-          <span className="text-zinc-400">Calabria, IT</span>
-        </div>
+    <section
+      id="top"
+      className="relative pt-12 sm:pt-20 pb-20 px-4 sm:px-6 overflow-hidden scroll-mt-28"
+    >
+      <div className="mx-auto max-w-7xl">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+          {/* Left Column: Headline, Description & CTAs */}
+          <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
+            {/* Apple Precision Status Capsule */}
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full apple-glass text-xs font-mono text-zinc-300 mb-6 border border-white/10 shadow-xl animate-float-slow">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Software & Full-Stack Developer</span>
+              <span className="text-zinc-600">·</span>
+              <span className="text-zinc-400">Calabria, IT</span>
+            </div>
 
-        {/* Apple Style Monolithic Headline */}
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.08] max-w-3xl">
-          Codice essenziale. <br />
-          <span className="text-gradient">Software che funziona.</span>
-        </h1>
+            {/* Apple Style Monolithic Headline */}
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.08] max-w-3xl">
+              Codice essenziale. <br />
+              <span className="text-gradient">Software che funziona.</span>
+            </h1>
 
-        {/* Subtitle */}
-        <p className="mt-6 text-base sm:text-xl text-zinc-400 max-w-2xl leading-relaxed">
-          Sviluppo web app ad alte prestazioni, backend robusti in{" "}
-          <span className="text-white font-medium">Java & Spring Boot</span> e applicativi desktop
-          nativi in <span className="text-white font-medium">JavaFX</span>.
-        </p>
+            {/* Subtitle */}
+            <p className="mt-6 text-base sm:text-xl text-zinc-400 max-w-2xl leading-relaxed">
+              Sviluppo web app ad alte prestazioni, backend robusti in{" "}
+              <span className="text-white font-medium">Java & Spring Boot</span> e applicativi
+              desktop nativi in <span className="text-white font-medium">JavaFX</span>.
+            </p>
 
-        {/* Minimal CTAs */}
-        <div className="mt-8 flex flex-wrap gap-3.5 justify-center">
-          <Button
-            asChild
-            size="lg"
-            className="rounded-full bg-white text-zinc-950 hover:bg-zinc-200 font-medium text-sm px-7 h-11 transition shadow-lg active:scale-95"
-          >
-            <a href="#projects" className="flex items-center gap-2">
-              Esplora i progetti <ArrowRight className="h-4 w-4" />
-            </a>
-          </Button>
+            {/* Minimal CTAs */}
+            <div className="mt-8 flex flex-wrap gap-3.5 justify-center lg:justify-start">
+              <Button
+                asChild
+                size="lg"
+                className="rounded-full bg-white text-zinc-950 hover:bg-zinc-200 font-medium text-sm px-7 h-11 transition shadow-lg active:scale-95"
+              >
+                <a href="#projects" className="flex items-center gap-2">
+                  Esplora i progetti <ArrowRight className="h-4 w-4" />
+                </a>
+              </Button>
 
-          <Button
-            asChild
-            size="lg"
-            variant="outline"
-            className="rounded-full apple-glass border-white/10 hover:bg-white/10 text-white font-medium text-sm px-7 h-11 transition active:scale-95"
-          >
-            <a href="#contact">Parliamo del tuo progetto</a>
-          </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="rounded-full apple-glass border-white/10 hover:bg-white/10 text-white font-medium text-sm px-7 h-11 transition active:scale-95"
+              >
+                <a href="#contact">Parliamo del tuo progetto</a>
+              </Button>
+            </div>
+          </div>
+
+          {/* Right Column: Interactive 3D WebGL Core */}
+          <div className="lg:col-span-5 w-full flex justify-center">
+            <Interactive3DHeroCore />
+          </div>
         </div>
 
         {/* Specifications Bar */}
@@ -395,7 +409,7 @@ function Hero() {
           <span className="text-zinc-700">|</span>
           <span className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
-            WebGL 3D Engine
+            WebGL 3D Core Interattivo
           </span>
           <span className="text-zinc-700">|</span>
           <span className="flex items-center gap-2">
