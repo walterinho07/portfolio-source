@@ -40,12 +40,10 @@ export function Interactive3DHeroCore() {
     // 1. Three.js Scene Setup
     const scene = new THREE.Scene();
 
-    const camera = new THREE.PerspectiveCamera(
-      45,
-      mount.clientWidth / mount.clientHeight,
-      0.1,
-      100,
-    );
+    const width = mount.clientWidth || 360;
+    const height = mount.clientHeight || 360;
+
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
     camera.position.set(0, 0, 7.5);
 
     const renderer = new THREE.WebGLRenderer({
@@ -54,7 +52,7 @@ export function Interactive3DHeroCore() {
       antialias: true,
       powerPreference: "high-performance",
     });
-    renderer.setSize(mount.clientWidth, mount.clientHeight);
+    renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.4;
@@ -192,14 +190,18 @@ export function Interactive3DHeroCore() {
 
     const handleResize = () => {
       if (!mount || !renderer || !camera) return;
-      const width = mount.clientWidth;
-      const height = mount.clientHeight;
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      const w = mount.clientWidth || 360;
+      const h = mount.clientHeight || 360;
+      if (w > 0 && h > 0) {
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      }
     };
 
+    const resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(mount);
     window.addEventListener("resize", handleResize);
 
     const handleVisibility = () => {
@@ -288,6 +290,7 @@ export function Interactive3DHeroCore() {
       window.removeEventListener("touchmove", onPointerMove);
       window.removeEventListener("touchend", onPointerUp);
       window.removeEventListener("resize", handleResize);
+      resizeObserver.disconnect();
       document.removeEventListener("visibilitychange", handleVisibility);
 
       knotGeo.dispose();

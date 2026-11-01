@@ -23,12 +23,10 @@ export function WebGLAntigravityCanvas() {
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x0a0a0c, 0.035);
 
-    const camera = new THREE.PerspectiveCamera(
-      45,
-      container.clientWidth / container.clientHeight,
-      0.1,
-      100,
-    );
+    const width = container.clientWidth || window.innerWidth || 1920;
+    const height = container.clientHeight || window.innerHeight || 1080;
+
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
     camera.position.set(0, 0, 16);
 
     const renderer = new THREE.WebGLRenderer({
@@ -37,7 +35,7 @@ export function WebGLAntigravityCanvas() {
       antialias: true,
       powerPreference: "high-performance",
     });
-    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.35;
@@ -179,13 +177,18 @@ export function WebGLAntigravityCanvas() {
 
     const handleResize = () => {
       if (!container || !renderer || !camera) return;
-      const width = container.clientWidth;
-      const height = container.clientHeight;
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      const w = container.clientWidth || window.innerWidth || 1920;
+      const h = container.clientHeight || window.innerHeight || 1080;
+      if (w > 0 && h > 0) {
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      }
     };
+
+    const resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(container);
 
     const handleVisibilityChange = () => {
       isVisible = !document.hidden;
@@ -256,6 +259,7 @@ export function WebGLAntigravityCanvas() {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
+      resizeObserver.disconnect();
       document.removeEventListener("visibilitychange", handleVisibilityChange);
 
       coreGeometry.dispose();

@@ -5,7 +5,7 @@ export function AntigravityBackground() {
   return (
     <div
       aria-hidden="true"
-      className="fixed inset-0 pointer-events-none -z-10 overflow-hidden select-none bg-[#0a0a0c]"
+      className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none bg-[#0a0a0c]"
     >
       {/* 3D WebGL Realtime Engine (Three.js Liquid Metal & Particle Field) */}
       <WebGLAntigravityCanvas />

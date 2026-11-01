@@ -1170,7 +1170,7 @@ function Footer() {
    ========================================================================= */
 export default function Index() {
   return (
-    <div className="relative min-h-screen bg-[#0a0a0c] text-white selection:bg-white/20 selection:text-white">
+    <div className="relative min-h-screen text-white selection:bg-white/20 selection:text-white">
       {/* Floating Lenses & Ambient Apple Space */}
       <AntigravityBackground />
 
@@ -1178,7 +1178,7 @@ export default function Index() {
       <Nav />
 
       {/* Page Sections */}
-      <main>
+      <main className="relative z-10">
         <Hero />
         <ArchitectureSection />
         <BentoAbout />

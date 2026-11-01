@@ -233,12 +233,9 @@ function WebGLAntigravityCanvas() {
     let isVisible = true;
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(657932, 0.035);
-    const camera = new THREE.PerspectiveCamera(
-      45,
-      container.clientWidth / container.clientHeight,
-      0.1,
-      100
-    );
+    const width = container.clientWidth || window.innerWidth || 1920;
+    const height = container.clientHeight || window.innerHeight || 1080;
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
     camera.position.set(0, 0, 16);
     const renderer = new THREE.WebGLRenderer({
       canvas,
@@ -246,7 +243,7 @@ function WebGLAntigravityCanvas() {
       antialias: true,
       powerPreference: "high-performance"
     });
-    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.35;
@@ -363,13 +360,17 @@ function WebGLAntigravityCanvas() {
     };
     const handleResize = () => {
       if (!container || !renderer || !camera) return;
-      const width = container.clientWidth;
-      const height = container.clientHeight;
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      const w = container.clientWidth || window.innerWidth || 1920;
+      const h = container.clientHeight || window.innerHeight || 1080;
+      if (w > 0 && h > 0) {
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      }
     };
+    const resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(container);
     const handleVisibilityChange = () => {
       isVisible = !document.hidden;
     };
@@ -414,6 +415,7 @@ function WebGLAntigravityCanvas() {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
+      resizeObserver.disconnect();
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       coreGeometry.dispose();
       coreMaterial.dispose();
@@ -449,7 +451,7 @@ function AntigravityBackground() {
     "div",
     {
       "aria-hidden": "true",
-      className: "fixed inset-0 pointer-events-none -z-10 overflow-hidden select-none bg-[#0a0a0c]",
+      className: "fixed inset-0 pointer-events-none z-0 overflow-hidden select-none bg-[#0a0a0c]",
       children: [
         /* @__PURE__ */ jsx(WebGLAntigravityCanvas, {}),
         /* @__PURE__ */ jsx("div", { className: "absolute -top-[20%] left-[15%] w-[600px] h-[600px] rounded-full bg-slate-400/[0.04] blur-[140px] animate-lens-drift" }),
@@ -1325,12 +1327,9 @@ function Interactive3DHeroCore() {
     let animId;
     let isComponentVisible = true;
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      45,
-      mount.clientWidth / mount.clientHeight,
-      0.1,
-      100
-    );
+    const width = mount.clientWidth || 360;
+    const height = mount.clientHeight || 360;
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
     camera.position.set(0, 0, 7.5);
     const renderer = new THREE.WebGLRenderer({
       canvas,
@@ -1338,7 +1337,7 @@ function Interactive3DHeroCore() {
       antialias: true,
       powerPreference: "high-performance"
     });
-    renderer.setSize(mount.clientWidth, mount.clientHeight);
+    renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.4;
@@ -1446,13 +1445,17 @@ function Interactive3DHeroCore() {
     window.addEventListener("touchend", onPointerUp);
     const handleResize = () => {
       if (!mount || !renderer || !camera) return;
-      const width = mount.clientWidth;
-      const height = mount.clientHeight;
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      const w = mount.clientWidth || 360;
+      const h = mount.clientHeight || 360;
+      if (w > 0 && h > 0) {
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      }
     };
+    const resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(mount);
     window.addEventListener("resize", handleResize);
     const handleVisibility = () => {
       isComponentVisible = !document.hidden;
@@ -1516,6 +1519,7 @@ function Interactive3DHeroCore() {
       window.removeEventListener("touchmove", onPointerMove);
       window.removeEventListener("touchend", onPointerUp);
       window.removeEventListener("resize", handleResize);
+      resizeObserver.disconnect();
       document.removeEventListener("visibilitychange", handleVisibility);
       knotGeo.dispose();
       sphereGeo.dispose();
@@ -2927,10 +2931,10 @@ function Footer() {
   ] }) });
 }
 function Index() {
-  return /* @__PURE__ */ jsxs("div", { className: "relative min-h-screen bg-[#0a0a0c] text-white selection:bg-white/20 selection:text-white", children: [
+  return /* @__PURE__ */ jsxs("div", { className: "relative min-h-screen text-white selection:bg-white/20 selection:text-white", children: [
     /* @__PURE__ */ jsx(AntigravityBackground, {}),
     /* @__PURE__ */ jsx(Nav, {}),
-    /* @__PURE__ */ jsxs("main", { children: [
+    /* @__PURE__ */ jsxs("main", { className: "relative z-10", children: [
       /* @__PURE__ */ jsx(Hero, {}),
       /* @__PURE__ */ jsx(ArchitectureSection, {}),
       /* @__PURE__ */ jsx(BentoAbout, {}),
