@@ -3,14 +3,15 @@ import { createRootRouteWithContext, useRouter, Link, Outlet, HeadContent, Scrip
 import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { Toaster as Toaster$1, toast } from "sonner";
 import * as React from "react";
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { X, Cpu, Minimize2, Maximize2, FileCode2, Layers, Terminal, Check, Copy, ArrowRight, Server, Database, Radio, Shield, Play, Globe, TerminalSquare, Code2, Sparkles, CheckCircle, Activity, Monitor, MapPin, Zap, ShieldCheck, HelpCircle, ChevronDown, Menu, Github, Calendar, Wrench, Briefcase, Mail, MessageCircle, Linkedin, Loader2, CheckCircle2, ExternalLink, ChevronRight } from "lucide-react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-const appCss = "/assets/styles-BE6I2g_m.css";
+import * as THREE from "three";
+const appCss = "/assets/styles-Sip4mBOV.css";
 const Toaster = ({ ...props }) => {
   return /* @__PURE__ */ jsx(
     Toaster$1,
@@ -252,6 +253,231 @@ const DialogDescription = React.forwardRef(({ className, ...props }, ref) => /* 
   }
 ));
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
+function WebGLAntigravityCanvas() {
+  const containerRef = useRef(null);
+  const canvasRef = useRef(null);
+  useEffect(() => {
+    if (typeof window === "undefined" || !canvasRef.current || !containerRef.current) {
+      return;
+    }
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const container = containerRef.current;
+    const canvas = canvasRef.current;
+    let animationFrameId;
+    let isVisible = true;
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(657932, 0.035);
+    const camera = new THREE.PerspectiveCamera(
+      45,
+      container.clientWidth / container.clientHeight,
+      0.1,
+      100
+    );
+    camera.position.set(0, 0, 16);
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true,
+      powerPreference: "high-performance"
+    });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.35;
+    const coreGeometry = new THREE.TorusKnotGeometry(2.3, 0.65, 140, 32, 2, 3);
+    const coreMaterial = new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(14476267),
+      metalness: 0.94,
+      roughness: 0.12,
+      clearcoat: 1,
+      clearcoatRoughness: 0.08,
+      reflectivity: 0.95,
+      wireframe: false
+    });
+    const coreMesh = new THREE.Mesh(coreGeometry, coreMaterial);
+    coreMesh.position.set(0, 0.5, 0);
+    scene.add(coreMesh);
+    const ring1Geo = new THREE.TorusGeometry(4.3, 0.035, 16, 120);
+    const ring1Mat = new THREE.MeshStandardMaterial({
+      color: 3718648,
+      metalness: 0.9,
+      roughness: 0.2,
+      emissive: 165063,
+      emissiveIntensity: 0.35
+    });
+    const ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
+    ring1.rotation.x = Math.PI / 3;
+    scene.add(ring1);
+    const ring2Geo = new THREE.TorusGeometry(5.2, 0.025, 16, 140);
+    const ring2Mat = new THREE.MeshStandardMaterial({
+      color: 8490232,
+      metalness: 0.9,
+      roughness: 0.2,
+      emissive: 5195493,
+      emissiveIntensity: 0.3
+    });
+    const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
+    ring2.rotation.y = Math.PI / 4;
+    scene.add(ring2);
+    const particleCount = 1100;
+    const particlePositions = new Float32Array(particleCount * 3);
+    const particleColors = new Float32Array(particleCount * 3);
+    const colorPalette = [
+      new THREE.Color(3718648),
+      // Sky Blue
+      new THREE.Color(8490232),
+      // Indigo
+      new THREE.Color(3462041),
+      // Emerald
+      new THREE.Color(16777215)
+      // Specular White
+    ];
+    for (let i = 0; i < particleCount; i++) {
+      const idx = i * 3;
+      particlePositions[idx] = (Math.random() - 0.5) * 45;
+      particlePositions[idx + 1] = (Math.random() - 0.5) * 45;
+      particlePositions[idx + 2] = (Math.random() - 0.5) * 35;
+      const c = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+      particleColors[idx] = c.r;
+      particleColors[idx + 1] = c.g;
+      particleColors[idx + 2] = c.b;
+    }
+    const particleGeometry = new THREE.BufferGeometry();
+    particleGeometry.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
+    particleGeometry.setAttribute("color", new THREE.BufferAttribute(particleColors, 3));
+    const spriteCanvas = document.createElement("canvas");
+    spriteCanvas.width = 32;
+    spriteCanvas.height = 32;
+    const ctx = spriteCanvas.getContext("2d");
+    if (ctx) {
+      const grad = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+      grad.addColorStop(0, "rgba(255, 255, 255, 1)");
+      grad.addColorStop(0.3, "rgba(255, 255, 255, 0.7)");
+      grad.addColorStop(1, "rgba(255, 255, 255, 0)");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 32, 32);
+    }
+    const particleTexture = new THREE.CanvasTexture(spriteCanvas);
+    const particleMaterial = new THREE.PointsMaterial({
+      size: 0.18,
+      vertexColors: true,
+      map: particleTexture,
+      transparent: true,
+      opacity: 0.65,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+    const particles = new THREE.Points(particleGeometry, particleMaterial);
+    scene.add(particles);
+    const ambientLight = new THREE.AmbientLight(988970, 1.2);
+    scene.add(ambientLight);
+    const light1 = new THREE.PointLight(3718648, 3.5, 35);
+    light1.position.set(6, 6, 8);
+    scene.add(light1);
+    const light2 = new THREE.PointLight(8490232, 3, 35);
+    light2.position.set(-6, -5, 6);
+    scene.add(light2);
+    const light3 = new THREE.PointLight(3462041, 2.2, 30);
+    light3.position.set(0, 8, -4);
+    scene.add(light3);
+    const dirLight = new THREE.DirectionalLight(16777215, 1);
+    dirLight.position.set(0, 10, 10);
+    scene.add(dirLight);
+    const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+    let scrollProgress = 0;
+    const handleMouseMove = (e) => {
+      mouse.targetX = e.clientX / window.innerWidth * 2 - 1;
+      mouse.targetY = -(e.clientY / window.innerHeight) * 2 + 1;
+    };
+    const handleScroll = () => {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (maxScroll > 0) {
+        scrollProgress = window.scrollY / maxScroll;
+      }
+    };
+    const handleResize = () => {
+      if (!container || !renderer || !camera) return;
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    };
+    const handleVisibilityChange = () => {
+      isVisible = !document.hidden;
+    };
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize, { passive: true });
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    const clock = new THREE.Clock();
+    const animate = () => {
+      animationFrameId = requestAnimationFrame(animate);
+      if (!isVisible) return;
+      const elapsedTime = clock.getElapsedTime();
+      mouse.x += (mouse.targetX - mouse.x) * 0.05;
+      mouse.y += (mouse.targetY - mouse.y) * 0.05;
+      if (!prefersReducedMotion) {
+        coreMesh.rotation.x = elapsedTime * 0.25 + mouse.y * 0.35;
+        coreMesh.rotation.y = elapsedTime * 0.35 + mouse.x * 0.45;
+        coreMesh.rotation.z = Math.sin(elapsedTime * 0.2) * 0.2;
+        coreMesh.position.y = 0.5 - scrollProgress * 5;
+        coreMesh.position.z = Math.sin(scrollProgress * Math.PI) * 1.5;
+        ring1.rotation.x = Math.PI / 3 + elapsedTime * 0.15 + mouse.y * 0.2;
+        ring1.rotation.y = elapsedTime * 0.2 + mouse.x * 0.2;
+        ring1.position.y = coreMesh.position.y;
+        ring2.rotation.y = Math.PI / 4 - elapsedTime * 0.18 + mouse.x * 0.15;
+        ring2.rotation.z = elapsedTime * 0.12 - mouse.y * 0.15;
+        ring2.position.y = coreMesh.position.y;
+        particles.rotation.y = elapsedTime * 0.03 + mouse.x * 0.1;
+        particles.rotation.x = mouse.y * 0.08;
+        light1.position.x = Math.sin(elapsedTime * 0.6) * 10 + mouse.x * 3;
+        light1.position.y = Math.cos(elapsedTime * 0.5) * 8 + mouse.y * 3;
+        light1.position.z = 8 + Math.sin(elapsedTime * 0.4) * 4;
+        light2.position.x = Math.cos(elapsedTime * 0.5) * 10 - mouse.x * 3;
+        light2.position.y = Math.sin(elapsedTime * 0.7) * 8 - mouse.y * 3;
+        light3.position.x = Math.sin(elapsedTime * 0.4) * 8;
+        light3.position.y = Math.cos(elapsedTime * 0.6) * 9;
+      }
+      renderer.render(scene, camera);
+    };
+    animate();
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      coreGeometry.dispose();
+      coreMaterial.dispose();
+      ring1Geo.dispose();
+      ring1Mat.dispose();
+      ring2Geo.dispose();
+      ring2Mat.dispose();
+      particleGeometry.dispose();
+      particleMaterial.dispose();
+      particleTexture.dispose();
+      renderer.dispose();
+    };
+  }, []);
+  return /* @__PURE__ */ jsx(
+    "div",
+    {
+      ref: containerRef,
+      className: "absolute inset-0 pointer-events-none select-none overflow-hidden",
+      style: { zIndex: 0 },
+      "aria-hidden": "true",
+      children: /* @__PURE__ */ jsx(
+        "canvas",
+        {
+          ref: canvasRef,
+          className: "w-full h-full block opacity-75 transition-opacity duration-1000"
+        }
+      )
+    }
+  );
+}
 function AntigravityBackground() {
   return /* @__PURE__ */ jsxs(
     "div",
@@ -259,26 +485,11 @@ function AntigravityBackground() {
       "aria-hidden": "true",
       className: "fixed inset-0 pointer-events-none -z-10 overflow-hidden select-none bg-[#0a0a0c]",
       children: [
+        /* @__PURE__ */ jsx(WebGLAntigravityCanvas, {}),
         /* @__PURE__ */ jsx("div", { className: "absolute -top-[20%] left-[15%] w-[600px] h-[600px] rounded-full bg-slate-400/[0.04] blur-[140px] animate-lens-drift" }),
         /* @__PURE__ */ jsx("div", { className: "absolute top-[35%] -right-[10%] w-[650px] h-[650px] rounded-full bg-sky-500/[0.035] blur-[150px] animate-float-slow" }),
         /* @__PURE__ */ jsx("div", { className: "absolute top-[65%] left-[5%] w-[500px] h-[500px] rounded-full bg-zinc-300/[0.03] blur-[130px] animate-float-reverse" }),
         /* @__PURE__ */ jsx("div", { className: "absolute -bottom-[15%] right-[20%] w-[700px] h-[700px] rounded-full bg-slate-500/[0.03] blur-[160px]" }),
-        /* @__PURE__ */ jsx("div", { className: "absolute top-[18%] right-[18%] w-80 h-80 perspective-stage-1200 opacity-25 pointer-events-none", children: /* @__PURE__ */ jsx("div", { className: "w-full h-full rounded-full border border-sky-400/30 animate-gyro-1 shadow-[0_0_25px_rgba(56,189,248,0.15)]" }) }),
-        /* @__PURE__ */ jsx("div", { className: "absolute top-[55%] left-[10%] w-96 h-96 perspective-stage-1200 opacity-20 pointer-events-none", children: /* @__PURE__ */ jsx("div", { className: "w-full h-full rounded-full border border-indigo-400/25 animate-gyro-2 shadow-[0_0_30px_rgba(129,140,248,0.12)]" }) }),
-        /* @__PURE__ */ jsx(
-          "div",
-          {
-            className: "absolute top-[28%] right-[12%] w-20 h-20 rounded-full border border-white/35 bg-gradient-to-br from-white/30 via-slate-400/15 to-transparent shadow-[0_20px_45px_rgba(0,0,0,0.85),inset_0_2px_5px_rgba(255,255,255,0.6)] backdrop-blur-md animate-chrome-pulse pointer-events-none",
-            style: { animationDuration: "8s" }
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          "div",
-          {
-            className: "absolute bottom-[22%] left-[8%] w-28 h-28 rounded-full border border-white/25 bg-gradient-to-br from-white/20 via-zinc-400/10 to-transparent shadow-[0_25px_50px_rgba(0,0,0,0.9),inset_0_2px_6px_rgba(255,255,255,0.4)] backdrop-blur-md animate-float-slow pointer-events-none",
-            style: { animationDuration: "11s" }
-          }
-        ),
         /* @__PURE__ */ jsx(
           "div",
           {
@@ -1563,6 +1774,11 @@ function Hero() {
       /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2", children: [
         /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-sky-400" }),
         "Full-Stack + Desktop Native"
+      ] }),
+      /* @__PURE__ */ jsx("span", { className: "text-zinc-700", children: "|" }),
+      /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2", children: [
+        /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" }),
+        "WebGL 3D Engine"
       ] }),
       /* @__PURE__ */ jsx("span", { className: "text-zinc-700", children: "|" }),
       /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2", children: [

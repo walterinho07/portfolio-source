@@ -394,6 +394,11 @@ function Hero() {
           </span>
           <span className="text-zinc-700">|</span>
           <span className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
+            WebGL 3D Engine
+          </span>
+          <span className="text-zinc-700">|</span>
+          <span className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
             Disponibilità Immediata
           </span>
