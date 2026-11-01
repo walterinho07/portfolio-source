@@ -3,15 +3,13 @@ import { createRootRouteWithContext, useRouter, Link, Outlet, HeadContent, Scrip
 import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { Toaster as Toaster$1, toast } from "sonner";
 import * as React from "react";
-import { useRef, useEffect, useState } from "react";
+import React__default, { useRef, useEffect, useState } from "react";
 import { X, Cpu, Minimize2, Maximize2, FileCode2, Layers, Terminal, Check, Copy, ArrowRight, Server, Database, Radio, Shield, Play, Globe, TerminalSquare, Code2, Sparkles, CheckCircle, Activity, Monitor, MapPin, RefreshCw, Rotate3d, Box, Eye, Zap, ShieldCheck, HelpCircle, ChevronDown, Menu, Github, Calendar, Wrench, Briefcase, Mail, MessageCircle, Linkedin, Loader2, CheckCircle2, ExternalLink, ChevronRight } from "lucide-react";
-import { Slot } from "@radix-ui/react-slot";
-import { cva } from "class-variance-authority";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import * as THREE from "three";
-const appCss = "/assets/styles-BLHf8v90.css";
+const appCss = "/assets/styles-AmBqc8Da.css";
 const Toaster = ({ ...props }) => {
   return /* @__PURE__ */ jsx(
     Toaster$1,
@@ -132,38 +130,6 @@ function RootComponent() {
 function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
-const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
-  {
-    variants: {
-      variant: {
-        default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
-        destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-        outline: "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
-        secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline"
-      },
-      size: {
-        default: "h-9 px-4 py-2",
-        sm: "h-8 rounded-md px-3 text-xs",
-        lg: "h-10 rounded-md px-8",
-        icon: "h-9 w-9"
-      }
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default"
-    }
-  }
-);
-const Button = React.forwardRef(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button";
-    return /* @__PURE__ */ jsx(Comp, { className: cn(buttonVariants({ variant, size, className })), ref, ...props });
-  }
-);
-Button.displayName = "Button";
 const Input = React.forwardRef(
   ({ className, type, ...props }, ref) => {
     return /* @__PURE__ */ jsx(
@@ -559,7 +525,17 @@ function SpatialCard({
             }
           }
         ),
-        children
+        /* @__PURE__ */ jsx(
+          "div",
+          {
+            className: "relative z-20 w-full h-full flex flex-col justify-between",
+            style: isMobile ? void 0 : {
+              transform: "translateZ(14px)",
+              transformStyle: "preserve-3d"
+            },
+            children
+          }
+        )
       ]
     }
   );
@@ -1135,7 +1111,17 @@ function SpatialBentoTile({
             }
           }
         ),
-        children
+        /* @__PURE__ */ jsx(
+          "div",
+          {
+            className: "relative z-20 w-full h-full flex flex-col justify-between",
+            style: {
+              transform: "translateZ(14px)",
+              transformStyle: "preserve-3d"
+            },
+            children
+          }
+        )
       ]
     }
   );
@@ -1667,6 +1653,166 @@ function Interactive3DHeroCore() {
     ] })
   ] });
 }
+const Spatial3DButton = React__default.forwardRef(
+  ({
+    href,
+    target,
+    rel,
+    variant = "primary",
+    size = "md",
+    depth = 12,
+    children,
+    className,
+    onClick,
+    disabled,
+    ...props
+  }, ref) => {
+    const buttonRef = useRef(null);
+    const [rotate, setRotate] = useState({ x: 0, y: 0 });
+    const [spotlight, setSpotlight] = useState({ x: 50, y: 50, opacity: 0 });
+    const [isPressed, setIsPressed] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+    const [reducedMotion, setReducedMotion] = useState(false);
+    useEffect(() => {
+      if (typeof window !== "undefined") {
+        const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+        setReducedMotion(mq.matches);
+        const listener = (e) => setReducedMotion(e.matches);
+        mq.addEventListener("change", listener);
+        return () => mq.removeEventListener("change", listener);
+      }
+    }, []);
+    const handleMouseMove = (e) => {
+      if (disabled || reducedMotion || !buttonRef.current) return;
+      const rect = buttonRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = (y - centerY) / centerY * -9;
+      const rotateY = (x - centerX) / centerX * 9;
+      setRotate({ x: rotateX, y: rotateY });
+      setSpotlight({
+        x: x / rect.width * 100,
+        y: y / rect.height * 100,
+        opacity: 0.35
+      });
+    };
+    const handleMouseEnter = () => {
+      setIsHovered(true);
+    };
+    const handleMouseLeave = () => {
+      setIsHovered(false);
+      setIsPressed(false);
+      setRotate({ x: 0, y: 0 });
+      setSpotlight((prev) => ({ ...prev, opacity: 0 }));
+    };
+    const sizeClasses = {
+      sm: "h-9 px-4 text-xs rounded-full",
+      md: "h-11 px-6 text-sm rounded-full",
+      lg: "h-12 px-7 text-sm sm:text-base rounded-full"
+    };
+    const variantClasses = {
+      primary: "bg-white text-zinc-950 font-semibold shadow-[0_10px_25px_-5px_rgba(255,255,255,0.2),0_15px_35px_-5px_rgba(0,0,0,0.6)] border border-white/40 hover:bg-zinc-100",
+      outline: "apple-glass text-white font-medium border border-white/20 shadow-[0_12px_30px_-8px_rgba(0,0,0,0.7)] hover:border-white/40 hover:bg-white/10",
+      liquid: "bg-gradient-to-b from-white/20 via-white/5 to-white/10 text-white font-medium border border-white/30 backdrop-blur-2xl shadow-[0_15px_35px_-10px_rgba(56,189,248,0.25),0_10px_30px_rgba(0,0,0,0.8)] hover:border-sky-400/50 hover:shadow-[0_15px_40px_-5px_rgba(56,189,248,0.4)]",
+      secondary: "bg-white/10 text-zinc-200 font-medium border border-white/10 hover:bg-white/15 hover:text-white shadow-lg",
+      ghost: "bg-transparent text-zinc-300 font-medium hover:text-white hover:bg-white/5"
+    };
+    const shadowOffset = !reducedMotion && isHovered ? `${-rotate.y * 1.8}px ${rotate.x * 1.8 + 12}px 30px rgba(0,0,0,0.65)` : "0 10px 25px rgba(0,0,0,0.4)";
+    const containerStyle = reducedMotion ? {} : {
+      perspective: "600px",
+      transformStyle: "preserve-3d",
+      transform: `perspective(600px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg) ${isPressed ? "scale(0.97) translateZ(-4px)" : isHovered ? "translateZ(4px)" : "translateZ(0)"}`,
+      boxShadow: shadowOffset,
+      transition: isHovered ? "transform 0.08s ease-out, box-shadow 0.15s ease-out" : "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease-out"
+    };
+    const innerContentStyle = reducedMotion ? {} : {
+      transform: `translateZ(${isPressed ? 2 : isHovered ? depth : 0}px)`,
+      transformStyle: "preserve-3d",
+      transition: "transform 0.2s cubic-bezier(0.16, 1, 0.3, 1)"
+    };
+    const commonClasses = cn(
+      "relative inline-flex items-center justify-center select-none cursor-pointer overflow-hidden transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 disabled:pointer-events-none disabled:opacity-50",
+      sizeClasses[size],
+      variantClasses[variant],
+      className
+    );
+    const innerElements = /* @__PURE__ */ jsxs(Fragment, { children: [
+      !reducedMotion && /* @__PURE__ */ jsx(
+        "div",
+        {
+          className: "pointer-events-none absolute -inset-px rounded-[inherit] transition-opacity duration-200 z-10",
+          style: {
+            opacity: spotlight.opacity,
+            background: `radial-gradient(circle 140px at ${spotlight.x}% ${spotlight.y}%, rgba(255, 255, 255, 0.45), transparent 75%)`
+          }
+        }
+      ),
+      /* @__PURE__ */ jsx(
+        "span",
+        {
+          className: "relative z-20 inline-flex items-center justify-center gap-2 pointer-events-none",
+          style: innerContentStyle,
+          children
+        }
+      )
+    ] });
+    if (href) {
+      return /* @__PURE__ */ jsx(
+        "div",
+        {
+          ref: buttonRef,
+          onMouseMove: handleMouseMove,
+          onMouseEnter: handleMouseEnter,
+          onMouseLeave: handleMouseLeave,
+          onMouseDown: () => setIsPressed(true),
+          onMouseUp: () => setIsPressed(false),
+          style: containerStyle,
+          className: "inline-block rounded-full will-change-transform",
+          children: /* @__PURE__ */ jsx(
+            "a",
+            {
+              ref,
+              href,
+              target,
+              rel,
+              onClick,
+              className: commonClasses,
+              children: innerElements
+            }
+          )
+        }
+      );
+    }
+    return /* @__PURE__ */ jsx(
+      "div",
+      {
+        ref: buttonRef,
+        onMouseMove: handleMouseMove,
+        onMouseEnter: handleMouseEnter,
+        onMouseLeave: handleMouseLeave,
+        onMouseDown: () => setIsPressed(true),
+        onMouseUp: () => setIsPressed(false),
+        style: containerStyle,
+        className: "inline-block rounded-full will-change-transform",
+        children: /* @__PURE__ */ jsx(
+          "button",
+          {
+            ref,
+            type: props.type || "button",
+            disabled,
+            onClick,
+            className: commonClasses,
+            ...props,
+            children: innerElements
+          }
+        )
+      }
+    );
+  }
+);
+Spatial3DButton.displayName = "Spatial3DButton";
 const faqItems = [
   {
     tag: "Architettura & Stack",
@@ -1937,6 +2083,7 @@ function Nav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState("Home");
+  const [navTilt, setNavTilt] = useState({ x: 0, y: 0 });
   useEffect(() => {
     const handleScroll = () => {
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -1970,80 +2117,106 @@ function Nav() {
       behavior: "smooth"
     });
   };
-  return /* @__PURE__ */ jsxs("header", { className: "sticky top-0 inset-x-0 z-50 w-full bg-[#0a0a0c]/90 backdrop-blur-3xl border-b border-white/10 shadow-2xl transition-all select-none", children: [
-    /* @__PURE__ */ jsx(
+  const handleNavMouseMove = (e) => {
+    if (typeof window === "undefined" || window.innerWidth < 1024) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    setNavTilt({
+      x: y / (rect.height / 2) * -3.5,
+      y: x / (rect.width / 2) * 3.5
+    });
+  };
+  const handleNavMouseLeave = () => {
+    setNavTilt({ x: 0, y: 0 });
+  };
+  return /* @__PURE__ */ jsxs("header", { className: "sticky top-0 inset-x-0 z-50 w-full pt-2 sm:pt-4 pb-2 px-3 sm:px-6 pointer-events-none select-none", children: [
+    /* @__PURE__ */ jsxs(
       "div",
       {
-        onClick: handleTrackClick,
-        title: "Clicca per scorrere rapidamente",
-        className: "absolute bottom-0 inset-x-0 h-[3px] bg-white/[0.04] cursor-pointer group/track",
-        children: /* @__PURE__ */ jsx(
-          "div",
-          {
-            className: "relative h-full bg-gradient-to-r from-sky-400 via-indigo-400 to-emerald-400 transition-all duration-150 ease-out group-hover/track:brightness-125",
-            style: { width: `${scrollProgress}%` },
-            children: /* @__PURE__ */ jsx("div", { className: "absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-3.5 h-3.5 rounded-full bg-white animate-progress-orb shadow-[0_0_12px_#38bdf8,0_0_24px_#818cf8]" })
-          }
-        )
-      }
-    ),
-    /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-6xl px-6 h-16 sm:h-20 flex items-center justify-between", children: [
-      /* @__PURE__ */ jsxs("a", { href: "#top", className: "flex items-center gap-2.5 font-mono text-sm tracking-tight group", children: [
-        /* @__PURE__ */ jsxs("span", { className: "relative flex h-2.5 w-2.5", children: [
-          /* @__PURE__ */ jsx("span", { className: "animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" }),
-          /* @__PURE__ */ jsx("span", { className: "relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400" })
-        ] }),
-        /* @__PURE__ */ jsx("span", { className: "font-bold text-white tracking-wide group-hover:text-zinc-300 transition", children: "Walter Fida" }),
-        /* @__PURE__ */ jsx("span", { className: "text-zinc-500 font-mono text-xs hidden sm:inline", children: "<dev/>" })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "hidden lg:flex items-center gap-2 px-3 py-1 rounded-full apple-glass border border-white/10 text-xs font-mono text-zinc-300", children: [
-        /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" }),
-        /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: activeSection }),
-        /* @__PURE__ */ jsx("span", { className: "text-zinc-600", children: "·" }),
-        /* @__PURE__ */ jsxs("span", { className: "text-sky-300 font-semibold", children: [
-          Math.round(scrollProgress),
-          "%"
-        ] })
-      ] }),
-      /* @__PURE__ */ jsx("nav", { className: "hidden md:flex items-center gap-8 text-xs lg:text-sm font-medium text-zinc-400", children: navLinks.map((link) => /* @__PURE__ */ jsxs(
-        "a",
-        {
-          href: link.href,
-          className: `hover:text-white transition-colors py-1 relative group ${activeSection === link.label ? "text-white font-semibold" : ""}`,
-          children: [
-            link.label,
+        onMouseMove: handleNavMouseMove,
+        onMouseLeave: handleNavMouseLeave,
+        style: {
+          transform: `perspective(1000px) rotateX(${navTilt.x}deg) rotateY(${navTilt.y}deg)`,
+          transformStyle: "preserve-3d"
+        },
+        className: "pointer-events-auto mx-auto max-w-5xl rounded-full spatial-dock px-4 sm:px-6 h-16 sm:h-18 flex items-center justify-between transition-transform duration-200 relative overflow-hidden",
+        children: [
+          /* @__PURE__ */ jsx(
+            "div",
+            {
+              onClick: handleTrackClick,
+              title: "Clicca per scorrere rapidamente",
+              className: "absolute bottom-0 inset-x-0 h-[2.5px] bg-white/[0.05] cursor-pointer group/track z-30",
+              children: /* @__PURE__ */ jsx(
+                "div",
+                {
+                  className: "relative h-full bg-gradient-to-r from-sky-400 via-indigo-400 to-emerald-400 transition-all duration-150 ease-out group-hover/track:brightness-125",
+                  style: { width: `${scrollProgress}%` },
+                  children: /* @__PURE__ */ jsx("div", { className: "absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-3 h-3 rounded-full bg-white animate-progress-orb shadow-[0_0_10px_#38bdf8,0_0_20px_#818cf8]" })
+                }
+              )
+            }
+          ),
+          /* @__PURE__ */ jsxs("a", { href: "#top", className: "flex items-center gap-2.5 font-mono text-sm tracking-tight group", children: [
+            /* @__PURE__ */ jsxs("span", { className: "relative flex h-2.5 w-2.5", children: [
+              /* @__PURE__ */ jsx("span", { className: "animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" }),
+              /* @__PURE__ */ jsx("span", { className: "relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400" })
+            ] }),
+            /* @__PURE__ */ jsx("span", { className: "font-bold text-white tracking-wide group-hover:text-zinc-300 transition", children: "Walter Fida" }),
+            /* @__PURE__ */ jsx("span", { className: "text-zinc-500 font-mono text-xs hidden sm:inline", children: "<dev/>" })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "hidden lg:flex items-center gap-2 px-3.5 py-1 rounded-full apple-glass border border-white/10 text-xs font-mono text-zinc-300 shadow-inner", children: [
+            /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" }),
+            /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: activeSection }),
+            /* @__PURE__ */ jsx("span", { className: "text-zinc-600", children: "·" }),
+            /* @__PURE__ */ jsxs("span", { className: "text-sky-300 font-semibold", children: [
+              Math.round(scrollProgress),
+              "%"
+            ] })
+          ] }),
+          /* @__PURE__ */ jsx("nav", { className: "hidden md:flex items-center gap-6 lg:gap-7 text-xs lg:text-sm font-medium text-zinc-400", children: navLinks.map((link) => /* @__PURE__ */ jsxs(
+            "a",
+            {
+              href: link.href,
+              className: `hover:text-white transition-colors py-1 relative group ${activeSection === link.label ? "text-white font-semibold" : ""}`,
+              children: [
+                link.label,
+                /* @__PURE__ */ jsx(
+                  "span",
+                  {
+                    className: `absolute bottom-0 left-0 h-[1.5px] bg-white transition-all duration-300 ${activeSection === link.label ? "w-full bg-sky-400" : "w-0 group-hover:w-full"}`
+                  }
+                )
+              ]
+            },
+            link.href
+          )) }),
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
             /* @__PURE__ */ jsx(
-              "span",
+              Spatial3DButton,
               {
-                className: `absolute bottom-0 left-0 h-[1.5px] bg-white transition-all duration-300 ${activeSection === link.label ? "w-full bg-sky-400" : "w-0 group-hover:w-full"}`
+                href: "#contact",
+                variant: "primary",
+                size: "sm",
+                className: "text-xs font-semibold px-4 h-8",
+                children: "Contattami"
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              "button",
+              {
+                onClick: () => setMobileMenuOpen(!mobileMenuOpen),
+                className: "md:hidden p-2 rounded-full text-zinc-400 hover:text-white bg-white/5 border border-white/10",
+                "aria-label": "Toggle menu",
+                children: mobileMenuOpen ? /* @__PURE__ */ jsx(X, { className: "w-4 h-4" }) : /* @__PURE__ */ jsx(Menu, { className: "w-4 h-4" })
               }
             )
-          ]
-        },
-        link.href
-      )) }),
-      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-        /* @__PURE__ */ jsx(
-          Button,
-          {
-            asChild: true,
-            size: "sm",
-            className: "rounded-full bg-white text-zinc-950 hover:bg-zinc-200 text-xs font-semibold px-5 h-9 shadow-sm transition active:scale-95",
-            children: /* @__PURE__ */ jsx("a", { href: "#contact", children: "Contattami" })
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          "button",
-          {
-            onClick: () => setMobileMenuOpen(!mobileMenuOpen),
-            className: "md:hidden p-2 rounded-xl text-zinc-400 hover:text-white bg-white/5 border border-white/10",
-            "aria-label": "Toggle menu",
-            children: mobileMenuOpen ? /* @__PURE__ */ jsx(X, { className: "w-5 h-5" }) : /* @__PURE__ */ jsx(Menu, { className: "w-5 h-5" })
-          }
-        )
-      ] })
-    ] }),
-    mobileMenuOpen && /* @__PURE__ */ jsxs("div", { className: "md:hidden border-t border-white/10 bg-[#0c0c10]/95 backdrop-blur-3xl px-6 py-4 shadow-2xl", children: [
+          ] })
+        ]
+      }
+    ),
+    mobileMenuOpen && /* @__PURE__ */ jsxs("div", { className: "md:hidden pointer-events-auto mx-auto max-w-sm mt-2 border border-white/15 bg-[#0c0c10]/95 backdrop-blur-3xl px-6 py-4 rounded-3xl shadow-2xl", children: [
       /* @__PURE__ */ jsxs("div", { className: "pb-3 mb-3 border-b border-white/10 flex items-center justify-between text-xs font-mono text-zinc-400", children: [
         /* @__PURE__ */ jsxs("span", { children: [
           "Sezione: ",
@@ -2095,29 +2268,12 @@ function Hero() {
               /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "JavaFX" }),
               "."
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "mt-8 flex flex-wrap gap-3.5 justify-center lg:justify-start", children: [
-              /* @__PURE__ */ jsx(
-                Button,
-                {
-                  asChild: true,
-                  size: "lg",
-                  className: "rounded-full bg-white text-zinc-950 hover:bg-zinc-200 font-medium text-sm px-7 h-11 transition shadow-lg active:scale-95",
-                  children: /* @__PURE__ */ jsxs("a", { href: "#projects", className: "flex items-center gap-2", children: [
-                    "Esplora i progetti ",
-                    /* @__PURE__ */ jsx(ArrowRight, { className: "h-4 w-4" })
-                  ] })
-                }
-              ),
-              /* @__PURE__ */ jsx(
-                Button,
-                {
-                  asChild: true,
-                  size: "lg",
-                  variant: "outline",
-                  className: "rounded-full apple-glass border-white/10 hover:bg-white/10 text-white font-medium text-sm px-7 h-11 transition active:scale-95",
-                  children: /* @__PURE__ */ jsx("a", { href: "#contact", children: "Parliamo del tuo progetto" })
-                }
-              )
+            /* @__PURE__ */ jsxs("div", { className: "mt-8 flex flex-wrap gap-4 justify-center lg:justify-start", children: [
+              /* @__PURE__ */ jsxs(Spatial3DButton, { href: "#projects", variant: "primary", size: "lg", depth: 14, children: [
+                "Esplora i progetti ",
+                /* @__PURE__ */ jsx(ArrowRight, { className: "h-4 w-4" })
+              ] }),
+              /* @__PURE__ */ jsx(Spatial3DButton, { href: "#contact", variant: "outline", size: "lg", depth: 12, children: "Parliamo del tuo progetto" })
             ] })
           ] }),
           /* @__PURE__ */ jsx("div", { className: "lg:col-span-5 w-full flex justify-center", children: /* @__PURE__ */ jsx(Interactive3DHeroCore, {}) })
@@ -2227,7 +2383,7 @@ function ScrollProjectCard({
             }
           }
         ),
-        /* @__PURE__ */ jsxs("div", { children: [
+        /* @__PURE__ */ jsxs("div", { style: { transform: "translateZ(18px)", transformStyle: "preserve-3d" }, children: [
           /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between gap-4 mb-4", children: [
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 mb-1", children: [
@@ -2246,7 +2402,7 @@ function ScrollProjectCard({
             /* @__PURE__ */ jsxs(
               "span",
               {
-                className: `inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1 rounded-full border ${project.done ? "border-emerald-500/25 bg-emerald-500/10 text-emerald-400" : "border-amber-500/25 bg-amber-500/10 text-amber-300"}`,
+                className: `inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1 rounded-full border shadow-sm ${project.done ? "border-emerald-500/25 bg-emerald-500/10 text-emerald-400" : "border-amber-500/25 bg-amber-500/10 text-amber-300"}`,
                 children: [
                   project.done ? /* @__PURE__ */ jsx(CheckCircle2, { className: "h-3.5 w-3.5" }) : /* @__PURE__ */ jsx(Loader2, { className: "h-3.5 w-3.5 animate-spin" }),
                   project.status
@@ -2259,6 +2415,7 @@ function ScrollProjectCard({
             "div",
             {
               onClick: () => onOpen(project),
+              style: { transform: "translateZ(12px)", transformStyle: "preserve-3d" },
               className: "cursor-pointer mb-6 rounded-2xl overflow-hidden border border-white/10 bg-black/60 relative group/img aspect-video shadow-xl transition-all duration-300 group-hover:border-white/30",
               children: [
                 /* @__PURE__ */ jsx(
@@ -2277,42 +2434,59 @@ function ScrollProjectCard({
               ]
             }
           ),
-          /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-6", children: project.stack.map((tech) => /* @__PURE__ */ jsx(
-            "span",
+          /* @__PURE__ */ jsx(
+            "div",
             {
-              className: "font-mono text-xs px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-zinc-300 group-hover:border-white/25 transition-colors",
-              children: tech
-            },
-            tech
-          )) })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "pt-5 border-t border-white/10 flex items-center justify-between text-sm", children: [
-          /* @__PURE__ */ jsxs(
-            "button",
-            {
-              type: "button",
-              onClick: () => onOpen(project),
-              className: "font-medium text-white hover:text-zinc-300 inline-flex items-center gap-1.5 transition-colors group/btn cursor-pointer",
-              children: [
-                "Dettagli progetto",
-                /* @__PURE__ */ jsx(ChevronRight, { className: "h-4 w-4 transition-transform group-hover/btn:translate-x-1" })
-              ]
-            }
-          ),
-          project.github && /* @__PURE__ */ jsxs(
-            "a",
-            {
-              href: project.github,
-              target: "_blank",
-              rel: "noreferrer",
-              className: "text-zinc-400 hover:text-white inline-flex items-center gap-1.5 transition-colors font-mono text-xs",
-              children: [
-                /* @__PURE__ */ jsx(Github, { className: "h-4 w-4" }),
-                "Codice GitHub"
-              ]
+              className: "flex flex-wrap gap-2 mb-6",
+              style: { transform: "translateZ(14px)", transformStyle: "preserve-3d" },
+              children: project.stack.map((tech) => /* @__PURE__ */ jsx(
+                "span",
+                {
+                  className: "font-mono text-xs px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-zinc-300 group-hover:border-white/25 transition-colors",
+                  children: tech
+                },
+                tech
+              ))
             }
           )
-        ] })
+        ] }),
+        /* @__PURE__ */ jsxs(
+          "div",
+          {
+            className: "pt-5 border-t border-white/10 flex items-center justify-between text-sm",
+            style: { transform: "translateZ(24px)", transformStyle: "preserve-3d" },
+            children: [
+              /* @__PURE__ */ jsxs(
+                Spatial3DButton,
+                {
+                  variant: "liquid",
+                  size: "sm",
+                  onClick: () => onOpen(project),
+                  className: "font-medium text-xs px-4 h-9",
+                  children: [
+                    "Dettagli progetto ",
+                    /* @__PURE__ */ jsx(ChevronRight, { className: "h-3.5 w-3.5 ml-1" })
+                  ]
+                }
+              ),
+              project.github && /* @__PURE__ */ jsxs(
+                Spatial3DButton,
+                {
+                  href: project.github,
+                  target: "_blank",
+                  rel: "noreferrer",
+                  variant: "ghost",
+                  size: "sm",
+                  className: "text-xs font-mono text-zinc-400 hover:text-white",
+                  children: [
+                    /* @__PURE__ */ jsx(Github, { className: "h-3.5 w-3.5 mr-1" }),
+                    " Codice GitHub"
+                  ]
+                }
+              )
+            ]
+          }
+        )
       ]
     }
   );
@@ -2358,7 +2532,7 @@ function Projects() {
           if (!val) setSelected(null);
           setOpen(val);
         },
-        children: /* @__PURE__ */ jsxs(DialogContent, { className: "max-w-4xl w-[95vw] sm:w-[90vw] max-h-[88vh] overflow-hidden flex flex-col liquid-metal-modal text-white rounded-3xl p-0 border border-white/20 shadow-[0_30px_90px_rgba(0,0,0,0.95)]", children: [
+        children: /* @__PURE__ */ jsxs(DialogContent, { className: "max-w-4xl w-[95vw] sm:w-[90vw] max-h-[88vh] overflow-hidden flex flex-col liquid-metal-modal text-white rounded-3xl p-0 border border-white/20 shadow-[0_30px_90px_rgba(0,0,0,0.95)] animate-modal-3d", children: [
           /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 pointer-events-none -z-10 overflow-hidden select-none", children: [
             /* @__PURE__ */ jsx(
               "div",
@@ -2392,16 +2566,17 @@ function Projects() {
             ),
             /* @__PURE__ */ jsx("div", { className: "absolute top-12 right-20 w-12 h-12 rounded-full border border-white/30 bg-gradient-to-br from-white/25 via-zinc-400/10 to-transparent shadow-[0_10px_25px_rgba(0,0,0,0.6),inset_0_2px_4px_rgba(255,255,255,0.5)] backdrop-blur-md animate-float-slow pointer-events-none" })
           ] }),
-          /* @__PURE__ */ jsx(
-            "button",
+          /* @__PURE__ */ jsx("div", { className: "absolute top-4 right-4 sm:top-5 sm:right-5 z-50", children: /* @__PURE__ */ jsx(
+            Spatial3DButton,
             {
-              type: "button",
+              variant: "outline",
+              size: "sm",
               onClick: () => setOpen(false),
-              className: "absolute top-4 right-4 sm:top-5 sm:right-5 z-50 flex items-center justify-center w-9 h-9 rounded-full bg-white/15 hover:bg-white/30 border border-white/30 text-white backdrop-blur-2xl shadow-xl transition-all duration-200 active:scale-90 cursor-pointer focus:outline-none",
+              className: "w-9 h-9 p-0 rounded-full bg-white/15 hover:bg-white/30 border-white/30",
               "aria-label": "Chiudi modale",
               children: /* @__PURE__ */ jsx(X, { className: "w-4 h-4 text-white" })
             }
-          ),
+          ) }),
           /* @__PURE__ */ jsxs("div", { className: "relative p-6 sm:p-8 md:p-10 overflow-y-auto custom-scrollbar flex-1 space-y-6", children: [
             /* @__PURE__ */ jsxs(DialogHeader, { className: "text-left space-y-2 pr-10", children: [
               /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
@@ -2440,25 +2615,19 @@ function Projects() {
                 },
                 s
               )) }),
-              selected?.github && /* @__PURE__ */ jsx(
-                Button,
+              selected?.github && /* @__PURE__ */ jsxs(
+                Spatial3DButton,
                 {
-                  asChild: true,
+                  href: selected.github,
+                  target: "_blank",
+                  rel: "noreferrer",
+                  variant: "primary",
                   size: "sm",
-                  className: "rounded-full bg-white text-zinc-950 hover:bg-zinc-200 font-medium text-xs px-5 h-9 shadow-lg transition active:scale-95 cursor-pointer",
-                  children: /* @__PURE__ */ jsxs(
-                    "a",
-                    {
-                      href: selected.github,
-                      target: "_blank",
-                      rel: "noreferrer",
-                      className: "inline-flex items-center gap-2",
-                      children: [
-                        /* @__PURE__ */ jsx(Github, { className: "h-4 w-4" }),
-                        " Vedi Codice GitHub"
-                      ]
-                    }
-                  )
+                  className: "text-xs px-5 h-9",
+                  children: [
+                    /* @__PURE__ */ jsx(Github, { className: "h-4 w-4 mr-1.5" }),
+                    " Vedi Codice GitHub"
+                  ]
                 }
               )
             ] })
@@ -2673,12 +2842,15 @@ function Contact() {
                 }
               )
             ] }),
-            /* @__PURE__ */ jsx(
-              Button,
+            /* @__PURE__ */ jsx("div", { className: "pt-2", children: /* @__PURE__ */ jsx(
+              Spatial3DButton,
               {
                 type: "submit",
                 disabled: sending,
-                className: "w-full rounded-xl bg-white text-zinc-950 hover:bg-zinc-200 h-12 font-medium mt-2 transition active:scale-95 shadow-lg cursor-pointer",
+                variant: "primary",
+                size: "lg",
+                depth: 12,
+                className: "w-full h-12",
                 children: sending ? /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2", children: [
                   /* @__PURE__ */ jsx(Loader2, { className: "h-4 w-4 animate-spin" }),
                   " Invio in corso..."
@@ -2687,7 +2859,7 @@ function Contact() {
                   /* @__PURE__ */ jsx(ArrowRight, { className: "h-4 w-4" })
                 ] })
               }
-            )
+            ) })
           ] })
         ]
       }
@@ -2695,37 +2867,62 @@ function Contact() {
   ] }) }) });
 }
 function Footer() {
-  return /* @__PURE__ */ jsx("footer", { className: "relative px-6 py-12 border-t border-white/5", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-6 text-xs font-mono text-zinc-500", children: [
-    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
-      /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400" }),
-      /* @__PURE__ */ jsxs("span", { children: [
+  return /* @__PURE__ */ jsx("footer", { className: "relative px-6 py-14 spatial-monolith select-none", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-6 text-xs font-mono text-zinc-400", children: [
+    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2.5", children: [
+      /* @__PURE__ */ jsxs("span", { className: "relative flex h-2 w-2", children: [
+        /* @__PURE__ */ jsx("span", { className: "animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" }),
+        /* @__PURE__ */ jsx("span", { className: "relative inline-flex rounded-full h-2 w-2 bg-emerald-400" })
+      ] }),
+      /* @__PURE__ */ jsxs("span", { className: "text-zinc-300", children: [
         "© ",
         (/* @__PURE__ */ new Date()).getFullYear(),
         " Walter Fida · Software & Full-Stack Developer"
       ] })
     ] }),
-    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6", children: [
-      /* @__PURE__ */ jsx(
-        "a",
+    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 sm:gap-3 flex-wrap justify-center", children: [
+      /* @__PURE__ */ jsxs(
+        Spatial3DButton,
         {
           href: "https://github.com/Walterinho07",
           target: "_blank",
           rel: "noreferrer",
-          className: "hover:text-white transition",
-          children: "GitHub"
+          variant: "secondary",
+          size: "sm",
+          depth: 8,
+          className: "text-xs px-3.5 h-8 font-mono",
+          children: [
+            /* @__PURE__ */ jsx(Github, { className: "w-3.5 h-3.5 mr-1" }),
+            " GitHub"
+          ]
         }
       ),
-      /* @__PURE__ */ jsx(
-        "a",
+      /* @__PURE__ */ jsxs(
+        Spatial3DButton,
         {
           href: "https://www.linkedin.com/in/walter-fida-a7749b1bb/",
           target: "_blank",
           rel: "noreferrer",
-          className: "hover:text-white transition",
-          children: "LinkedIn"
+          variant: "secondary",
+          size: "sm",
+          depth: 8,
+          className: "text-xs px-3.5 h-8 font-mono text-sky-300",
+          children: [
+            /* @__PURE__ */ jsx(Linkedin, { className: "w-3.5 h-3.5 mr-1 text-sky-400" }),
+            " LinkedIn"
+          ]
         }
       ),
-      /* @__PURE__ */ jsx("a", { href: "#top", className: "text-white hover:underline", children: "Torna in cima ↑" })
+      /* @__PURE__ */ jsx(
+        Spatial3DButton,
+        {
+          href: "#top",
+          variant: "ghost",
+          size: "sm",
+          depth: 6,
+          className: "text-xs px-3 h-8 font-mono text-zinc-400 hover:text-white",
+          children: "Torna in cima ↑"
+        }
+      )
     ] })
   ] }) });
 }

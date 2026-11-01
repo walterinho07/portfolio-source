@@ -87,7 +87,19 @@ function SpatialCard({
           }}
         />
       )}
-      {children}
+      <div
+        className="relative z-20 w-full h-full flex flex-col justify-between"
+        style={
+          isMobile
+            ? undefined
+            : {
+                transform: "translateZ(14px)",
+                transformStyle: "preserve-3d",
+              }
+        }
+      >
+        {children}
+      </div>
     </div>
   );
 }

@@ -85,7 +85,15 @@ function SpatialBentoTile({
           background: `radial-gradient(circle 300px at ${spotlight.x}% ${spotlight.y}%, rgba(255, 255, 255, 0.25), transparent 70%)`,
         }}
       />
-      {children}
+      <div
+        className="relative z-20 w-full h-full flex flex-col justify-between"
+        style={{
+          transform: "translateZ(14px)",
+          transformStyle: "preserve-3d",
+        }}
+      >
+        {children}
+      </div>
     </div>
   );
 }

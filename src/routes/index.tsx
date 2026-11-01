@@ -23,7 +23,6 @@ import {
   Layers,
   Sparkles,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -38,6 +37,7 @@ import { AntigravityBackground } from "@/components/ui/AntigravityBackground";
 import { DeconstructingTerminal } from "@/components/ui/DeconstructingTerminal";
 import { BentoAbout } from "@/components/ui/BentoAbout";
 import { Interactive3DHeroCore } from "@/components/ui/Interactive3DHeroCore";
+import { Spatial3DButton } from "@/components/ui/Spatial3DButton";
 import Faq from "@/components/ui/Faq";
 
 export const Route = createFileRoute("/")({
@@ -187,6 +187,7 @@ function Nav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState("Home");
+  const [navTilt, setNavTilt] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -226,24 +227,47 @@ function Nav() {
     });
   };
 
-  return (
-    <header className="sticky top-0 inset-x-0 z-50 w-full bg-[#0a0a0c]/90 backdrop-blur-3xl border-b border-white/10 shadow-2xl transition-all select-none">
-      {/* Interactive Scroll Reading Progress Bar with Glowing Mercury Orb Head */}
-      <div
-        onClick={handleTrackClick}
-        title="Clicca per scorrere rapidamente"
-        className="absolute bottom-0 inset-x-0 h-[3px] bg-white/[0.04] cursor-pointer group/track"
-      >
-        <div
-          className="relative h-full bg-gradient-to-r from-sky-400 via-indigo-400 to-emerald-400 transition-all duration-150 ease-out group-hover/track:brightness-125"
-          style={{ width: `${scrollProgress}%` }}
-        >
-          {/* Glowing Mercury Orb Head */}
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-3.5 h-3.5 rounded-full bg-white animate-progress-orb shadow-[0_0_12px_#38bdf8,0_0_24px_#818cf8]" />
-        </div>
-      </div>
+  const handleNavMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (typeof window === "undefined" || window.innerWidth < 1024) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    setNavTilt({
+      x: (y / (rect.height / 2)) * -3.5,
+      y: (x / (rect.width / 2)) * 3.5,
+    });
+  };
 
-      <div className="mx-auto max-w-6xl px-6 h-16 sm:h-20 flex items-center justify-between">
+  const handleNavMouseLeave = () => {
+    setNavTilt({ x: 0, y: 0 });
+  };
+
+  return (
+    <header className="sticky top-0 inset-x-0 z-50 w-full pt-2 sm:pt-4 pb-2 px-3 sm:px-6 pointer-events-none select-none">
+      <div
+        onMouseMove={handleNavMouseMove}
+        onMouseLeave={handleNavMouseLeave}
+        style={{
+          transform: `perspective(1000px) rotateX(${navTilt.x}deg) rotateY(${navTilt.y}deg)`,
+          transformStyle: "preserve-3d",
+        }}
+        className="pointer-events-auto mx-auto max-w-5xl rounded-full spatial-dock px-4 sm:px-6 h-16 sm:h-18 flex items-center justify-between transition-transform duration-200 relative overflow-hidden"
+      >
+        {/* Interactive Scroll Reading Progress Bar with Glowing Mercury Orb Head */}
+        <div
+          onClick={handleTrackClick}
+          title="Clicca per scorrere rapidamente"
+          className="absolute bottom-0 inset-x-0 h-[2.5px] bg-white/[0.05] cursor-pointer group/track z-30"
+        >
+          <div
+            className="relative h-full bg-gradient-to-r from-sky-400 via-indigo-400 to-emerald-400 transition-all duration-150 ease-out group-hover/track:brightness-125"
+            style={{ width: `${scrollProgress}%` }}
+          >
+            {/* Glowing Mercury Orb Head */}
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-3 h-3 rounded-full bg-white animate-progress-orb shadow-[0_0_10px_#38bdf8,0_0_20px_#818cf8]" />
+          </div>
+        </div>
+
         <a href="#top" className="flex items-center gap-2.5 font-mono text-sm tracking-tight group">
           <span className="relative flex h-2.5 w-2.5">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -256,7 +280,7 @@ function Nav() {
         </a>
 
         {/* Dynamic Telemetry Status Capsule (Showing Current Section & Percentage) */}
-        <div className="hidden lg:flex items-center gap-2 px-3 py-1 rounded-full apple-glass border border-white/10 text-xs font-mono text-zinc-300">
+        <div className="hidden lg:flex items-center gap-2 px-3.5 py-1 rounded-full apple-glass border border-white/10 text-xs font-mono text-zinc-300 shadow-inner">
           <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
           <span className="text-white font-medium">{activeSection}</span>
           <span className="text-zinc-600">·</span>
@@ -264,7 +288,7 @@ function Nav() {
         </div>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-8 text-xs lg:text-sm font-medium text-zinc-400">
+        <nav className="hidden md:flex items-center gap-6 lg:gap-7 text-xs lg:text-sm font-medium text-zinc-400">
           {navLinks.map((link) => (
             <a
               key={link.href}
@@ -283,29 +307,30 @@ function Nav() {
           ))}
         </nav>
 
-        {/* CTA Button & Mobile Toggle */}
+        {/* 3D CTA Button & Mobile Toggle */}
         <div className="flex items-center gap-3">
-          <Button
-            asChild
+          <Spatial3DButton
+            href="#contact"
+            variant="primary"
             size="sm"
-            className="rounded-full bg-white text-zinc-950 hover:bg-zinc-200 text-xs font-semibold px-5 h-9 shadow-sm transition active:scale-95"
+            className="text-xs font-semibold px-4 h-8"
           >
-            <a href="#contact">Contattami</a>
-          </Button>
+            Contattami
+          </Spatial3DButton>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-xl text-zinc-400 hover:text-white bg-white/5 border border-white/10"
+            className="md:hidden p-2 rounded-full text-zinc-400 hover:text-white bg-white/5 border border-white/10"
             aria-label="Toggle menu"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-white/10 bg-[#0c0c10]/95 backdrop-blur-3xl px-6 py-4 shadow-2xl">
+        <div className="md:hidden pointer-events-auto mx-auto max-w-sm mt-2 border border-white/15 bg-[#0c0c10]/95 backdrop-blur-3xl px-6 py-4 rounded-3xl shadow-2xl">
           <div className="pb-3 mb-3 border-b border-white/10 flex items-center justify-between text-xs font-mono text-zinc-400">
             <span>Sezione: {activeSection}</span>
             <span className="text-sky-400 font-bold">{Math.round(scrollProgress)}%</span>
@@ -366,26 +391,15 @@ function Hero() {
               desktop nativi in <span className="text-white font-medium">JavaFX</span>.
             </p>
 
-            {/* Minimal CTAs */}
-            <div className="mt-8 flex flex-wrap gap-3.5 justify-center lg:justify-start">
-              <Button
-                asChild
-                size="lg"
-                className="rounded-full bg-white text-zinc-950 hover:bg-zinc-200 font-medium text-sm px-7 h-11 transition shadow-lg active:scale-95"
-              >
-                <a href="#projects" className="flex items-center gap-2">
-                  Esplora i progetti <ArrowRight className="h-4 w-4" />
-                </a>
-              </Button>
+            {/* Minimal 3D Tactile CTAs */}
+            <div className="mt-8 flex flex-wrap gap-4 justify-center lg:justify-start">
+              <Spatial3DButton href="#projects" variant="primary" size="lg" depth={14}>
+                Esplora i progetti <ArrowRight className="h-4 w-4" />
+              </Spatial3DButton>
 
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="rounded-full apple-glass border-white/10 hover:bg-white/10 text-white font-medium text-sm px-7 h-11 transition active:scale-95"
-              >
-                <a href="#contact">Parliamo del tuo progetto</a>
-              </Button>
+              <Spatial3DButton href="#contact" variant="outline" size="lg" depth={12}>
+                Parliamo del tuo progetto
+              </Spatial3DButton>
             </div>
           </div>
 
@@ -524,7 +538,7 @@ function ScrollProjectCard({
         }}
       />
 
-      <div>
+      <div style={{ transform: "translateZ(18px)", transformStyle: "preserve-3d" }}>
         <div className="flex items-start justify-between gap-4 mb-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
@@ -543,7 +557,7 @@ function ScrollProjectCard({
 
           {/* Status Indicator */}
           <span
-            className={`inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1 rounded-full border ${
+            className={`inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1 rounded-full border shadow-sm ${
               project.done
                 ? "border-emerald-500/25 bg-emerald-500/10 text-emerald-400"
                 : "border-amber-500/25 bg-amber-500/10 text-amber-300"
@@ -566,6 +580,7 @@ function ScrollProjectCard({
         {project.images && project.images.length > 0 && (
           <div
             onClick={() => onOpen(project)}
+            style={{ transform: "translateZ(12px)", transformStyle: "preserve-3d" }}
             className="cursor-pointer mb-6 rounded-2xl overflow-hidden border border-white/10 bg-black/60 relative group/img aspect-video shadow-xl transition-all duration-300 group-hover:border-white/30"
           >
             <img
@@ -583,7 +598,10 @@ function ScrollProjectCard({
         )}
 
         {/* Tech Stack Pills */}
-        <div className="flex flex-wrap gap-2 mb-6">
+        <div
+          className="flex flex-wrap gap-2 mb-6"
+          style={{ transform: "translateZ(14px)", transformStyle: "preserve-3d" }}
+        >
           {project.stack.map((tech) => (
             <span
               key={tech}
@@ -595,27 +613,31 @@ function ScrollProjectCard({
         </div>
       </div>
 
-      {/* Bottom Actions */}
-      <div className="pt-5 border-t border-white/10 flex items-center justify-between text-sm">
-        <button
-          type="button"
+      {/* Bottom Actions with 3D Tactile Elevation */}
+      <div
+        className="pt-5 border-t border-white/10 flex items-center justify-between text-sm"
+        style={{ transform: "translateZ(24px)", transformStyle: "preserve-3d" }}
+      >
+        <Spatial3DButton
+          variant="liquid"
+          size="sm"
           onClick={() => onOpen(project)}
-          className="font-medium text-white hover:text-zinc-300 inline-flex items-center gap-1.5 transition-colors group/btn cursor-pointer"
+          className="font-medium text-xs px-4 h-9"
         >
-          Dettagli progetto
-          <ChevronRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-        </button>
+          Dettagli progetto <ChevronRight className="h-3.5 w-3.5 ml-1" />
+        </Spatial3DButton>
 
         {project.github && (
-          <a
+          <Spatial3DButton
             href={project.github}
             target="_blank"
             rel="noreferrer"
-            className="text-zinc-400 hover:text-white inline-flex items-center gap-1.5 transition-colors font-mono text-xs"
+            variant="ghost"
+            size="sm"
+            className="text-xs font-mono text-zinc-400 hover:text-white"
           >
-            <Github className="h-4 w-4" />
-            Codice GitHub
-          </a>
+            <Github className="h-3.5 w-3.5 mr-1" /> Codice GitHub
+          </Spatial3DButton>
         )}
       </div>
     </article>
@@ -677,7 +699,7 @@ function Projects() {
             setOpen(val);
           }}
         >
-          <DialogContent className="max-w-4xl w-[95vw] sm:w-[90vw] max-h-[88vh] overflow-hidden flex flex-col liquid-metal-modal text-white rounded-3xl p-0 border border-white/20 shadow-[0_30px_90px_rgba(0,0,0,0.95)]">
+          <DialogContent className="max-w-4xl w-[95vw] sm:w-[90vw] max-h-[88vh] overflow-hidden flex flex-col liquid-metal-modal text-white rounded-3xl p-0 border border-white/20 shadow-[0_30px_90px_rgba(0,0,0,0.95)] animate-modal-3d">
             {/* 3D Liquid Metal Ambient Background Layers */}
             <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden select-none">
               <div
@@ -708,15 +730,18 @@ function Projects() {
               <div className="absolute top-12 right-20 w-12 h-12 rounded-full border border-white/30 bg-gradient-to-br from-white/25 via-zinc-400/10 to-transparent shadow-[0_10px_25px_rgba(0,0,0,0.6),inset_0_2px_4px_rgba(255,255,255,0.5)] backdrop-blur-md animate-float-slow pointer-events-none" />
             </div>
 
-            {/* Custom Floating Visible Liquid Metal Close Button */}
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              className="absolute top-4 right-4 sm:top-5 sm:right-5 z-50 flex items-center justify-center w-9 h-9 rounded-full bg-white/15 hover:bg-white/30 border border-white/30 text-white backdrop-blur-2xl shadow-xl transition-all duration-200 active:scale-90 cursor-pointer focus:outline-none"
-              aria-label="Chiudi modale"
-            >
-              <X className="w-4 h-4 text-white" />
-            </button>
+            {/* Custom Floating Visible 3D Liquid Metal Close Button */}
+            <div className="absolute top-4 right-4 sm:top-5 sm:right-5 z-50">
+              <Spatial3DButton
+                variant="outline"
+                size="sm"
+                onClick={() => setOpen(false)}
+                className="w-9 h-9 p-0 rounded-full bg-white/15 hover:bg-white/30 border-white/30"
+                aria-label="Chiudi modale"
+              >
+                <X className="w-4 h-4 text-white" />
+              </Spatial3DButton>
+            </div>
 
             {/* Scrollable Modal Content */}
             <div className="relative p-6 sm:p-8 md:p-10 overflow-y-auto custom-scrollbar flex-1 space-y-6">
@@ -783,20 +808,16 @@ function Projects() {
                 </div>
 
                 {selected?.github && (
-                  <Button
-                    asChild
+                  <Spatial3DButton
+                    href={selected.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    variant="primary"
                     size="sm"
-                    className="rounded-full bg-white text-zinc-950 hover:bg-zinc-200 font-medium text-xs px-5 h-9 shadow-lg transition active:scale-95 cursor-pointer"
+                    className="text-xs px-5 h-9"
                   >
-                    <a
-                      href={selected.github}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2"
-                    >
-                      <Github className="h-4 w-4" /> Vedi Codice GitHub
-                    </a>
-                  </Button>
+                    <Github className="h-4 w-4 mr-1.5" /> Vedi Codice GitHub
+                  </Spatial3DButton>
                 )}
               </div>
             </div>
@@ -1058,21 +1079,26 @@ function Contact() {
                   />
                 </div>
 
-                <Button
-                  type="submit"
-                  disabled={sending}
-                  className="w-full rounded-xl bg-white text-zinc-950 hover:bg-zinc-200 h-12 font-medium mt-2 transition active:scale-95 shadow-lg cursor-pointer"
-                >
-                  {sending ? (
-                    <span className="flex items-center gap-2">
-                      <Loader2 className="h-4 w-4 animate-spin" /> Invio in corso...
-                    </span>
-                  ) : (
-                    <span className="flex items-center gap-2">
-                      Invia messaggio <ArrowRight className="h-4 w-4" />
-                    </span>
-                  )}
-                </Button>
+                <div className="pt-2">
+                  <Spatial3DButton
+                    type="submit"
+                    disabled={sending}
+                    variant="primary"
+                    size="lg"
+                    depth={12}
+                    className="w-full h-12"
+                  >
+                    {sending ? (
+                      <span className="flex items-center gap-2">
+                        <Loader2 className="h-4 w-4 animate-spin" /> Invio in corso...
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-2">
+                        Invia messaggio <ArrowRight className="h-4 w-4" />
+                      </span>
+                    )}
+                  </Spatial3DButton>
+                </div>
               </div>
             </form>
           </div>
@@ -1087,33 +1113,52 @@ function Contact() {
    ========================================================================= */
 function Footer() {
   return (
-    <footer className="relative px-6 py-12 border-t border-white/5">
-      <div className="mx-auto max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-6 text-xs font-mono text-zinc-500">
-        <div className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-          <span>© {new Date().getFullYear()} Walter Fida · Software & Full-Stack Developer</span>
+    <footer className="relative px-6 py-14 spatial-monolith select-none">
+      <div className="mx-auto max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-6 text-xs font-mono text-zinc-400">
+        <div className="flex items-center gap-2.5">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+          </span>
+          <span className="text-zinc-300">
+            © {new Date().getFullYear()} Walter Fida · Software & Full-Stack Developer
+          </span>
         </div>
 
-        <div className="flex items-center gap-6">
-          <a
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-center">
+          <Spatial3DButton
             href="https://github.com/Walterinho07"
             target="_blank"
             rel="noreferrer"
-            className="hover:text-white transition"
+            variant="secondary"
+            size="sm"
+            depth={8}
+            className="text-xs px-3.5 h-8 font-mono"
           >
-            GitHub
-          </a>
-          <a
+            <Github className="w-3.5 h-3.5 mr-1" /> GitHub
+          </Spatial3DButton>
+
+          <Spatial3DButton
             href="https://www.linkedin.com/in/walter-fida-a7749b1bb/"
             target="_blank"
             rel="noreferrer"
-            className="hover:text-white transition"
+            variant="secondary"
+            size="sm"
+            depth={8}
+            className="text-xs px-3.5 h-8 font-mono text-sky-300"
           >
-            LinkedIn
-          </a>
-          <a href="#top" className="text-white hover:underline">
+            <Linkedin className="w-3.5 h-3.5 mr-1 text-sky-400" /> LinkedIn
+          </Spatial3DButton>
+
+          <Spatial3DButton
+            href="#top"
+            variant="ghost"
+            size="sm"
+            depth={6}
+            className="text-xs px-3 h-8 font-mono text-zinc-400 hover:text-white"
+          >
             Torna in cima ↑
-          </a>
+          </Spatial3DButton>
         </div>
       </div>
     </footer>
